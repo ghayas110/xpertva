@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "XpertVA Activity Tracker",
+    "version": "1.0",
+    "description": "Tracks employee activity on specific social media platforms for XpertVA portal.",
+    "permissions": [
+        "tabs",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://www.facebook.com/*",
+        "https://www.instagram.com/*",
+        "https://www.youtube.com/*",
+        "*://*.xpertva.com/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
