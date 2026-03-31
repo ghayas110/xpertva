@@ -142,7 +142,7 @@ class WebmailController extends Controller
                     'from_name' => $message->getFrom()[0]->personal ?? ($message->getFrom()[0]->mail ?? 'Unknown'),
                     'date'    => $dateObj->format('M d, g:i A'),
                     'snippet' => $snippet,
-                    'body'    => $message->getHTMLBody() ?? nl2br($textBody),
+                    'body'    => $message->getHTMLBody(true) ?? nl2br($textBody),
                     'flags'   => [
                         'seen' => $message->hasFlag('SEEN')
                     ],
@@ -187,7 +187,8 @@ class WebmailController extends Controller
                 'mail.from.name' => auth()->user()->name,
             ]);
 
-            \Illuminate\Support\Facades\Mail::mailer('custom_smtp')->raw($request->body, function ($message) use ($request) {
+            $sentMessage = \Illuminate\Support\Facades\Mail::mailer('custom_smtp')->raw($request->body, function ($message) use ($request, $account) {
+                $message->from($account->email, auth()->user()->name);
                 $message->to($request->to)->subject($request->subject);
                 
                 if ($request->filled('cc')) {
@@ -200,6 +201,58 @@ class WebmailController extends Controller
                     $message->bcc(array_filter($bccs));
                 }
             });
+
+            // Append to Sent Folder via IMAP
+            try {
+                $cm = new ClientManager([]);
+                $client = $cm->make([
+                    'host'          => $account->imap_host,
+                    'port'          => $account->imap_port,
+                    'encryption'    => 'ssl', 
+                    'validate_cert' => false,
+                    'username'      => $account->email,
+                    'password'      => $account->password,
+                    'protocol'      => 'imap'
+                ]);
+                $client->connect();
+
+                // Try standard sent folder paths
+                $folderNames = ['INBOX.Sent', 'Sent', 'Sent Messages', 'Sent Mail', 'INBOX.Sent Messages'];
+                $sentFolder = null;
+                foreach ($folderNames as $name) {
+                    try {
+                        $sentFolder = $client->getFolderByPath($name);
+                        if ($sentFolder) break;
+                    } catch (\Exception $e) { }
+                }
+
+                if ($sentFolder) {
+                    // Build the MIME message manually for append
+                    $rawMime = "From: " . auth()->user()->name . " <{$account->email}>\r\n";
+                    $rawMime .= "To: {$request->to}\r\n";
+                    $rawMime .= "Subject: {$request->subject}\r\n";
+                    $rawMime .= "Date: " . now()->format('r') . "\r\n";
+                    $rawMime .= "Content-Type: text/plain; charset=UTF-8\r\n";
+                    $rawMime .= "\r\n";
+                    $rawMime .= $request->body;
+
+                    // Try to get the actual MIME from Symfony if available
+                    if ($sentMessage && method_exists($sentMessage, 'getSymfonySentMessage')) {
+                        try {
+                            $rawMime = $sentMessage->getSymfonySentMessage()->getOriginalMessage()->toString();
+                        } catch (\Exception $e) {
+                            \Log::info("Using manually built MIME for Sent folder append.");
+                        }
+                    }
+
+                    $sentFolder->appendMessage($rawMime, ['\Seen']);
+                    \Log::info("Webmail: Message appended to Sent folder successfully.");
+                } else {
+                    \Log::warning("Webmail Append: Could not find Sent folder on server.");
+                }
+            } catch (\Exception $e) {
+                \Log::error("Webmail Append Sent Failed: " . $e->getMessage());
+            }
 
             return response()->json(['success' => true]);
 

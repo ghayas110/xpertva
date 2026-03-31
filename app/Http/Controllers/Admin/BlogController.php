@@ -39,6 +39,9 @@ class BlogController extends Controller
             'content' => 'required|string',
             'tags' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ], [
+            'image.max' => 'The image must not be larger than 2MB. Please compress your image or use a smaller file.',
+            'image.uploaded' => 'The image failed to upload. This usually happens if the file exceeds the server\'s upload size limit (PHP configuration). Please try a smaller image.',
         ]);
 
         $data = $request->all();
@@ -78,6 +81,9 @@ class BlogController extends Controller
             'content' => 'required|string',
             'tags' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ], [
+            'image.max' => 'The image must not be larger than 2MB. Please compress your image or use a smaller file.',
+            'image.uploaded' => 'The image failed to upload. This usually happens if the file exceeds the server\'s upload size limit (PHP configuration). Please try a smaller image.',
         ]);
 
         $data = $request->all();

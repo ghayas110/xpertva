@@ -19,10 +19,10 @@ class TaskController extends Controller
         
         // Admins and HR can see all tasks
         if (in_array($user->role, ['super_admin', 'hr'])) {
-            $tasks = Task::with(['creator', 'assignees', 'client'])->get();
+            $tasks = Task::with(['creator', 'assignees', 'client', 'parent'])->get();
         } else {
             // Normal users only see tasks assigned to them or created by them
-            $tasks = Task::with(['creator', 'assignees', 'client'])
+            $tasks = Task::with(['creator', 'assignees', 'client', 'parent'])
                 ->whereHas('assignees', function($q) use ($user) {
                     $q->where('user_id', $user->id);
                 })
@@ -45,6 +45,7 @@ class TaskController extends Controller
             'assignees' => 'nullable|array',
             'assignees.*' => 'exists:users,id',
             'client_id' => 'nullable|exists:clients,id',
+            'parent_id' => 'nullable|exists:tasks,id',
             'due_date' => 'nullable|date',
         ]);
 
@@ -54,6 +55,7 @@ class TaskController extends Controller
             'priority' => $request->priority,
             'creator_id' => Auth::id(),
             'client_id' => $request->client_id,
+            'parent_id' => $request->parent_id,
             'due_date' => $request->due_date,
             'status' => 'To-Do',
         ]);
@@ -70,13 +72,17 @@ class TaskController extends Controller
             }
         }
 
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'task' => $task->load(['creator', 'assignees', 'client', 'parent'])]);
+        }
+
         return back()->with('success', 'Task created successfully.');
     }
 
     public function updateStatus(Request $request, Task $task)
     {
         $request->validate([
-            'status' => 'required|in:To-Do,In-Progress,Completed',
+            'status' => 'required|in:To-Do,In-Progress,Waiting-Approval,Completed',
         ]);
 
         $updateData = ['status' => $request->status];
@@ -96,6 +102,17 @@ class TaskController extends Controller
         return back()->with('success', 'Task status updated.');
     }
 
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'due_date' => 'nullable|date',
+        ]);
+
+        $task->update($request->only(['due_date']));
+
+        return response()->json(['success' => true, 'task' => $task]);
+    }
+
     public function destroy(Task $task)
     {
         $task->delete();
@@ -110,7 +127,7 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         // Load relationship data
-        $task->load(['creator', 'assignees', 'client', 'comments.user']);
+        $task->load(['creator', 'assignees', 'client', 'comments.user', 'subtasks', 'parent']);
         
         return response()->json([
             'task' => $task
@@ -161,5 +178,11 @@ class TaskController extends Controller
         }
 
         return response()->json(['success' => true, 'comment' => $comment->load('user')]);
+    }
+
+    public function getCard(Task $task)
+    {
+        $task->load(['creator', 'assignees', 'client', 'parent']);
+        return view('tasks._card', compact('task'))->render();
     }
 }

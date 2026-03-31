@@ -15,19 +15,28 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('dashboard');
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'The provided email is not registered.',
+            ])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        if (!\Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+            return back()->withErrors([
+                'password' => 'Incorrect password entered.',
+            ])->onlyInput('email');
+        }
+
+        Auth::login($user);
+        $request->session()->regenerate();
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)

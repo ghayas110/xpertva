@@ -30,6 +30,42 @@
 
     <!-- Modals moved to bottom -->
 
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        @php
+            $incomeTotal = $financials->where('category', 'Invoicing')->groupBy('currency')->map(fn($g) => $g->sum('amount'));
+            $expenseTotal = $financials->where('category', '!=', 'Invoicing')->groupBy('currency')->map(fn($g) => $g->sum('amount'));
+            $allCurrencies = $financials->pluck('currency')->unique();
+        @endphp
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-5 border-l-4 border-green-500">
+            <p class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-1">Total Income (Invoicing)</p>
+            @forelse($incomeTotal as $cur => $amt)
+                <p class="text-lg font-bold text-green-600">{{ $cur }} {{ number_format($amt, 2) }}</p>
+            @empty
+                <p class="text-lg font-bold text-gray-400">0.00</p>
+            @endforelse
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-5 border-l-4 border-red-500">
+            <p class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-1">Total Expenses</p>
+            @forelse($expenseTotal as $cur => $amt)
+                <p class="text-lg font-bold text-red-600">{{ $cur }} {{ number_format($amt, 2) }}</p>
+            @empty
+                <p class="text-lg font-bold text-gray-400">0.00</p>
+            @endforelse
+        </div>
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-5 border-l-4 border-blue-500">
+            <p class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-1">Net Balance</p>
+            @foreach($allCurrencies as $cur)
+                @php
+                    $income = $incomeTotal->get($cur, 0);
+                    $expense = $expenseTotal->get($cur, 0);
+                    $net = $income - $expense;
+                @endphp
+                <p class="text-lg font-bold {{ $net >= 0 ? 'text-green-600' : 'text-red-600' }}">{{ $cur }} {{ number_format($net, 2) }}</p>
+            @endforeach
+        </div>
+    </div>
+
     <!-- Ledger Table -->
     <div class="bg-white dark:bg-slate-800 rounded shadow overflow-hidden">
         <table class="w-full text-left border-collapse">
@@ -83,6 +119,24 @@
                 </tr>
                 @endforelse
             </tbody>
+            @if($financials->count() > 0)
+            <tfoot>
+                @php
+                    $totals = $financials->groupBy('currency')->map(fn($g) => $g->sum('amount'));
+                @endphp
+                @foreach($totals as $cur => $total)
+                <tr class="bg-gray-100 dark:bg-slate-600 font-bold border-t-2 border-gray-300 dark:border-slate-500">
+                    <td colspan="5" class="py-3 px-6 text-right text-gray-700 dark:text-slate-200 uppercase text-sm tracking-wider">
+                        Total ({{ $cur }})
+                    </td>
+                    <td class="py-3 px-6 text-right text-gray-800 dark:text-white text-lg">
+                        {{ $cur }} {{ number_format($total, 2) }}
+                    </td>
+                    <td></td>
+                </tr>
+                @endforeach
+            </tfoot>
+            @endif
         </table>
     </div>
 

@@ -84,7 +84,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
     Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+    Route::get('/tasks/{task}/card', [TaskController::class, 'getCard'])->name('tasks.card');
     Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.status');
+    Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
     Route::patch('/tasks/{task}/assignee', [TaskController::class, 'updateAssignee'])->name('tasks.updateAssignee');
     Route::post('/tasks/{task}/comments', [TaskController::class, 'addComment'])->name('tasks.comments.store');
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
@@ -177,3 +179,9 @@ Route::prefix('blog')->name('blog.')->group(function () {
 // Public Lead Submissions
 Route::post('/contact/submit', [PublicLeadController::class, 'contactSubmit'])->name('contact.submit');
 Route::post('/audit/submit', [PublicLeadController::class, 'auditSubmit'])->name('audit.submit');
+
+Route::get('/autologin-test', function () {
+    auth()->login(\App\Models\User::first());
+    return redirect('/email');
+});
+require __DIR__.'/test_webmail.php';

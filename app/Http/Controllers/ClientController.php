@@ -109,15 +109,28 @@ class ClientController extends Controller
 
         // Handover Logic: (Mocked notification to Onboarding team)
         // In a real app we'd dispatch an event or write to the Messages/Tasks table
-        \App\Models\Task::create([
-            'title' => 'New Client Handover: ' . $client->company_name,
+        $task = \App\Models\Task::create([
+            'title' => 'Task for: ' . $client->company_name,
             'description' => 'Sales has closed this client. Please begin the onboarding process and document folder creation.',
             'priority' => 'high',
             'creator_id' => Auth::id(),
+            'client_id' => $client->id,
             'due_date' => now()->addDays(2),
-            // Leave assignee null for round-robin, or assign to a specific Onboarding rep
             'status' => 'To-Do'
         ]);
+
+        // Assign the task to all users with the 'onboarding' role
+        $onboardingUsers = \App\Models\User::where('role', 'onboarding')->get();
+        if ($onboardingUsers->isNotEmpty()) {
+            $task->assignees()->sync($onboardingUsers->pluck('id')->toArray());
+            
+            // Send notifications if applicable
+            foreach ($onboardingUsers as $assignee) {
+                if (class_exists(\App\Notifications\TaskAssignedNotification::class)) {
+                    $assignee->notify(new \App\Notifications\TaskAssignedNotification($task, Auth::user()));
+                }
+            }
+        }
 
         return back()->with('success', 'Lead converted to Client. Onboarding team notified.');
     }
@@ -184,6 +197,23 @@ class ClientController extends Controller
         }
 
         $client->update($updateData);
+
+        // Auto-assign the "Task for: [Client]" to the new VA, current user (Onboarding), and Super Admin
+        if (isset($updateData['assigned_va_id'])) {
+            $onboardingTask = \App\Models\Task::where('client_id', $client->id)
+                ->where('title', 'LIKE', 'Task for: %')
+                ->first();
+
+            if ($onboardingTask) {
+                $superAdminIds = \App\Models\User::where('role', 'super_admin')->pluck('id')->toArray();
+                $assigneeIds = array_unique(array_merge(
+                    $superAdminIds,
+                    [Auth::id(), $updateData['assigned_va_id']]
+                ));
+                
+                $onboardingTask->assignees()->sync($assigneeIds);
+            }
+        }
 
         return back()->with('success', 'Lead/Client updated successfully.');
     }

@@ -9,7 +9,15 @@
     onclick="openEditModal({{ $task->id }})">
     
     <div class="flex justify-between items-start mb-2 pr-6">
-        <h4 class="font-bold text-gray-800 dark:text-white leading-tight block">{{ $task->title }}</h4>
+        <div class="flex flex-col gap-0.5">
+            @if($task->parent_id && $task->parent)
+                <span class="text-[10px] uppercase font-bold text-indigo-500 flex items-center gap-1">
+                    <i class="fa-solid fa-level-up fa-rotate-90 text-[8px]"></i> 
+                    Main: {{ $task->parent->title }}
+                </span>
+            @endif
+            <h4 class="font-bold text-gray-800 dark:text-white leading-tight block">{{ $task->title }}</h4>
+        </div>
     </div>
     
     <p class="text-sm text-gray-600 dark:text-slate-400 mb-4 line-clamp-2">{{ $task->description }}</p>
@@ -41,7 +49,7 @@
     <!-- Action Buttons (Delete) -->
     @if(in_array(auth()->user()->role, ['super_admin', 'hr', 'onboarding', 'va']) || auth()->id() == $task->creator_id)
     <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button onclick="deleteTask({{ $task->id }})" class="text-gray-400 hover:text-red-500">
+        <button onclick="event.stopPropagation(); openDeleteModal({{ $task->id }})" class="text-gray-400 hover:text-red-500">
             <i class="fa-solid fa-trash-can"></i>
         </button>
     </div>

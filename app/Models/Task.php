@@ -13,9 +13,15 @@ class Task extends Model
         'creator_id',
         'assignee_id',
         'client_id',
+        'parent_id',
         'due_date',
         'status',
         'completed_at',
+    ];
+
+    protected $casts = [
+        'due_date' => 'date',
+        'completed_at' => 'datetime',
     ];
 
     public function creator()
@@ -26,6 +32,16 @@ class Task extends Model
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Task::class, 'parent_id');
+    }
+
+    public function subtasks()
+    {
+        return $this->hasMany(Task::class, 'parent_id');
     }
 
     public function assignees()
