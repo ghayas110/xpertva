@@ -31,7 +31,21 @@ class TaskController extends Controller
         }
 
         $users = User::all();
-        $clients = Client::all();
+        
+        if (in_array($user->role, ['super_admin', 'hr'])) {
+            $clients = Client::all();
+        } elseif ($user->role === 'sales') {
+            $clients = Client::where('assigned_sales_id', $user->id)->get();
+        } elseif ($user->role === 'onboarding') {
+            $clients = Client::whereIn('status', ['Onboarding', 'Active', 'Churned'])->get();
+        } elseif ($user->role === 'va') {
+            $clients = Client::where('assigned_va_id', $user->id)
+                ->get();
+        } elseif ($user->role === 'accounts') {
+            $clients = Client::where('status', 'Active')->get();
+        } else {
+            $clients = collect();
+        }
 
         return view('tasks.index', compact('tasks', 'users', 'clients'));
     }

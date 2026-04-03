@@ -30,10 +30,9 @@ class ClientController extends Controller
                 ->whereIn('status', ['Onboarding', 'Active', 'Churned'])
                 ->get();
         }
-        // VAs see Active clients assigned to them
+        // VAs see clients assigned to them
         elseif ($user->role === 'va') {
             $clients = Client::with(['assignedSales', 'assignedVA'])
-                ->where('status', 'Active')
                 ->where('assigned_va_id', $user->id)
                 ->get();
         }

@@ -135,7 +135,7 @@
                             <!-- Hidden Select -->
                             <select name="assignees[]" id="createTaskAssignees" multiple class="hidden" onchange="toggleClientDropdown(this, 'clientSelectionDiv'); renderCreateAssignedMembersDisplay()">
                                 @foreach($users as $u)
-                                    <option value="{{ $u->id }}" data-role="{{ $u->role }}" data-name="{{ $u->name }}">{{ $u->name }} ({{ ucfirst(str_replace('_', ' ', $u->role)) }})</option>
+                                    <option value="{{ $u->id }}" data-role="{{ $u->role }}" data-name="{{ $u->name }}" {{ (auth()->user()->role === 'va' && auth()->id() === $u->id) ? 'selected' : '' }}>{{ $u->name }} ({{ ucfirst(str_replace('_', ' ', $u->role)) }})</option>
                                 @endforeach
                             </select>
 
@@ -1457,6 +1457,11 @@
             openEditModal(taskId);
         }
         
+        if (document.getElementById('createTaskAssignees')) {
+            renderCreateAssignedMembersDisplay();
+            toggleClientDropdown(document.getElementById('createTaskAssignees'), 'clientSelectionDiv');
+        }
+
         // Ensure counts are accurate on initial load
         filterTasks('client', ''); 
     });

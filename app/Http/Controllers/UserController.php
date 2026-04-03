@@ -174,8 +174,14 @@ class UserController extends Controller
         ]);
 
         // Send email
-        Mail::to($user->email)->send(new FireEmployeeMail($user, $request->reason));
+        try {
+            Mail::to($user->email)->send(new FireEmployeeMail($user, $request->reason));
+            $message = "Employee has been fired and notified via email.";
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to send fire email to {$user->email}: " . $e->getMessage());
+            $message = "Employee has been fired, but the email notification could not be sent due to a mail server error.";
+        }
 
-        return back()->with('success', "Employee has been fired and notified via email.");
+        return back()->with('success', $message);
     }
 }
