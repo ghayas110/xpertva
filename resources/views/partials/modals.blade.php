@@ -73,12 +73,12 @@
 </div>
 
 <!-- Floating Action Buttons -->
-<div class="fixed bottom-4 left-4 z-50 hidden md:block">
+<div class="fixed bottom-4 left-4 z-50 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none floating-btn">
     <button onclick="document.getElementById('contact-modal').classList.remove('hidden')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-full flex items-center gap-2 shadow-lg">
         Get in touch <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
     </button>
 </div>
-<div class="fixed bottom-4 right-4 z-50 hidden md:block">
+<div class="fixed bottom-4 right-4 z-50 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none floating-btn">
     <button onclick="document.getElementById('audit-modal').classList.remove('hidden')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-full flex items-center gap-2 shadow-lg">
         Request Free Audit <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
     </button>

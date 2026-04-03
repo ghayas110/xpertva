@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('header');
     const logoContainer = header?.querySelector('.translate-x-2');
     const touchButton = header?.querySelector('.hidden.md\\:block');
-    const floatingButtons = document.querySelectorAll('.fixed.bottom-4');
+    const floatingButtons = document.querySelectorAll('.floating-btn');
 
     window.addEventListener('scroll', () => {
         if (window.scrollY > 40) {
@@ -71,7 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 touchButton.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
                 touchButton.classList.remove('opacity-100', 'scale-100');
             }
-            floatingButtons.forEach(btn => btn.classList.remove('hidden'));
+            floatingButtons.forEach(btn => {
+                btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-20');
+                btn.classList.add('opacity-100', 'translate-y-0');
+            });
         } else {
             header?.classList.add('py-6');
             header?.classList.remove('py-2');
@@ -83,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 touchButton.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
                 touchButton.classList.add('opacity-100', 'scale-100');
             }
-            floatingButtons.forEach(btn => btn.classList.add('hidden'));
+            floatingButtons.forEach(btn => {
+                btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-20');
+                btn.classList.remove('opacity-100', 'translate-y-0');
+            });
         }
     });
 

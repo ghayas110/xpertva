@@ -2,8 +2,10 @@
     @if($task->priority == 'high') border-red-500
     @elseif($task->priority == 'medium') border-yellow-500
     @else border-blue-500 @endif
-    hover:shadow-md transition-shadow relative group"
+    hover:shadow-md transition-shadow relative group task-card"
     id="task-{{ $task->id }}"
+    data-client-id="{{ $task->client_id ?? '' }}"
+    data-assignee-ids="{{ $task->assignees ? $task->assignees->pluck('id')->implode(',') : '' }}"
     draggable="true"
     ondragstart="drag(event)"
     onclick="openEditModal({{ $task->id }})">

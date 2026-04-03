@@ -7,11 +7,7 @@
     <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Task Board</h2>
     <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Manage and track project tasks.</p>
 </div>
-    @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {{ session('success') }}
-        </div>
-    @endif
+
 
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Your Tasks</h2>
@@ -19,6 +15,32 @@
         <button onclick="document.getElementById('createTaskModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2">
             <i class="fa-solid fa-plus"></i> Create New Task
         </button>
+        @endif
+    </div>
+
+    <!-- Filters Block -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-slate-700">
+        <div class="flex-1 w-full overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+            <div class="flex gap-2">
+                <button onclick="filterTasks('client', '')" id="filter-btn-all" class="client-pill whitespace-nowrap bg-blue-600 text-white border-blue-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors border">All Tasks</button>
+                @foreach($clients as $client)
+                    <button onclick="filterTasks('client', '{{ $client->id }}')" id="filter-btn-{{ $client->id }}" class="client-pill whitespace-nowrap bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors border border-transparent flex items-center gap-2" data-client-id="{{ $client->id }}">
+                        <i class="fa-solid fa-building text-gray-400 dark:text-slate-500"></i> {{ $client->company_name }}
+                    </button>
+                @endforeach
+            </div>
+        </div>
+
+        @if(auth()->user()->role === 'super_admin')
+        <div class="flex items-center gap-3 shrink-0">
+            <label class="text-sm font-bold text-gray-600 dark:text-slate-400 whitespace-nowrap"><i class="fa-solid fa-filter text-indigo-500"></i> Employee SID:</label>
+            <select id="employeeFilter" onchange="filterTasks('employee', this.value)" class="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 text-sm rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none text-gray-700 dark:text-white font-medium cursor-pointer max-w-[200px]">
+                <option value="">All Employees</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }} ({{ ucwords(str_replace('_', ' ', $user->role)) }})</option>
+                @endforeach
+            </select>
+        </div>
         @endif
     </div>
 
@@ -106,13 +128,48 @@
                                 <option value="high">High</option>
                             </select>
                         </div>
+                        </div>
+                        <div class="relative">
                             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Assignees</label>
-                            <select name="assignees[]" id="createTaskAssignees" multiple size="4" onchange="toggleClientDropdown(this, 'clientSelectionDiv')" class="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                            
+                            <!-- Hidden Select -->
+                            <select name="assignees[]" id="createTaskAssignees" multiple class="hidden" onchange="toggleClientDropdown(this, 'clientSelectionDiv'); renderCreateAssignedMembersDisplay()">
                                 @foreach($users as $u)
-                                    <option value="{{ $u->id }}" data-role="{{ $u->role }}">{{ $u->name }} ({{ ucfirst(str_replace('_', ' ', $u->role)) }})</option>
+                                    <option value="{{ $u->id }}" data-role="{{ $u->role }}" data-name="{{ $u->name }}">{{ $u->name }} ({{ ucfirst(str_replace('_', ' ', $u->role)) }})</option>
                                 @endforeach
                             </select>
-                            <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
+
+                            <!-- Assigned Members Display -->
+                            <div id="createAssignedMembersDisplay" class="flex flex-wrap gap-2 mb-2 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-lg border border-gray-200 dark:border-slate-600 min-h-[50px] items-center">
+                                <span class="text-sm text-gray-400 dark:text-slate-500 italic">No members assigned</span>
+                            </div>
+                            
+                            <button type="button" onclick="toggleCreateMembersPopover()" class="text-sm text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1 transition-colors mt-2">
+                                <i class="fa-solid fa-user-plus text-xs"></i> Select Members
+                            </button>
+
+                            <!-- Create Members Popover -->
+                            <div id="createMembersPopover" class="hidden fixed z-[9999] w-72 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-gray-200 dark:border-slate-600 overflow-hidden">
+                                <div class="flex justify-between items-center px-4 py-3 border-b border-gray-100 dark:border-slate-700">
+                                    <h5 class="font-bold text-sm text-gray-800 dark:text-white">Members</h5>
+                                    <button type="button" onclick="toggleCreateMembersPopover()" class="text-gray-400 hover:text-gray-600 dark:hover:text-slate-300">
+                                        <i class="fa-solid fa-times text-sm"></i>
+                                    </button>
+                                </div>
+                                <div class="px-4 py-2">
+                                    <input type="text" id="createMemberSearchInput" oninput="filterCreateMembers()" placeholder="Search members" class="w-full text-sm border border-gray-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-md px-3 py-2 outline-none focus:border-indigo-400">
+                                </div>
+                                
+                                <div id="createCardMembersSection" class="hidden">
+                                    <p class="px-4 py-1 text-[11px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider">Selected members</p>
+                                    <div id="createCardMembersList" class="max-h-[120px] overflow-y-auto"></div>
+                                </div>
+                                
+                                <div id="createBoardMembersSection">
+                                    <p class="px-4 py-1 text-[11px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider">Board members</p>
+                                    <div id="createBoardMembersList" class="max-h-[180px] overflow-y-auto pb-2"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6 hidden" id="clientSelectionDiv">
@@ -128,9 +185,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="flex justify-end gap-3 pt-4 border-t">
-                        <button type="button" onclick="document.getElementById('createTaskModal').classList.add('hidden')" class="px-5 py-2.5 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-gray-800 dark:text-white font-medium rounded-lg transition-colors">Cancel</button>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm">
+                    <div class="flex justify-end gap-3 mt-4 -mx-6 -mb-6 px-6 py-4 bg-gray-50 dark:bg-slate-700/30 border-t border-gray-100 dark:border-slate-700 rounded-b-xl">
+                        <button type="button" onclick="document.getElementById('createTaskModal').classList.add('hidden')" class="px-5 py-2.5 bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 border border-gray-200 dark:border-slate-600 text-gray-800 dark:text-white font-medium rounded-lg transition-colors">Cancel</button>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
                             Create Task
                         </button>
                     </div>
@@ -1249,6 +1306,130 @@
         }
     });
 
+    // ========== Create Task Trello-style Members Popover ==========
+    function toggleCreateMembersPopover(e) {
+        const popover = document.getElementById('createMembersPopover');
+        popover.classList.toggle('hidden');
+        if (!popover.classList.contains('hidden')) {
+            // Position near the trigger button using viewport coordinates to escape overflow-hidden
+            const trigger = document.querySelector('[onclick*="toggleCreateMembersPopover"]');
+            if (trigger) {
+                const rect = trigger.getBoundingClientRect();
+                popover.style.top = (rect.bottom + 4) + 'px';
+                popover.style.left = Math.max(8, rect.left) + 'px';
+            }
+            document.getElementById('createMemberSearchInput').value = '';
+            renderCreateMembersPopover();
+            document.getElementById('createMemberSearchInput').focus();
+        }
+    }
+
+    function renderCreateAssignedMembersDisplay() {
+        const select = document.getElementById('createTaskAssignees');
+        const display = document.getElementById('createAssignedMembersDisplay');
+        const assigned = Array.from(select.selectedOptions);
+        
+        if (assigned.length === 0) {
+            display.innerHTML = '<span class="text-sm text-gray-400 dark:text-slate-500 italic">No members assigned</span>';
+            return;
+        }
+        
+        display.innerHTML = assigned.map(opt => {
+            const name = opt.getAttribute('data-name') || opt.textContent;
+            const initials = getInitials(name);
+            const color = getMemberColor(parseInt(opt.value));
+            return `
+                <div class="flex items-center gap-0 group/avatar" title="${name}">
+                    <div class="w-8 h-8 rounded-full ${color} text-white flex items-center justify-center text-xs font-bold shadow-sm cursor-default">
+                        ${initials}
+                    </div>
+                </div>
+            `;
+        }).join('') + `
+            <button type="button" onclick="toggleCreateMembersPopover()" class="w-8 h-8 rounded-full bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-slate-400 flex items-center justify-center text-sm hover:bg-gray-300 dark:hover:bg-slate-500 transition-colors" title="Select members">
+                <i class="fa-solid fa-plus text-xs"></i>
+            </button>
+        `;
+    }
+
+    function renderCreateMembersPopover(filter = '') {
+        const select = document.getElementById('createTaskAssignees');
+        const assignedIds = Array.from(select.selectedOptions).map(o => o.value);
+        const allOptions = Array.from(select.options);
+        const query = filter.toLowerCase();
+
+        const cardMembers = allOptions.filter(o => assignedIds.includes(o.value));
+        const boardMembers = allOptions.filter(o => !assignedIds.includes(o.value));
+
+        const filteredCard = query ? cardMembers.filter(o => (o.getAttribute('data-name') || o.textContent).toLowerCase().includes(query)) : cardMembers;
+        const filteredBoard = query ? boardMembers.filter(o => (o.getAttribute('data-name') || o.textContent).toLowerCase().includes(query)) : boardMembers;
+
+        const cardSection = document.getElementById('createCardMembersSection');
+        const cardList = document.getElementById('createCardMembersList');
+        if (filteredCard.length > 0) {
+            cardSection.classList.remove('hidden');
+            cardList.innerHTML = filteredCard.map(opt => {
+                const name = opt.getAttribute('data-name') || opt.textContent;
+                const initials = getInitials(name);
+                const color = getMemberColor(parseInt(opt.value));
+                return `
+                    <button type="button" onclick="toggleCreateMember('${opt.value}')" class="flex items-center gap-3 w-full px-4 py-2 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors text-left">
+                        <div class="w-8 h-8 rounded-full ${color} text-white flex items-center justify-center text-xs font-bold shrink-0">${initials}</div>
+                        <span class="text-sm text-gray-700 dark:text-slate-300 flex-grow">${name}</span>
+                        <i class="fa-solid fa-times text-gray-400 hover:text-red-500 text-xs"></i>
+                    </button>
+                `;
+            }).join('');
+        } else {
+            cardSection.classList.add('hidden');
+        }
+
+        const boardList = document.getElementById('createBoardMembersList');
+        if (filteredBoard.length > 0) {
+            document.getElementById('createBoardMembersSection').classList.remove('hidden');
+            boardList.innerHTML = filteredBoard.map(opt => {
+                const name = opt.getAttribute('data-name') || opt.textContent;
+                const initials = getInitials(name);
+                const color = getMemberColor(parseInt(opt.value));
+                return `
+                    <button type="button" onclick="toggleCreateMember('${opt.value}')" class="flex items-center gap-3 w-full px-4 py-2 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors text-left">
+                        <div class="w-8 h-8 rounded-full ${color} text-white flex items-center justify-center text-xs font-bold shrink-0">${initials}</div>
+                        <span class="text-sm text-gray-700 dark:text-slate-300 flex-grow">${name}</span>
+                    </button>
+                `;
+            }).join('');
+        } else {
+            document.getElementById('createBoardMembersSection').classList.add('hidden');
+            boardList.innerHTML = '<p class="px-4 py-2 text-xs text-gray-400 italic">No more members</p>';
+        }
+    }
+
+    function filterCreateMembers() {
+        renderCreateMembersPopover(document.getElementById('createMemberSearchInput').value);
+    }
+
+    function toggleCreateMember(userId) {
+        const select = document.getElementById('createTaskAssignees');
+        const option = select.querySelector(`option[value="${userId}"]`);
+        if (!option) return;
+        
+        option.selected = !option.selected;
+        select.dispatchEvent(new Event('change'));
+        
+        renderCreateAssignedMembersDisplay();
+        renderCreateMembersPopover(document.getElementById('createMemberSearchInput').value);
+    }
+
+    // Close form popover when clicking outside
+    document.addEventListener('click', function(e) {
+        const popover = document.getElementById('createMembersPopover');
+        if (!popover) return;
+        const isInside = e.target.closest('#createMembersPopover') || e.target.closest('[onclick*="toggleCreateMembersPopover"]');
+        if (!isInside && !popover.classList.contains('hidden')) {
+            popover.classList.add('hidden');
+        }
+    });
+
     function toggleClientDropdown(selectElement, divId) {
         let hasVaRole = false;
         
@@ -1275,6 +1456,111 @@
         if (taskId) {
             openEditModal(taskId);
         }
+        
+        // Ensure counts are accurate on initial load
+        filterTasks('client', ''); 
     });
+
+    // ========== Filtering Logic ==========
+    let currentClientFilter = '';
+    let currentEmployeeFilter = '';
+
+    function filterTasks(type, value) {
+        if (type === 'client') {
+            if (currentClientFilter === value && value !== '') {
+                // Deselect if already active
+                value = '';
+            }
+            currentClientFilter = value;
+            
+            // Update UI for pills
+            document.querySelectorAll('.client-pill').forEach(pill => {
+                const pillClientId = pill.getAttribute('data-client-id') || '';
+                
+                if (pillClientId == value) {
+                    pill.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                    pill.classList.remove('bg-gray-100', 'dark:bg-slate-700', 'text-gray-700', 'dark:text-slate-300', 'hover:bg-gray-200', 'dark:hover:bg-slate-600', 'border-transparent');
+                    
+                    // Update icon color if present inside the active pill
+                    const icon = pill.querySelector('i');
+                    if(icon) {
+                        icon.classList.remove('text-gray-400', 'dark:text-slate-500');
+                        icon.classList.add('text-white');
+                    }
+                } else {
+                    pill.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                    pill.classList.add('bg-gray-100', 'dark:bg-slate-700', 'text-gray-700', 'dark:text-slate-300', 'hover:bg-gray-200', 'dark:hover:bg-slate-600', 'border-transparent');
+                    
+                    // Update icon color back to normal
+                    const icon = pill.querySelector('i');
+                    if(icon) {
+                        icon.classList.add('text-gray-400', 'dark:text-slate-500');
+                        icon.classList.remove('text-white');
+                    }
+                }
+            });
+        } else if (type === 'employee') {
+            currentEmployeeFilter = value;
+        }
+
+        const cards = document.querySelectorAll('.task-card');
+        
+        cards.forEach(card => {
+            const clientId = card.getAttribute('data-client-id') || '';
+            const assigneeIdsStr = card.getAttribute('data-assignee-ids') || '';
+            const assigneeIds = assigneeIdsStr ? assigneeIdsStr.split(',') : [];
+
+            let showClient = true;
+            let showEmployee = true;
+
+            if (currentClientFilter !== '') {
+                showClient = (clientId == currentClientFilter);
+            }
+
+            if (currentEmployeeFilter !== '') {
+                showEmployee = assigneeIds.includes(currentEmployeeFilter);
+            }
+
+            if (showClient && showEmployee) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Update column counts and handle empty state
+        ['To-Do', 'In-Progress', 'Waiting-Approval', 'Completed'].forEach(status => {
+            const col = document.querySelector(`[data-status="${status}"]`);
+            if (col) {
+                const visibleCards = Array.from(col.querySelectorAll('.task-card')).filter(c => c.style.display !== 'none');
+                
+                // Also update the UI column if no tasks are available
+                const taskList = col.querySelector('.task-list');
+                const emptyMessageQuery = col.querySelector('.empty-message');
+                if (visibleCards.length === 0) {
+                    if (!emptyMessageQuery && taskList) {
+                        const msg = document.createElement('div');
+                        msg.className = 'empty-message text-center p-4 text-xs italic text-gray-500 w-full opacity-50 select-none';
+                        msg.textContent = 'No tasks found';
+                        taskList.appendChild(msg);
+                    }
+                } else {
+                    if (emptyMessageQuery) emptyMessageQuery.remove();
+                }
+
+                // Update count badge explicitly.
+                const countBadge = col.querySelector('.rounded-full');
+                if (countBadge) {
+                    countBadge.textContent = visibleCards.length;
+                    
+                    if (visibleCards.length === 0) {
+                        countBadge.classList.add('opacity-50');
+                    } else {
+                        countBadge.classList.remove('opacity-50');
+                    }
+                }
+            }
+        });
+    }
 </script>
 @endpush
