@@ -53,7 +53,7 @@
         </div>
 
         <!-- Portfolio Grid -->
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-12">
+        <div id="portfolio-grid" class="columns-1 md:columns-2 lg:columns-3 gap-8 px-4 md:px-12">
             @php
             $portfolio = [
                 // INFOGRAPHICS
@@ -139,14 +139,14 @@
             @endphp
 
             @foreach($portfolio as $item)
-            <div class="portfolio-item relative rounded-2xl overflow-hidden group cursor-pointer bg-[#111] border border-white/5 hover:border-indigo-500/50 transition-all duration-500" data-category="{{ $item['cat'] }}">
-                <div class="aspect-[4/3] overflow-hidden">
-                    <img alt="{{ $item['title'] }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('assets/' . $item['img']) }}"/>
+            <div class="portfolio-item w-full break-inside-avoid relative rounded-2xl overflow-hidden group cursor-pointer bg-[#111] border border-white/5 hover:border-indigo-500/50 transition-all duration-500 mb-8" data-category="{{ $item['cat'] }}">
+                <div class="overflow-hidden w-full relative">
+                    <img alt="{{ $item['title'] }}" loading="lazy" class="w-full h-auto min-h-[200px] block object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('assets/' . $item['img']) }}"/>
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-100 group-hover:via-black/40 transition-all duration-500"></div>
-                <div class="absolute bottom-8 left-8 right-8 text-white z-10 transition-transform duration-500 group-hover:-translate-y-2">
-                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3 block">{{ $item['cat'] }}</span>
-                    <h3 class="text-2xl font-bold mb-2">{{ $item['title'] }}</h3>
+                <div class="absolute bottom-6 left-6 right-6 text-white z-10 transition-transform duration-500 group-hover:-translate-y-2">
+                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2 block">{{ $item['cat'] }}</span>
+                    <h3 class="text-xl md:text-2xl font-bold mb-1 drop-shadow-md">{{ $item['title'] }}</h3>
                     <p class="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{{ $item['desc'] }}</p>
                 </div>
             </div>
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Filter items
             portfolioItems.forEach(item => {
                 if (category === 'All' || item.getAttribute('data-category') === category) {
-                    item.style.display = 'block';
+                    item.style.display = 'inline-block';
                     setTimeout(() => {
                         item.style.opacity = '1';
                         item.style.transform = 'scale(1)';

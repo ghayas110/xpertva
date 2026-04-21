@@ -119,16 +119,14 @@
                         <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Description</label>
                         <textarea name="description" class="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all min-h-[100px]" placeholder="Add details..."></textarea>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-                        <div>
-                            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Priority</label>
-                            <select name="priority" class="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                <option value="low">Low</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="high">High</option>
-                            </select>
-                        </div>
-                        </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Priority</label>
+                        <select name="priority" class="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
                         <div class="relative">
                             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Assignees</label>
                             
@@ -172,21 +170,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6 hidden" id="clientSelectionDiv">
-                        <div>
-                            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Assign Client</label>
-                            <select name="client_id" class="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                <option value="">No Client (Internal Task)</option>
-                                @if(isset($clients))
-                                    @foreach($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->company_name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
+                    <div class="mb-8 hidden" id="clientSelectionDiv">
+                        <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Assign Client</label>
+                        <select name="client_id" class="w-full border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                            <option value="">No Client (Internal Task)</option>
+                            @if(isset($clients))
+                                @foreach($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->company_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
-                    <div class="flex justify-end gap-3 mt-4 -mx-6 -mb-6 px-6 py-4 bg-gray-50 dark:bg-slate-700/30 border-t border-gray-100 dark:border-slate-700 rounded-b-xl">
-                        <button type="button" onclick="document.getElementById('createTaskModal').classList.add('hidden')" class="px-5 py-2.5 bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 border border-gray-200 dark:border-slate-600 text-gray-800 dark:text-white font-medium rounded-lg transition-colors">Cancel</button>
+
+                    <div class="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-slate-700 mt-4">
+                        <button type="button" onclick="document.getElementById('createTaskModal').classList.add('hidden')" class="px-5 py-2.5 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 border border-transparent text-gray-800 dark:text-white font-medium rounded-lg transition-colors">Cancel</button>
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800">
                             Create Task
                         </button>
