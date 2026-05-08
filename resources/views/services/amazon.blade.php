@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Amazon Services - XpertVA')
+@section('meta_description', 'XpertVA Amazon Seller Central management — listing optimization, PPC advertising, inventory management, BSR improvement, and full account management.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white">
@@ -41,20 +42,30 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @php
+            $featured = [
+                ['Listing Optimization', 'SEO-optimized titles, bullets, A+ content, and backend keywords that rank and convert.', route('services.amazon.listing-optimization')],
+                ['PPC Management', 'Sponsored Products, Brands, Display, and DSP campaigns managed for lower ACoS.', route('services.amazon.ppc-management')],
+                ['SEO & Keyword Research', 'A10-aligned keyword research using Helium 10, Brand Analytics, and Cerebro.', route('services.amazon.seo-keyword-research')],
+                ['A+ Content & Storefront', 'A+ Content, Premium A+, Brand Story, and shoppable Storefront design.', route('services.amazon.a-plus-storefront')],
+                ['Account Management', 'Account Health, cases, FBA, suspensions, and reimbursement recovery.', route('services.amazon.account-management')],
+                ['Brand Protection', 'Hijacker removal, MAP enforcement, counterfeit takedowns, and Brand Registry.', route('services.amazon.brand-protection')],
+            ];
+            @endphp
+            @foreach($featured as [$f_title, $f_desc, $f_url])
             <div class="bg-[#121212] border border-[#1f1f1f] rounded-2xl p-8 hover:border-orange-300 transition-all group flex flex-col items-start shadow-xl">
                 <div class="bg-orange-500/10 p-3 rounded-lg mb-4 group-hover:bg-orange-500/20 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-orange-300"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
-                <h3 class="text-xl font-semibold mb-3 text-white">Keyword Research</h3>
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    In-depth analysis to identify high-converting keywords for your products.
-                </p>
+                <h3 class="text-xl font-semibold mb-3 text-white">{{ $f_title }}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">{{ $f_desc }}</p>
                 <div class="mt-auto pt-6 border-t border-white/5 w-full">
-                    <a href="#" class="text-orange-300 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
+                    <a href="{{ $f_url }}" class="text-orange-300 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
                         Read More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
                     </a>
                 </div>
             </div>
+            @endforeach
             <!-- Repeat for other 15 items ... I'll include them all for "pixel-perfect" parity -->
             @foreach(['Listing Optimization', 'Customer Support', 'A to Z Guarantee Claims', 'Amazon Cases', 'Account Health', 'Listing Issues', 'A+ (EBC) Creation', 'Storefront Creation', 'Campaign Management', 'Coupon/Promotion Management', 'Infringements', 'Hijacker Removal', 'Business Report', 'Account Management', 'MAP Enforcement'] as $item)
             <div class="bg-[#121212] border border-[#1f1f1f] rounded-2xl p-8 hover:border-orange-300 transition-all group flex flex-col items-start shadow-xl">

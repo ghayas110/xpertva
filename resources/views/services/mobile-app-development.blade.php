@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Mobile App Development - XpertVA')
+@section('meta_description', 'XpertVA mobile app development: iOS and Android apps, PWAs, and cross-platform mobile solutions designed for eCommerce and business growth.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white overflow-hidden">

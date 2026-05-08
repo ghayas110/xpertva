@@ -18,6 +18,15 @@ Route::prefix('services')->name('services.')->group(function () {
         return view('services.amazon');
     })->name('amazon');
 
+    Route::prefix('amazon')->name('amazon.')->group(function () {
+        Route::get('/listing-optimization', fn () => view('services.amazon.listing-optimization'))->name('listing-optimization');
+        Route::get('/ppc-management', fn () => view('services.amazon.ppc-management'))->name('ppc-management');
+        Route::get('/seo-keyword-research', fn () => view('services.amazon.seo-keyword-research'))->name('seo-keyword-research');
+        Route::get('/a-plus-storefront', fn () => view('services.amazon.a-plus-storefront'))->name('a-plus-storefront');
+        Route::get('/account-management', fn () => view('services.amazon.account-management'))->name('account-management');
+        Route::get('/brand-protection', fn () => view('services.amazon.brand-protection'))->name('brand-protection');
+    });
+
     Route::get('/shopify', function () {
         return view('services.shopify');
     })->name('shopify');
@@ -57,6 +66,15 @@ Route::prefix('services')->name('services.')->group(function () {
     Route::get('/mobile-app-development', function () {
         return view('services.mobile-app-development');
     })->name('mobile-app');
+
+    Route::prefix('amazon')->name('amazon.')->group(function () {
+        Route::get('/listing-optimization', fn() => view('services.amazon.listing-optimization'))->name('listing-optimization');
+        Route::get('/ppc-management', fn() => view('services.amazon.ppc-management'))->name('ppc-management');
+        Route::get('/seo-keyword-research', fn() => view('services.amazon.seo-keyword-research'))->name('seo-keyword-research');
+        Route::get('/a-plus-storefront', fn() => view('services.amazon.a-plus-storefront'))->name('a-plus-storefront');
+        Route::get('/account-management', fn() => view('services.amazon.account-management'))->name('account-management');
+        Route::get('/brand-protection', fn() => view('services.amazon.brand-protection'))->name('brand-protection');
+    });
 });
 
 Route::get('/work', function () {
@@ -165,6 +183,71 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/about', function () {
+    return redirect()->route('team', [], 301);
+})->name('about');
+
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        ['loc' => url('/'), 'changefreq' => 'weekly', 'priority' => '1.0'],
+        ['loc' => url('/team'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/work'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/contact'), 'changefreq' => 'yearly', 'priority' => '0.7'],
+        ['loc' => url('/services'), 'changefreq' => 'monthly', 'priority' => '0.9'],
+        ['loc' => url('/services/amazon'), 'changefreq' => 'monthly', 'priority' => '0.9'],
+        ['loc' => url('/services/amazon/listing-optimization'), 'changefreq' => 'monthly', 'priority' => '0.85'],
+        ['loc' => url('/services/amazon/ppc-management'), 'changefreq' => 'monthly', 'priority' => '0.85'],
+        ['loc' => url('/services/amazon/seo-keyword-research'), 'changefreq' => 'monthly', 'priority' => '0.85'],
+        ['loc' => url('/services/amazon/a-plus-storefront'), 'changefreq' => 'monthly', 'priority' => '0.85'],
+        ['loc' => url('/services/amazon/account-management'), 'changefreq' => 'monthly', 'priority' => '0.85'],
+        ['loc' => url('/services/amazon/brand-protection'), 'changefreq' => 'monthly', 'priority' => '0.85'],
+        ['loc' => url('/services/amazon/listing-optimization'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/amazon/ppc-management'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/amazon/seo-keyword-research'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/amazon/a-plus-storefront'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/amazon/account-management'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/amazon/brand-protection'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/shopify'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/walmart'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/ebay'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/virtual-assistant'), 'changefreq' => 'monthly', 'priority' => '0.9'],
+        ['loc' => url('/services/amazon-operations'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/marketing-solutions'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/web-development'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/content-branding'), 'changefreq' => 'monthly', 'priority' => '0.7'],
+        ['loc' => url('/services/mobile-app-development'), 'changefreq' => 'monthly', 'priority' => '0.7'],
+        ['loc' => url('/services/design-development'), 'changefreq' => 'monthly', 'priority' => '0.7'],
+        ['loc' => url('/blog'), 'changefreq' => 'weekly', 'priority' => '0.8'],
+        ['loc' => url('/privacy-policy'), 'changefreq' => 'yearly', 'priority' => '0.3'],
+    ];
+
+    $blogs = \App\Models\Blog::select('slug', 'updated_at')->orderBy('created_at', 'desc')->get();
+    foreach ($blogs as $blog) {
+        $urls[] = [
+            'loc' => url('/blog/' . $blog->slug),
+            'lastmod' => $blog->updated_at->toAtomString(),
+            'changefreq' => 'monthly',
+            'priority' => '0.7',
+        ];
+    }
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($urls as $url) {
+        $xml .= "  <url>\n";
+        $xml .= "    <loc>" . e($url['loc']) . "</loc>\n";
+        if (isset($url['lastmod'])) {
+            $xml .= "    <lastmod>" . $url['lastmod'] . "</lastmod>\n";
+        }
+        $xml .= "    <changefreq>" . $url['changefreq'] . "</changefreq>\n";
+        $xml .= "    <priority>" . $url['priority'] . "</priority>\n";
+        $xml .= "  </url>\n";
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200)->header('Content-Type', 'application/xml');
+})->name('sitemap');
 
 Route::get('/privacy-policy', function () {
     return view('privacy-policy');

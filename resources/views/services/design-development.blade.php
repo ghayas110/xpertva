@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Design & Development - XpertVA')
+@section('meta_description', 'XpertVA design and development: UI/UX design, graphic design, and front-end development for modern eCommerce brands.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white">

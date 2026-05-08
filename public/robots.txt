@@ -1,2 +1,17 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /login
+Disallow: /users
+Disallow: /tasks
+Disallow: /clients
+Disallow: /financials
+Disallow: /hr
+Disallow: /messages
+Disallow: /attendance-management
+Disallow: /my-attendance
+Disallow: /leaves
+Disallow: /email
+Disallow: /activities
+
+Sitemap: https://xpertva.com/sitemap.xml

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Shopify Services - XpertVA')
+@section('meta_description', 'XpertVA Shopify services: store setup, theme customization, product management, app integrations, and conversion rate optimization.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white">

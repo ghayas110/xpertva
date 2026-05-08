@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Marketing Solutions & SEO - XpertVA')
+@section('meta_description', 'XpertVA digital marketing: data-driven campaigns, SEO, PPC, social media, and Amazon advertising strategies to grow your eCommerce brand.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white overflow-hidden">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Amazon E-Commerce Operations - XpertVA')
+@section('meta_description', 'XpertVA Amazon operations management: full-service Amazon account management, case management, brand registry, and marketplace optimization.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white overflow-hidden">

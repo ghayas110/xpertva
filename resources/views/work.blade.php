@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Work - XpertVA')
+@section('meta_description', 'XpertVA case studies: $9.2M in Amazon sales, 6x revenue growth, and proven eCommerce success stories across Amazon, Shopify, and Walmart.')
 
 @section('content')
 <section class="text-white overflow-hidden bg-black min-h-screen relative">

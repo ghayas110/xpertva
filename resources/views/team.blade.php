@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('title', 'About XpertVA - Professional Virtual Assistant Services')
+@section('meta_description', 'Learn about XpertVA — founded in 2017, 9+ years helping eCommerce sellers on Amazon, Shopify, eBay, and Walmart. Meet our leadership team in Englishtown, NJ.')
 
 @section('content')
 <div class="bg-black text-white mt-10">
     <section class="pt-24 pb-12 md:pt-28 md:pb-20 px-6 text-center max-w-4xl mx-auto">
+        <p class="text-indigo-400 text-sm uppercase tracking-widest mb-4 font-medium">Founded 2017 &middot; 9+ Years of Experience</p>
         <h1 class="text-5xl font-semibold mb-6">About XpertVA</h1>
-        <p class="text-gray-300 text-lg leading-relaxed">Supporting businesses globally with expert eCommerce services. We believe in innovation, teamwork, and world-class results.</p>
+        <p class="text-gray-300 text-lg leading-relaxed">Supporting businesses globally with expert eCommerce services since 2017. We believe in innovation, teamwork, and world-class results.</p>
     </section>
 
     <!-- Services Overview -->

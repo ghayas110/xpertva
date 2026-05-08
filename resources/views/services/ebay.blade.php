@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Ebay Services - XpertVA')
+@section('meta_description', 'XpertVA eBay services: professional listing creation, store management, feedback management, order processing, and growth strategies.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Content & Branding - XpertVA')
+@section('meta_description', 'XpertVA content and branding services: product copywriting, brand identity, graphic design, and content strategy for eCommerce businesses.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white overflow-hidden">

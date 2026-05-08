@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'XpertVA - Professional Virtual Assistant Services')
+@section('meta_description', 'XpertVA offers expert virtual assistant services for Amazon, eBay, Shopify, and Walmart sellers. Founded 2017 · Englishtown, NJ · 500+ clients served worldwide.')
 
 @section('content')
 <!-- Hero Section -->

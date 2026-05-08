@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Contact Us - XpertVA')
+@section('meta_description', 'Get in touch with XpertVA. Call +1 (732) 490-6272 or email hello@xpertva.com. Located in Englishtown, NJ. We respond within 24 hours.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white flex items-center justify-center px-4 sm:px-6 py-12 sm:py-32 relative overflow-hidden">
@@ -50,7 +51,7 @@
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Email Address</p>
-                            <p class="text-gray-200">hello@xpertva.com</p>
+                            <a href="mailto:hello@xpertva.com" class="text-gray-200 hover:text-indigo-400 transition-colors">hello@xpertva.com</a>
                         </div>
                     </div>
 
@@ -60,7 +61,7 @@
                         </div>
                         <div>
                             <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Call / WhatsApp</p>
-                            <p class="text-gray-200">+1 732 490 6272</p>
+                            <a href="tel:+17324906272" class="text-gray-200 hover:text-indigo-400 transition-colors">+1 (732) 490-6272</a>
                         </div>
                     </div>
                 </div>
@@ -68,9 +69,9 @@
 
             <!-- Social Links -->
             <div class="flex gap-4">
-                <a href="#" class="bg-[#141414] border border-[#222] p-4 rounded-2xl hover:bg-gray-800 transition shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                <a href="#" class="bg-[#141414] border border-[#222] p-4 rounded-2xl hover:bg-gray-800 transition shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
-                <a href="#" class="bg-[#141414] border border-[#222] p-4 rounded-2xl hover:bg-gray-800 transition shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="https://www.facebook.com/xpertva" target="_blank" rel="noopener noreferrer" aria-label="XpertVA on Facebook" class="bg-[#141414] border border-[#222] p-4 rounded-2xl hover:bg-gray-800 transition shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                <a href="https://www.instagram.com/xpertva/" target="_blank" rel="noopener noreferrer" aria-label="XpertVA on Instagram" class="bg-[#141414] border border-[#222] p-4 rounded-2xl hover:bg-gray-800 transition shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+                <a href="https://www.linkedin.com/company/xpertva" target="_blank" rel="noopener noreferrer" aria-label="XpertVA on LinkedIn" class="bg-[#141414] border border-[#222] p-4 rounded-2xl hover:bg-gray-800 transition shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
             </div>
         </div>
     </div>

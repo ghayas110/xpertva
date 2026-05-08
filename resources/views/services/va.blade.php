@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Professional Virtual Assistance - XpertVA')
+@section('meta_description', 'Hire a professional virtual assistant from XpertVA for eCommerce operations, customer support, data entry, order management, and more.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white overflow-hidden">

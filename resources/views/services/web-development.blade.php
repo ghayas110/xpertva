@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Website & eCommerce Development - XpertVA')
+@section('meta_description', 'XpertVA web development services: custom eCommerce websites, Shopify, WooCommerce, WordPress, and PWA builds optimized for conversion and performance.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white overflow-hidden">

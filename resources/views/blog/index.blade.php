@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Blog - XpertVA')
+@section('meta_description', 'XpertVA Blog — Expert tips, strategies, and insights on Amazon selling, Shopify growth, eCommerce management, and virtual assistant best practices.')
 
 @section('content')
 <div class="bg-black text-white min-h-screen pt-32 pb-20">

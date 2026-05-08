@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Services - XpertVA')
+@section('meta_description', 'Explore XpertVA\'s full range of eCommerce services: Amazon, eBay, Shopify, Walmart management, virtual assistants, web development, and digital marketing.')
 
 @section('content')
 <section class="text-white overflow-hidden bg-black">

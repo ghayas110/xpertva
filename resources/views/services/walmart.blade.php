@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Walmart Services - XpertVA')
+@section('meta_description', 'XpertVA Walmart Marketplace: account setup, listing optimization, inventory management, and advertising to grow your Walmart seller account.')
 
 @section('content')
 <div class="min-h-screen bg-[#0b0b0b] text-white">
