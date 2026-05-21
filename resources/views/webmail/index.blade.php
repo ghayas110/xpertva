@@ -134,7 +134,7 @@
             <!-- LEFT SIDEBAR -->
             <div class="w-[256px] flex flex-col pt-3">
                 <div class="px-3 pb-4">
-                    <button onclick="openComposeModal()" class="bg-[#c2e7ff] hover:bg-[#b3dcf6] text-[#001d35] shadow-[0_1px_2px_0_rgba(60,64,67,0.3),0_1px_3px_1px_rgba(60,64,67,0.15)] rounded-2xl px-5 py-4 font-medium flex items-center transition-all">
+                    <button onclick="openComposeFresh()" class="bg-[#c2e7ff] hover:bg-[#b3dcf6] text-[#001d35] shadow-[0_1px_2px_0_rgba(60,64,67,0.3),0_1px_3px_1px_rgba(60,64,67,0.15)] rounded-2xl px-5 py-4 font-medium flex items-center transition-all">
                         <i class="fa-solid fa-pen mr-4"></i>
                         <span class="text-[0.875rem] tracking-wide">Compose</span>
                     </button>
@@ -226,10 +226,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-xs text-slate-500 flex items-center space-x-4">
-                            <span id="viewDate"></span>
+                        <div class="text-xs text-slate-500 flex items-center space-x-2">
+                            <span id="viewDate" class="mr-2"></span>
                             <button type="button" onclick="openReplyModal()" title="Reply" class="hover:bg-slate-100 p-1.5 rounded-full transition-colors">
                                 <i class="fa-solid fa-reply"></i>
+                            </button>
+                            <button type="button" onclick="openReplyAllModal()" title="Reply all" class="hover:bg-slate-100 p-1.5 rounded-full transition-colors">
+                                <i class="fa-solid fa-reply-all"></i>
+                            </button>
+                            <button type="button" onclick="openForwardModal()" title="Forward" class="hover:bg-slate-100 p-1.5 rounded-full transition-colors">
+                                <i class="fa-solid fa-share"></i>
                             </button>
                         </div>
                     </div>
@@ -239,10 +245,10 @@
             </div>
             
             <!-- COMPOSE MODAL -->
-            <div id="composeModal" class="hidden fixed bottom-0 right-24 w-[500px] h-[500px] bg-white rounded-t-[8px] shadow-[0_8px_10px_1px_rgba(0,0,0,0.14),0_3px_14px_2px_rgba(0,0,0,0.12),0_5px_5px_-3px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden z-50 transform origin-bottom">
+            <div id="composeModal" class="hidden fixed bottom-0 right-24 w-[560px] h-[600px] bg-white rounded-t-[8px] shadow-[0_8px_10px_1px_rgba(0,0,0,0.14),0_3px_14px_2px_rgba(0,0,0,0.12),0_5px_5px_-3px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden z-50 transform origin-bottom">
                 <!-- Header -->
                 <div class="bg-[#f2f6fc] text-[#041e49] px-4 py-2 flex justify-between items-center cursor-pointer rounded-t-[8px]">
-                    <span class="font-medium text-sm">New Message</span>
+                    <span id="composeTitle" class="font-medium text-sm">New Message</span>
                     <div class="flex space-x-3 text-slate-500">
                         <button class="hover:bg-slate-200 px-1 rounded transition-colors"><i class="fa-solid fa-minus"></i></button>
                         <button class="hover:bg-slate-200 px-1 rounded transition-colors" style="font-size: 11px;"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
@@ -252,12 +258,73 @@
                 <!-- Body -->
                 <div class="flex-1 flex flex-col pt-0 overflow-hidden relative border-l border-r border-[#dadce0]">
                     <form id="composeForm" onsubmit="event.preventDefault(); sendMail();" class="flex flex-col h-full bg-white">
-                        <div class="border-b border-[#f2f2f4] flex flex-col justify-end px-4 min-h-[40px]">
-                            <input type="email" id="composeTo" placeholder="To" required class="w-full py-1 bg-transparent border-none focus:ring-0 text-[0.875rem] text-[#202124] placeholder-slate-500 focus:outline-none">
+                        <!-- To row (chip input) -->
+                        <div class="border-b border-[#f2f2f4] flex items-center gap-2 px-4 min-h-[40px] py-1.5">
+                            <span class="text-[0.8rem] text-slate-500 shrink-0">To</span>
+                            <div id="composeToChips" data-chip-input class="flex-1 flex flex-wrap items-center gap-1 cursor-text" onclick="this.querySelector('input').focus()">
+                                <input type="text" data-chip-entry placeholder="" class="flex-1 min-w-[120px] py-1 bg-transparent border-none focus:ring-0 text-[0.875rem] text-[#202124] placeholder-slate-500 focus:outline-none">
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500 shrink-0">
+                                <button type="button" onclick="toggleCcRow()" class="hover:text-[#1a73e8] px-1">Cc</button>
+                                <button type="button" onclick="toggleBccRow()" class="hover:text-[#1a73e8] px-1">Bcc</button>
+                            </div>
+                        </div>
+                        <!-- Cc row (hidden by default) -->
+                        <div id="composeCcRow" class="hidden border-b border-[#f2f2f4] flex items-center gap-2 px-4 min-h-[40px] py-1.5">
+                            <span class="text-[0.8rem] text-slate-500 shrink-0">Cc</span>
+                            <div id="composeCcChips" data-chip-input class="flex-1 flex flex-wrap items-center gap-1 cursor-text" onclick="this.querySelector('input').focus()">
+                                <input type="text" data-chip-entry placeholder="" class="flex-1 min-w-[120px] py-1 bg-transparent border-none focus:ring-0 text-[0.875rem] text-[#202124] placeholder-slate-500 focus:outline-none">
+                            </div>
+                        </div>
+                        <!-- Bcc row (hidden by default) -->
+                        <div id="composeBccRow" class="hidden border-b border-[#f2f2f4] flex items-center gap-2 px-4 min-h-[40px] py-1.5">
+                            <span class="text-[0.8rem] text-slate-500 shrink-0">Bcc</span>
+                            <div id="composeBccChips" data-chip-input class="flex-1 flex flex-wrap items-center gap-1 cursor-text" onclick="this.querySelector('input').focus()">
+                                <input type="text" data-chip-entry placeholder="" class="flex-1 min-w-[120px] py-1 bg-transparent border-none focus:ring-0 text-[0.875rem] text-[#202124] placeholder-slate-500 focus:outline-none">
+                            </div>
                         </div>
                         <div class="border-b border-[#f2f2f4] flex flex-col justify-end px-4 min-h-[40px]">
                             <input type="text" id="composeSubject" placeholder="Subject" required class="w-full py-1 bg-transparent border-none focus:ring-0 text-[0.875rem] text-[#202124] placeholder-slate-500 focus:outline-none">
                         </div>
+
+                        <!-- Formatting toolbar -->
+                        <div class="border-b border-[#f2f2f4] px-2 py-1 flex flex-wrap items-center gap-0.5 bg-[#fafafa] text-slate-600">
+                            <select onchange="composeExec('fontSize', this.value); this.value='';" title="Text size" class="text-xs bg-transparent border-none focus:ring-0 cursor-pointer px-1 py-1 hover:bg-slate-200 rounded">
+                                <option value="">Size</option>
+                                <option value="1">Small</option>
+                                <option value="3">Normal</option>
+                                <option value="5">Large</option>
+                                <option value="7">Huge</option>
+                            </select>
+                            <span class="w-px h-5 bg-slate-300 mx-1"></span>
+                            <button type="button" onclick="composeExec('bold')"     title="Bold (Ctrl+B)"      class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-bold text-xs"></i></button>
+                            <button type="button" onclick="composeExec('italic')"   title="Italic (Ctrl+I)"    class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-italic text-xs"></i></button>
+                            <button type="button" onclick="composeExec('underline')" title="Underline (Ctrl+U)" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-underline text-xs"></i></button>
+                            <button type="button" onclick="composeExec('strikeThrough')" title="Strikethrough" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-strikethrough text-xs"></i></button>
+                            <span class="w-px h-5 bg-slate-300 mx-1"></span>
+                            <label title="Text color" class="w-7 h-7 hover:bg-slate-200 rounded flex items-center justify-center cursor-pointer relative">
+                                <i class="fa-solid fa-palette text-xs"></i>
+                                <input type="color" oninput="composeExec('foreColor', this.value)" class="absolute inset-0 opacity-0 cursor-pointer">
+                            </label>
+                            <label title="Background color" class="w-7 h-7 hover:bg-slate-200 rounded flex items-center justify-center cursor-pointer relative">
+                                <i class="fa-solid fa-highlighter text-xs"></i>
+                                <input type="color" oninput="composeExec('hiliteColor', this.value); composeExec('backColor', this.value);" class="absolute inset-0 opacity-0 cursor-pointer">
+                            </label>
+                            <span class="w-px h-5 bg-slate-300 mx-1"></span>
+                            <button type="button" onclick="composeExec('justifyLeft')"    title="Align left"    class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-align-left text-xs"></i></button>
+                            <button type="button" onclick="composeExec('justifyCenter')"  title="Align center"  class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-align-center text-xs"></i></button>
+                            <button type="button" onclick="composeExec('justifyRight')"   title="Align right"   class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-align-right text-xs"></i></button>
+                            <button type="button" onclick="composeExec('justifyFull')"    title="Justify"       class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-align-justify text-xs"></i></button>
+                            <span class="w-px h-5 bg-slate-300 mx-1"></span>
+                            <button type="button" onclick="composeExec('insertUnorderedList')" title="Bullet list"  class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-list-ul text-xs"></i></button>
+                            <button type="button" onclick="composeExec('insertOrderedList')"   title="Numbered list" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-list-ol text-xs"></i></button>
+                            <button type="button" onclick="composeExec('outdent')" title="Decrease indent" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-outdent text-xs"></i></button>
+                            <button type="button" onclick="composeExec('indent')"  title="Increase indent" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-indent text-xs"></i></button>
+                            <span class="w-px h-5 bg-slate-300 mx-1"></span>
+                            <button type="button" onclick="composeExec('formatBlock','blockquote')" title="Quote" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-quote-right text-xs"></i></button>
+                            <button type="button" onclick="composeExec('removeFormat')" title="Clear formatting" class="w-7 h-7 hover:bg-slate-200 rounded"><i class="fa-solid fa-text-slash text-xs"></i></button>
+                        </div>
+
                         <!-- Rich text body (contenteditable so we can embed images and links) -->
                         <div id="composeBody" contenteditable="true" data-placeholder="Write your message here..."
                              class="flex-1 px-4 py-2 text-[0.875rem] text-[#202124] outline-none overflow-y-auto compose-body-placeholder"
@@ -280,10 +347,7 @@
                                     <span id="composeBtnText">Send</span>
                                 </button>
                                 <div class="w-px h-6 bg-slate-200 mx-3"></div>
-                                <button type="button" onclick="composeBold()" title="Bold" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors">
-                                    <i class="fa-solid fa-bold text-sm"></i>
-                                </button>
-                                <button type="button" onclick="document.getElementById('composeFileInput').click()" title="Attach file" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors ml-1">
+                                <button type="button" onclick="document.getElementById('composeFileInput').click()" title="Attach file" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors">
                                     <i class="fa-solid fa-paperclip text-sm"></i>
                                 </button>
                                 <button type="button" onclick="composeInsertLink()" title="Insert link" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors ml-1">
@@ -307,6 +371,43 @@
             #composeBody img { max-width: 100%; height: auto; display: block; margin: 4px 0; }
             #composeBody a   { color: #1a73e8; text-decoration: underline; }
             #composeBody b, #composeBody strong { font-weight: 700; }
+
+            /* Chip input styles (Gmail-like) */
+            .recipient-chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: #e8f0fe;
+                color: #1f1f1f;
+                border: 1px solid transparent;
+                border-radius: 9999px;
+                padding: 2px 4px 2px 10px;
+                font-size: 12px;
+                line-height: 1.4;
+                max-width: 100%;
+            }
+            .recipient-chip.invalid {
+                background: #fce8e6;
+                color: #c5221f;
+                border-color: #f4c7c3;
+            }
+            .recipient-chip .chip-text {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 220px;
+            }
+            .recipient-chip .chip-remove {
+                width: 18px;
+                height: 18px;
+                border-radius: 9999px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: #5f6368;
+            }
+            .recipient-chip .chip-remove:hover { background: rgba(0,0,0,0.08); color: #202124; }
         </style>
 
         <script>
@@ -473,27 +574,232 @@
                 renderList();
             }
 
+            /* ─── Recipient chip inputs (Gmail-style) ─────────────── */
+            const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            function extractEmail(raw) {
+                if (!raw) return '';
+                let s = String(raw).trim().replace(/[,;]+$/, '');
+                const m = s.match(/<([^>]+)>/);
+                if (m) s = m[1];
+                return s.trim();
+            }
+
+            function commitChipFromInput(container, opts = {}) {
+                const input = container.querySelector('[data-chip-entry]');
+                const text  = (input.value || '').trim().replace(/[,;]+$/, '');
+                if (!text) return false;
+                addChip(container, text);
+                input.value = '';
+                return true;
+            }
+
+            function addChip(container, raw) {
+                const email = extractEmail(raw);
+                if (!email) return;
+                // Avoid duplicates
+                const existing = Array.from(container.querySelectorAll('.recipient-chip'))
+                    .map(c => c.dataset.email.toLowerCase());
+                if (existing.includes(email.toLowerCase())) return;
+
+                const chip = document.createElement('span');
+                chip.className = 'recipient-chip' + (EMAIL_RE.test(email) ? '' : ' invalid');
+                chip.dataset.email = email;
+                chip.innerHTML =
+                    '<span class="chip-text" title="' + email.replace(/"/g, '&quot;') + '">' + escapeHtml(email) + '</span>' +
+                    '<span class="chip-remove" title="Remove">&times;</span>';
+                chip.querySelector('.chip-remove').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    chip.remove();
+                });
+                const input = container.querySelector('[data-chip-entry]');
+                container.insertBefore(chip, input);
+            }
+
+            function getChips(container) {
+                return Array.from(container.querySelectorAll('.recipient-chip')).map(c => c.dataset.email);
+            }
+
+            function clearChips(container) {
+                container.querySelectorAll('.recipient-chip').forEach(c => c.remove());
+                const input = container.querySelector('[data-chip-entry]');
+                if (input) input.value = '';
+            }
+
+            function attachChipBehavior(container) {
+                const input = container.querySelector('[data-chip-entry]');
+                if (!input || input.dataset.chipBound) return;
+                input.dataset.chipBound = '1';
+
+                input.addEventListener('keydown', (e) => {
+                    // Enter / Tab / comma / semicolon → commit chip; never submit the form
+                    if (e.key === 'Enter' || e.key === 'Tab' || e.key === ',' || e.key === ';') {
+                        if (input.value.trim()) {
+                            e.preventDefault();
+                            commitChipFromInput(container);
+                        } else if (e.key === 'Enter') {
+                            // Prevent accidental form submit when field is empty
+                            e.preventDefault();
+                        }
+                    } else if (e.key === 'Backspace' && input.value === '') {
+                        // Remove the last chip
+                        const chips = container.querySelectorAll('.recipient-chip');
+                        if (chips.length) chips[chips.length - 1].remove();
+                    }
+                });
+
+                // Paste → split on commas / semicolons / whitespace, create a chip per token
+                input.addEventListener('paste', (e) => {
+                    const data = (e.clipboardData || window.clipboardData).getData('text');
+                    if (data && /[,;\s]/.test(data)) {
+                        e.preventDefault();
+                        data.split(/[\s,;]+/).forEach(t => { if (t) addChip(container, t); });
+                    }
+                });
+
+                // Blur → commit whatever's typed
+                input.addEventListener('blur', () => { commitChipFromInput(container); });
+            }
+
+            // Bind on page load
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('[data-chip-input]').forEach(attachChipBehavior);
+            });
+
+            /* ─── Quote the email being replied to / forwarded ─── */
+            function buildQuotedBody(mail) {
+                const when    = escapeHtml(mail.date || '');
+                const fromStr = escapeHtml((mail.from_name || '') + ' <' + (mail.from || '') + '>');
+                const inner   = mail.body || '';
+                return (
+                    '<br><br>' +
+                    '<div style="border-left:2px solid #ccc;padding-left:10px;color:#555;margin-top:8px">' +
+                    '<div style="font-size:12px;color:#888;margin-bottom:6px">On ' + when + ', ' + fromStr + ' wrote:</div>' +
+                    inner +
+                    '</div>'
+                );
+            }
+
+            /* Resolve the current account email (so we exclude ourselves from Reply All) */
+            const CURRENT_ACCOUNT_EMAIL = @json(optional(auth()->user()->emailAccount)->email ?? '');
+
+            function splitAddresses(raw) {
+                if (!raw) return [];
+                return raw.split(/[,;]+/).map(s => s.trim()).filter(Boolean);
+            }
+
+            function setComposeTitle(t) {
+                const el = document.getElementById('composeTitle');
+                if (el) el.innerText = t;
+            }
+
+            function prepareComposeReset() {
+                clearChips(document.getElementById('composeToChips'));
+                clearChips(document.getElementById('composeCcChips'));
+                clearChips(document.getElementById('composeBccChips'));
+                document.getElementById('composeSubject').value = '';
+                document.getElementById('composeBody').innerHTML = '';
+                document.getElementById('composeCcRow').classList.add('hidden');
+                document.getElementById('composeBccRow').classList.add('hidden');
+                if (typeof resetComposeAttachments === 'function') resetComposeAttachments();
+            }
+
+            function openComposeFresh() {
+                prepareComposeReset();
+                setComposeTitle('New Message');
+                openComposeModal();
+                setTimeout(() => document.querySelector('#composeToChips [data-chip-entry]').focus(), 50);
+            }
+
             function openReplyModal() {
                 const mail = currentOpenMail;
-                if (!mail) {
-                    alert('Open an email first to reply.');
-                    return;
-                }
+                if (!mail) { alert('Open an email first to reply.'); return; }
+                prepareComposeReset();
+                setComposeTitle('Reply');
+
                 const replyTo = mail.reply_to || mail.from;
                 const subject = mail.subject && mail.subject.match(/^Re:/i) ? mail.subject : 'Re: ' + (mail.subject || '');
-                document.getElementById('composeTo').value = replyTo || '';
+                if (replyTo) addChip(document.getElementById('composeToChips'), replyTo);
                 document.getElementById('composeSubject').value = subject;
-                document.getElementById('composeBody').innerHTML = '';
-                if (typeof resetComposeAttachments === 'function') resetComposeAttachments();
+                document.getElementById('composeBody').innerHTML = buildQuotedBody(mail);
+
+                openComposeModal();
+                setTimeout(() => {
+                    const b = document.getElementById('composeBody');
+                    b.focus();
+                    // Put cursor at the very top so user types above the quote
+                    const range = document.createRange();
+                    range.setStart(b, 0);
+                    range.collapse(true);
+                    const sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }, 50);
+            }
+
+            function openReplyAllModal() {
+                const mail = currentOpenMail;
+                if (!mail) { alert('Open an email first to reply.'); return; }
+                prepareComposeReset();
+                setComposeTitle('Reply all');
+
+                const me = (CURRENT_ACCOUNT_EMAIL || '').toLowerCase();
+                const primary = (mail.reply_to || mail.from || '').trim();
+
+                // Collect every original recipient (To + Cc) minus ourselves and the primary reply target
+                const allRecips = [
+                    ...splitAddresses(mail.to_list || mail.to || ''),
+                    ...splitAddresses(mail.cc_list || mail.cc || ''),
+                ];
+                const ccList = [];
+                const seen = new Set([me, primary.toLowerCase()]);
+                allRecips.forEach(addr => {
+                    const clean = addr.replace(/.*<|>.*/g, '').trim().toLowerCase();
+                    if (clean && !seen.has(clean)) {
+                        seen.add(clean);
+                        ccList.push(addr);
+                    }
+                });
+
+                const subject = mail.subject && mail.subject.match(/^Re:/i) ? mail.subject : 'Re: ' + (mail.subject || '');
+                if (primary) addChip(document.getElementById('composeToChips'), primary);
+                document.getElementById('composeSubject').value = subject;
+                document.getElementById('composeBody').innerHTML = buildQuotedBody(mail);
+
+                if (ccList.length) {
+                    const ccBox = document.getElementById('composeCcChips');
+                    ccList.forEach(addr => addChip(ccBox, addr));
+                    document.getElementById('composeCcRow').classList.remove('hidden');
+                }
+
                 openComposeModal();
                 setTimeout(() => document.getElementById('composeBody').focus(), 50);
             }
 
-            /* ─── Compose rich-text helpers ─── */
-            function composeBold() {
-                document.getElementById('composeBody').focus();
-                document.execCommand('bold', false, null);
+            function openForwardModal() {
+                const mail = currentOpenMail;
+                if (!mail) { alert('Open an email first to forward.'); return; }
+                prepareComposeReset();
+                setComposeTitle('Forward');
+
+                const subject = mail.subject && mail.subject.match(/^Fwd:/i) ? mail.subject : 'Fwd: ' + (mail.subject || '');
+                document.getElementById('composeSubject').value = subject;
+                document.getElementById('composeBody').innerHTML = buildQuotedBody(mail);
+
+                openComposeModal();
+                setTimeout(() => document.querySelector('#composeToChips [data-chip-entry]').focus(), 50);
             }
+
+            function toggleCcRow()  { document.getElementById('composeCcRow').classList.toggle('hidden'); }
+            function toggleBccRow() { document.getElementById('composeBccRow').classList.toggle('hidden'); }
+
+            /* ─── Compose rich-text helpers ─── */
+            function composeExec(cmd, value = null) {
+                document.getElementById('composeBody').focus();
+                try { document.execCommand(cmd, false, value); } catch (e) {}
+            }
+
+            function composeBold() { composeExec('bold'); } // back-compat
 
             function composeInsertLink() {
                 const url = prompt('Enter URL (e.g. https://example.com):');
@@ -623,15 +929,36 @@
                 const btnText  = document.getElementById('composeBtnText');
                 const errorBox = document.getElementById('composeErrorBox');
 
-                const to      = document.getElementById('composeTo').value.trim();
-                const subject = document.getElementById('composeSubject').value.trim();
-                const bodyEl  = document.getElementById('composeBody');
-                const body    = bodyEl.innerHTML.trim();
+                // Commit any half-typed chips before reading values
+                const toBox  = document.getElementById('composeToChips');
+                const ccBox  = document.getElementById('composeCcChips');
+                const bccBox = document.getElementById('composeBccChips');
+                commitChipFromInput(toBox);
+                commitChipFromInput(ccBox);
+                commitChipFromInput(bccBox);
+
+                const toChips  = getChips(toBox);
+                const ccChips  = getChips(ccBox);
+                const bccChips = getChips(bccBox);
+                const to       = toChips.join(',');
+                const cc       = ccChips.join(',');
+                const bcc      = bccChips.join(',');
+                const subject  = document.getElementById('composeSubject').value.trim();
+                const bodyEl   = document.getElementById('composeBody');
+                const body     = bodyEl.innerHTML.trim();
 
                 errorBox.classList.add('hidden');
 
-                if (!to || !subject) {
+                if (!toChips.length || !subject) {
                     errorBox.innerText = 'Please fill in To and Subject.';
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
+
+                // Check for invalid chips
+                const invalidChips = document.querySelectorAll('.recipient-chip.invalid');
+                if (invalidChips.length) {
+                    errorBox.innerText = 'One or more recipients are invalid email addresses.';
                     errorBox.classList.remove('hidden');
                     return;
                 }
@@ -648,6 +975,8 @@
                 try {
                     const fd = new FormData();
                     fd.append('to', to);
+                    if (cc)  fd.append('cc',  cc);
+                    if (bcc) fd.append('bcc', bcc);
                     fd.append('subject', subject);
                     fd.append('body', body);
                     composeAttachments.forEach(f => fd.append('attachments[]', f, f.name));
@@ -663,10 +992,7 @@
                     const data = await response.json();
 
                     if (data.success) {
-                        document.getElementById('composeTo').value = '';
-                        document.getElementById('composeSubject').value = '';
-                        bodyEl.innerHTML = '';
-                        resetComposeAttachments();
+                        prepareComposeReset();
                         closeComposeModal();
                         // Refresh after a short delay so server-side Sent append has time to land
                         setTimeout(() => fetchMails(), 1500);

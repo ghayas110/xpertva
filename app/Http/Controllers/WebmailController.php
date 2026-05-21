@@ -216,12 +216,28 @@ class WebmailController extends Controller
                 }
 
                 $dateObj = $message->getDate()[0] ?? now();
+
+                // Flatten address-collection objects into a comma-separated string of "Name <email>"
+                $addrList = function ($collection) {
+                    if (!$collection) return '';
+                    $parts = [];
+                    foreach ($collection as $a) {
+                        if (!isset($a->mail) || !$a->mail) continue;
+                        $parts[] = !empty($a->personal)
+                            ? ($a->personal . ' <' . $a->mail . '>')
+                            : $a->mail;
+                    }
+                    return implode(', ', $parts);
+                };
+
                 $formatted[] = [
                     'id'        => $message->getUid(),
                     'subject'   => (string)$message->getSubject() ?: '(No Subject)',
                     'from'      => $message->getFrom()[0]->mail ?? 'Unknown',
                     'from_name' => $message->getFrom()[0]->personal ?? ($message->getFrom()[0]->mail ?? 'Unknown'),
                     'reply_to'  => $message->getReplyTo()[0]->mail ?? ($message->getFrom()[0]->mail ?? ''),
+                    'to_list'   => $addrList($message->getTo()),
+                    'cc_list'   => $addrList($message->getCc()),
                     'date'      => $dateObj->format('M d, g:i A'),
                     'date_ts'   => (int) $dateObj->getTimestamp(),
                     'snippet'   => $snippet,
@@ -293,11 +309,44 @@ class WebmailController extends Controller
     public function sendEmail(Request $request)
     {
         $request->validate([
-            'to'             => 'required|email',
+            'to'             => 'required|string',
+            'cc'             => 'nullable|string',
+            'bcc'            => 'nullable|string',
             'subject'        => 'required|string',
             'body'           => 'required|string',
             'attachments'    => 'nullable|array',
             'attachments.*'  => 'file|max:25600', // 25 MB per file
+        ]);
+
+        // Allow comma- or semicolon-separated address lists in `to` / `cc` / `bcc`.
+        // Validate at least one well-formed address in `to`.
+        $extractAddresses = static function ($raw) {
+            if (!$raw) return [];
+            $parts = preg_split('/[,;]+/', $raw);
+            $out = [];
+            foreach ($parts as $p) {
+                $p = trim($p);
+                // Strip "Name <addr@x>" wrappers
+                if (preg_match('/<([^>]+)>/', $p, $m)) $p = $m[1];
+                if (filter_var($p, FILTER_VALIDATE_EMAIL)) $out[] = $p;
+            }
+            return $out;
+        };
+        $toAddresses  = $extractAddresses($request->to);
+        $ccAddresses  = $extractAddresses($request->cc);
+        $bccAddresses = $extractAddresses($request->bcc);
+        if (empty($toAddresses)) {
+            return response()->json(['success' => false, 'message' => 'Please provide at least one valid recipient in "To".'], 422);
+        }
+
+        \Log::info('Webmail send', [
+            'user'   => auth()->id(),
+            'to_raw' => $request->to,
+            'cc_raw' => $request->cc,
+            'bcc_raw'=> $request->bcc,
+            'to'     => $toAddresses,
+            'cc'     => $ccAddresses,
+            'bcc'    => $bccAddresses,
         ]);
 
         // Unlock session so background dashboard ajax doesn't deadlock the single-threaded artisan server
@@ -326,18 +375,11 @@ class WebmailController extends Controller
             $htmlBody    = $request->body;
             $uploadFiles = $request->file('attachments') ?? [];
 
-            $sentMessage = \Illuminate\Support\Facades\Mail::mailer('custom_smtp')->html($htmlBody, function ($message) use ($request, $account, $uploadFiles) {
+            $sentMessage = \Illuminate\Support\Facades\Mail::mailer('custom_smtp')->html($htmlBody, function ($message) use ($request, $account, $uploadFiles, $toAddresses, $ccAddresses, $bccAddresses) {
                 $message->from($account->email, auth()->user()->name);
-                $message->to($request->to)->subject($request->subject);
-
-                if ($request->filled('cc')) {
-                    $ccs = array_map('trim', explode(',', $request->cc));
-                    $message->cc(array_filter($ccs));
-                }
-                if ($request->filled('bcc')) {
-                    $bccs = array_map('trim', explode(',', $request->bcc));
-                    $message->bcc(array_filter($bccs));
-                }
+                $message->to($toAddresses)->subject($request->subject);
+                if (!empty($ccAddresses))  $message->cc($ccAddresses);
+                if (!empty($bccAddresses)) $message->bcc($bccAddresses);
 
                 foreach ($uploadFiles as $file) {
                     if (!$file) continue;
@@ -349,12 +391,28 @@ class WebmailController extends Controller
                 }
             });
 
+            // Capture what Symfony actually queued so we can verify CC/BCC made it onto the wire
+            try {
+                $sent = $sentMessage->getSymfonySentMessage();
+                $email = $sent ? $sent->getOriginalMessage() : null;
+                if ($email) {
+                    \Log::info('Webmail send (after SMTP)', [
+                        'to'  => array_map(fn($a) => $a->getAddress(), $email->getTo()),
+                        'cc'  => array_map(fn($a) => $a->getAddress(), $email->getCc()),
+                        'bcc' => array_map(fn($a) => $a->getAddress(), $email->getBcc()),
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                \Log::info('Webmail send: could not introspect sent message: ' . $e->getMessage());
+            }
+
             // Append to Sent Folder via IMAP
             $appendStatus = $this->appendToSentFolder($account, $request, $htmlBody, $sentMessage);
 
             return response()->json(['success' => true, 'sent_folder' => $appendStatus]);
 
         } catch (\Exception $e) {
+            \Log::error('Webmail send failed: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
