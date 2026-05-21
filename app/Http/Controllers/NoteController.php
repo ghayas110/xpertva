@@ -10,16 +10,6 @@ use Illuminate\Support\Str;
 
 class NoteController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (Auth::user() && Auth::user()->role === 'super_admin') {
-                abort(403, 'Notes are not available for super admin.');
-            }
-            return $next($request);
-        });
-    }
-
     public function index()
     {
         $notes = Note::where('user_id', Auth::id())

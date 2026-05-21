@@ -149,12 +149,10 @@
                     <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Inbox</span>
                 </a>
 
-                @if(auth()->user()->role !== 'super_admin')
                 <a href="{{ route('notes.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('notes.*') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white' }} transition-colors group">
                     <i class="fa-regular fa-lightbulb w-5 text-center {{ request()->routeIs('notes.*') ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200' }}"></i>
                     <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Notes</span>
                 </a>
-                @endif
 
                 @if(auth()->user()->role === 'super_admin')
                 <p x-show="sidebarOpen" class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6 transition-opacity">Admin</p>
