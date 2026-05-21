@@ -255,6 +255,10 @@
                                     </form>
                                 @endif
                             </div>
+                            <div id="osNotifBanner" class="hidden px-4 py-2 bg-amber-50 dark:bg-amber-900/20 border-b border-amber-100 dark:border-amber-800/40 text-xs text-amber-800 dark:text-amber-300 flex items-center justify-between gap-2">
+                                <span><i class="fa-solid fa-triangle-exclamation mr-1"></i> OS notifications are off.</span>
+                                <button type="button" id="enableOsNotifBtn" class="font-semibold text-amber-700 dark:text-amber-300 hover:underline">Enable</button>
+                            </div>
                             <div class="max-h-72 overflow-y-auto">
                                 @forelse(auth()->user()->notifications()->latest()->take(10)->get() as $notification)
                                     <a href="{{ isset($notification->data['task_id']) ? route('tasks.index') . '?open_task=' . $notification->data['task_id'] : '#' }}" class="block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-100 dark:border-slate-700/50 {{ is_null($notification->read_at) ? 'bg-indigo-50/50 dark:bg-indigo-900/20' : '' }}">
@@ -361,55 +365,133 @@
     <script>
     // ── OS / Browser Push Notifications ──────────────────────────────────────
     (function() {
-        let lastNotifCount = {{ auth()->user()->unreadNotifications->count() }};
-        const CSRF = '{{ csrf_token() }}';
+        const CSRF        = '{{ csrf_token() }}';
+        const ICON        = '{{ asset("assets/images/logo-xpertva.png") }}';
+        const POLL_MS     = 15000; // 15 seconds
+        const SINCE_KEY   = 'xpertva.notif.lastSeen';
 
-        function showBrowserNotif(title, body, url) {
+        let swRegistration = null;
+        let lastSeen = localStorage.getItem(SINCE_KEY) || new Date().toISOString();
+
+        function isSupported() { return 'Notification' in window; }
+
+        function updateBanner() {
+            const banner = document.getElementById('osNotifBanner');
+            if (!banner) return;
+            if (!isSupported())              { banner.classList.remove('hidden'); return; }
+            if (Notification.permission === 'granted') banner.classList.add('hidden');
+            else                                       banner.classList.remove('hidden');
+        }
+
+        async function registerServiceWorker() {
+            if (!('serviceWorker' in navigator)) return null;
+            try {
+                swRegistration = await navigator.serviceWorker.register('/sw-notifications.js', { scope: '/' });
+                return swRegistration;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function ensurePermission(fromUserGesture = false) {
+            if (!isSupported()) return false;
+            if (Notification.permission === 'granted') return true;
+            if (Notification.permission === 'denied')  return false;
+            if (!fromUserGesture) return false; // most browsers block silent requests
+            try {
+                const result = await Notification.requestPermission();
+                updateBanner();
+                return result === 'granted';
+            } catch (e) { return false; }
+        }
+
+        async function showOsNotif(title, body, url, tag) {
             if (Notification.permission !== 'granted') return;
-            const n = new Notification(title, {
-                body: body,
-                icon: '{{ asset("assets/images/logo-xpertva.png") }}',
-                badge: '{{ asset("assets/images/logo-xpertva.png") }}',
-                tag: 'xpertva-' + Date.now(),
+            const opts = {
+                body: body || '',
+                icon: ICON,
+                badge: ICON,
+                tag: tag || ('xpertva-' + Date.now()),
+                renotify: true,
                 requireInteraction: false,
-            });
+                data: { url: url || null }
+            };
+            // Prefer the SW registration — fires reliably when tab is backgrounded
+            try {
+                const reg = swRegistration || (navigator.serviceWorker && await navigator.serviceWorker.ready);
+                if (reg && reg.showNotification) {
+                    await reg.showNotification(title, opts);
+                    return;
+                }
+            } catch (e) {}
+            // Fallback to direct Notification API
+            const n = new Notification(title, opts);
             if (url) n.onclick = () => { window.focus(); window.location.href = url; n.close(); };
         }
 
-        async function requestPermission() {
-            if (!('Notification' in window)) return;
-            if (Notification.permission === 'default') {
-                await Notification.requestPermission();
+        function updateBadge(count) {
+            const wrapper = document.querySelector('.notification-badge, [data-notif-badge]');
+            // Best-effort badge refresh (server-rendered span); soft-reload count via DOM:
+            const bell = document.querySelector('button [class*="fa-bell"]');
+            if (!bell) return;
+            const btn = bell.closest('button');
+            if (!btn) return;
+            let badge = btn.querySelector('.os-notif-badge');
+            if (count > 0) {
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'os-notif-badge absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-800';
+                    btn.appendChild(badge);
+                }
+                badge.textContent = count;
+            } else if (badge) {
+                badge.remove();
             }
         }
 
         async function pollNotifications() {
             try {
-                const res = await fetch('/notifications/poll', { headers: { 'X-CSRF-TOKEN': CSRF } });
+                const url = '/notifications/poll?since=' + encodeURIComponent(lastSeen);
+                const res = await fetch(url, { headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }, cache: 'no-store' });
                 if (!res.ok) return;
                 const data = await res.json();
-                if (data.count > lastNotifCount) {
-                    const diff = data.count - lastNotifCount;
-                    if (data.latest) {
-                        showBrowserNotif(
-                            data.latest.title || 'New Notification',
-                            data.latest.message || '',
-                            data.latest.url || null
-                        );
-                    } else {
-                        showBrowserNotif('XpertVA', `You have ${diff} new notification${diff > 1 ? 's' : ''}`);
+
+                if (Array.isArray(data.new) && data.new.length) {
+                    for (const item of data.new) {
+                        await showOsNotif(item.title, item.message, item.url, 'xpertva-' + item.id);
                     }
-                    // Update badge in header
-                    const badge = document.querySelector('.notification-badge');
-                    if (badge) { badge.textContent = data.count; badge.classList.remove('hidden'); }
                 }
-                lastNotifCount = data.count;
-            } catch(e) {}
+
+                lastSeen = data.server_time || new Date().toISOString();
+                localStorage.setItem(SINCE_KEY, lastSeen);
+                updateBadge(data.unread_count || 0);
+            } catch (e) { /* network hiccup — ignore */ }
         }
 
-        // Request permission on first load then poll every 30s
-        requestPermission().then(() => {
-            setInterval(pollNotifications, 30000);
+        // Manual enable button inside the bell dropdown
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('#enableOsNotifBtn');
+            if (!btn) return;
+            e.preventDefault();
+            const ok = await ensurePermission(true);
+            if (ok) {
+                showOsNotif('XpertVA notifications enabled', 'You will now receive desktop alerts.', null, 'xpertva-enable');
+            }
+        });
+
+        // Boot
+        updateBanner();
+        registerServiceWorker().finally(() => {
+            // Try silent permission request once (will only succeed if previously granted)
+            ensurePermission(false);
+            // First poll immediately so any backlog fires now
+            pollNotifications();
+            setInterval(pollNotifications, POLL_MS);
+        });
+
+        // Re-poll when tab regains focus
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) pollNotifications();
         });
     })();
 

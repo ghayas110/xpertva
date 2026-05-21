@@ -136,17 +136,39 @@ Route::middleware(['auth'])->group(function () {
         return back();
     })->name('notifications.markAllRead');
 
-    Route::get('/notifications/poll', function () {
-        $user = auth()->user();
-        $unread = $user->unreadNotifications;
-        $latest = $unread->first();
+    Route::get('/notifications/poll', function (\Illuminate\Http\Request $request) {
+        $user  = auth()->user();
+        $since = $request->query('since');
+
+        $query = $user->notifications();
+        if ($since) {
+            try {
+                $query->where('created_at', '>', \Carbon\Carbon::parse($since));
+            } catch (\Throwable $e) { /* ignore bad timestamp */ }
+        }
+
+        $new = $query->orderBy('created_at')->get();
+
+        $items = $new->map(function ($n) {
+            $url = null;
+            if (isset($n->data['task_id'])) {
+                $url = route('tasks.index') . '?open_task=' . $n->data['task_id'];
+            }
+            return [
+                'id'         => $n->id,
+                'title'      => $n->data['title']   ?? 'New Notification',
+                'message'    => $n->data['message'] ?? '',
+                'icon'       => $n->data['icon']    ?? 'fa-solid fa-bell',
+                'url'        => $url,
+                'created_at' => $n->created_at->toIso8601String(),
+                'is_unread'  => is_null($n->read_at),
+            ];
+        })->values();
+
         return response()->json([
-            'count' => $unread->count(),
-            'latest' => $latest ? [
-                'title'   => $latest->data['title'] ?? 'New Notification',
-                'message' => $latest->data['message'] ?? '',
-                'url'     => isset($latest->data['task_id']) ? route('tasks.index') . '?open_task=' . $latest->data['task_id'] : null,
-            ] : null,
+            'unread_count' => $user->unreadNotifications()->count(),
+            'server_time'  => now()->toIso8601String(),
+            'new'          => $items,
         ]);
     })->name('notifications.poll');
 

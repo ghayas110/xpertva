@@ -9,6 +9,7 @@ use App\Models\Attendance;
 use App\Models\CompanySetting;
 use App\Models\LeaveRequest;
 use App\Models\User;
+use App\Notifications\AttendanceClockInNotification;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
@@ -19,12 +20,39 @@ class AttendanceController extends Controller
         $user = Auth::user();
         if ($user->status !== 'online') {
             $user->update(['status' => 'online']);
+            $clockIn = Carbon::now();
             Attendance::create([
                 'user_id' => $user->id,
-                'clock_in_time' => Carbon::now(),
+                'clock_in_time' => $clockIn,
             ]);
+            $this->notifyClockIn($user, $clockIn);
         }
         return response()->json(['status' => 'ok']);
+    }
+
+    private function notifyClockIn($user, Carbon $clockIn): void
+    {
+        $settings = CompanySetting::current();
+        [$sh, $sm] = array_pad(explode(':', $settings->shift_start), 2, 0);
+        $shiftStart = $clockIn->copy()->setTime((int)$sh, (int)$sm, 0);
+
+        [$ch, $cm] = array_pad(explode(':', $settings->late_cutoff), 2, 0);
+        $cutoff = $clockIn->copy()->setTime((int)$ch, (int)$cm, 0);
+
+        if ($clockIn->greaterThan($cutoff)) {
+            $minutesLate = $shiftStart->diffInMinutes($clockIn);
+            $state = 'late';
+            $detail = "You clocked in at {$clockIn->format('h:i A')} — {$minutesLate} minute(s) late.";
+        } elseif ($clockIn->lessThan($shiftStart)) {
+            $minutesEarly = $clockIn->diffInMinutes($shiftStart);
+            $state = 'early';
+            $detail = "You clocked in at {$clockIn->format('h:i A')} — {$minutesEarly} minute(s) early.";
+        } else {
+            $state = 'on_time';
+            $detail = "You clocked in at {$clockIn->format('h:i A')} — on time.";
+        }
+
+        $user->notify(new AttendanceClockInNotification($state, $detail));
     }
 
     public function toggle()
@@ -54,11 +82,14 @@ class AttendanceController extends Controller
         } else {
             // Clock in
             $user->update(['status' => 'online']);
-            
+
+            $clockIn = Carbon::now();
             Attendance::create([
                 'user_id' => $user->id,
-                'clock_in_time' => Carbon::now(),
+                'clock_in_time' => $clockIn,
             ]);
+
+            $this->notifyClockIn($user, $clockIn);
 
             return back()->with('status', 'You are now online.');
         }
