@@ -63,7 +63,7 @@
     <header class="w-full fixed top-0 left-0 z-50 px-4 sm:px-8 md:px-12 py-4 flex items-center justify-between transition-all duration-500 ease-in-out bg-transparent py-6">
         <div class="transition-all duration-500 ease-in-out translate-x-2">
             <a href="{{ route('home') }}">
-                <img alt="iDC Logo" width="128" height="128" decoding="async" class="w-24 md:w-32 h-auto cursor-pointer" src="{{ asset('assets/images/logo-xpertva.png') }}">
+                <img alt="XpertVA — Virtual Assistant Services" width="128" height="128" decoding="async" class="w-24 md:w-32 h-auto cursor-pointer" src="{{ asset('assets/images/logo-xpertva.png') }}">
             </a>
         </div>
         <div class="transition-all duration-500 ease-in-out hidden md:block opacity-100 scale-100">
@@ -90,7 +90,7 @@
     <footer class="bg-black text-white py-16 text-sm">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-12">
             <div class="flex-1 flex justify-center md:justify-start hidden md:flex">
-                <img alt="iDC Logo" loading="lazy" width="100" height="100" class="h-20 cursor-pointer" src="{{ asset('assets/images/logo-xpertva.png') }}">
+                <img alt="XpertVA — Virtual Assistant Services" loading="lazy" width="100" height="100" class="h-20 cursor-pointer" src="{{ asset('assets/images/logo-xpertva.png') }}">
             </div>
             <div class="flex-[2] grid grid-cols-2 gap-8 md:gap-6 text-white">
                 <ul class="space-y-2">

@@ -1,16 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'XpertVA - Professional Virtual Assistant Services')
-@section('meta_description', 'XpertVA offers expert virtual assistant services for Amazon, eBay, Shopify, and Walmart sellers. Founded 2017 · Englishtown, NJ · 500+ clients served worldwide.')
+@section('title', 'Virtual Assistant Services for Amazon, eBay, Shopify & Walmart Sellers | XpertVA')
+@section('meta_description', 'Expert virtual assistant services for Amazon, eBay, Shopify, and Walmart sellers. Listing optimization, PPC management, account health, and storefront design. 500+ brands scaled since 2017.')
+
+@push('head')
+<link rel="canonical" href="{{ url('/') }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Virtual Assistant Services for Amazon, eBay, Shopify & Walmart Sellers | XpertVA">
+<meta property="og:description" content="Expert virtual assistant services for eCommerce sellers. Listing optimization, PPC, A+ content, account health, and brand protection on Amazon, eBay, Shopify, and Walmart.">
+<meta property="og:url" content="{{ url('/') }}">
+<meta name="twitter:card" content="summary_large_image">
+@endpush
 
 @section('content')
 <!-- Hero Section -->
 <section class="text-white flex flex-col px-4 sm:px-6 md:px-12 py-24 sm:py-32 md:py-44 text-center">
     <div class="w-full mt-10">
-        <h1 class="text-3xl sm:text-4xl md:text-7xl font-light mb-8 leading-snug md:leading-tight">A complete suite of digital solutions <br class="hidden md:block"/>designed to grow <span class="text-indigo-500 font-medium transition-all duration-500">BSR Optimization</span></h1>
+        <h1 class="text-3xl sm:text-4xl md:text-7xl font-light mb-8 leading-snug md:leading-tight">Virtual assistant services <br class="hidden md:block"/>that scale your <span class="text-indigo-500 font-medium transition-all duration-500">Amazon sales</span></h1>
         
         <div class="w-full mt-12 sm:mt-16 md:mt-20 mx-auto">
-            <video autoplay loop muted playsinline class="w-full max-w-7xl mx-auto rounded-xl shadow-xl border border-gray-700 cursor-pointer" title="Click to toggle mute">
+            <video autoplay loop muted playsinline preload="metadata" poster="{{ asset('assets/images/hero-poster.jpg') }}" fetchpriority="high" class="w-full max-w-7xl mx-auto rounded-xl shadow-xl border border-gray-700 cursor-pointer" title="XpertVA virtual assistant services showcase" aria-label="XpertVA virtual assistant services showcase">
                 <source src="{{ asset('assets/videos/hero-video.mp4') }}" type="video/mp4"/>
                 Your browser does not support video.
             </video>
@@ -79,7 +88,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <article class="bg-[#111] border border-gray-800 rounded-3xl overflow-hidden group">
             <div class="aspect-video overflow-hidden">
-                <img src="{{ asset('assets/images/1st-quarter.jpg') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+                <img src="{{ asset('assets/images/1st-quarter.jpg') }}" alt="Amazon seller case study — Q1 sales chart showing $976,715 in product revenue from XpertVA virtual assistant services" loading="lazy" width="800" height="450" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             </div>
             <div class="p-8">
                 <h3 class="text-xl font-semibold mb-2">1st Quarter Sales</h3>
@@ -90,7 +99,7 @@
         
         <article class="bg-[#111] border border-gray-800 rounded-3xl overflow-hidden group">
             <div class="aspect-video overflow-hidden">
-                <img src="{{ asset('assets/images/last-quarter.jpg') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+                <img src="{{ asset('assets/images/last-quarter.jpg') }}" alt="Amazon seller case study — quarterly sales chart showing $9.2M in ordered product revenue scaled by XpertVA" loading="lazy" width="800" height="450" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             </div>
             <div class="p-8">
                 <h3 class="text-xl font-semibold mb-2">Last Quarter Sales</h3>
@@ -101,7 +110,7 @@
 
         <article class="bg-[#111] border border-gray-800 rounded-3xl overflow-hidden group">
             <div class="aspect-video overflow-hidden">
-                <img src="{{ asset('assets/images/SDS.jpg') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+                <img src="{{ asset('assets/images/SDS.jpg') }}" alt="Amazon seller case study — 3-month sales report showing $2,086,577 in ordered product revenue with 10x growth from XpertVA" loading="lazy" width="800" height="450" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             </div>
             <div class="p-8">
                 <h3 class="text-xl font-semibold mb-2">3 Months Sales</h3>

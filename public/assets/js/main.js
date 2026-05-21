@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Rotating Banner Titles ---
-    const rotatingWords = ['BSR Optimization', 'Brand Awareness', 'Keyword Ranking', 'Market Places'];
+    const rotatingWords = ['Amazon sales', 'eBay store', 'Shopify brand', 'Walmart listings', 'eCommerce growth'];
     const rotatingSpan = document.querySelector('h1 .text-indigo-500');
     if (rotatingSpan) {
         let wordIndex = 0;

@@ -11,34 +11,30 @@
 @endpush
 
 @push('schema')
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
+  "@@context": "https://schema.org",
+  "@@type": "Service",
   "name": "Amazon Account Management Services",
   "serviceType": "Amazon Seller Central Management",
-  "provider": { "@id": "https://xpertva.com/#organization" },
+  "provider": { "@@id": "https://xpertva.com/#organization" },
   "description": "End-to-end Amazon Seller Central management including account health monitoring, case management, listing reinstatement, suspension appeals, FBA shipment support, and FBA reimbursement claims.",
   "url": "{{ url('/services/amazon/account-management') }}"
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "What does an Amazon account manager do?", "acceptedAnswer": { "@type": "Answer", "text": "An Amazon account manager handles day-to-day Seller Central operations: monitoring Account Health metrics (ODR, late shipment rate, policy violations), opening and following up on cases, fixing suppressed and stranded listings, managing FBA shipments and reimbursements, and responding to A-to-Z Guarantee claims." } },
-    { "@type": "Question", "name": "What is Amazon Account Health?", "acceptedAnswer": { "@type": "Answer", "text": "Amazon Account Health is a Seller Central dashboard that tracks customer service performance (Order Defect Rate under 1%), policy compliance, and shipping performance. A score below 200 or a Critical metric can lead to account suspension." } },
-    { "@type": "Question", "name": "How do you appeal an Amazon suspension?", "acceptedAnswer": { "@type": "Answer", "text": "An Amazon suspension appeal requires a Plan of Action (POA) that identifies the root cause, the immediate corrective actions taken, and the long-term preventive measures. We draft, submit, and escalate the POA through Seller Performance and Account Health Specialists." } },
-    { "@type": "Question", "name": "Can you recover lost FBA inventory reimbursements?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We audit FBA inventory reports and file reimbursement claims for lost, damaged, and incorrectly weighed inventory, customer return discrepancies, and FBA fee overcharges — typically recovering 1–3% of FBA revenue for sellers who have never claimed before." } },
-    { "@type": "Question", "name": "What is an A-to-Z Guarantee Claim?", "acceptedAnswer": { "@type": "Answer", "text": "An A-to-Z Guarantee Claim is a buyer-initiated dispute Amazon files when the customer believes they did not receive the item or it differs significantly from the listing. Unresolved A-to-Z claims hurt the Order Defect Rate and need a fact-based appeal within 30 days." } }
+    { "@@type": "Question", "name": "What does an Amazon account manager do?", "acceptedAnswer": { "@@type": "Answer", "text": "An Amazon account manager handles day-to-day Seller Central operations: monitoring Account Health metrics (ODR, late shipment rate, policy violations), opening and following up on cases, fixing suppressed and stranded listings, managing FBA shipments and reimbursements, and responding to A-to-Z Guarantee claims." } },
+    { "@@type": "Question", "name": "What is Amazon Account Health?", "acceptedAnswer": { "@@type": "Answer", "text": "Amazon Account Health is a Seller Central dashboard that tracks customer service performance (Order Defect Rate under 1%), policy compliance, and shipping performance. A score below 200 or a Critical metric can lead to account suspension." } },
+    { "@@type": "Question", "name": "How do you appeal an Amazon suspension?", "acceptedAnswer": { "@@type": "Answer", "text": "An Amazon suspension appeal requires a Plan of Action (POA) that identifies the root cause, the immediate corrective actions taken, and the long-term preventive measures. We draft, submit, and escalate the POA through Seller Performance and Account Health Specialists." } },
+    { "@@type": "Question", "name": "Can you recover lost FBA inventory reimbursements?", "acceptedAnswer": { "@@type": "Answer", "text": "Yes. We audit FBA inventory reports and file reimbursement claims for lost, damaged, and incorrectly weighed inventory, customer return discrepancies, and FBA fee overcharges — typically recovering 1–3% of FBA revenue for sellers who have never claimed before." } },
+    { "@@type": "Question", "name": "What is an A-to-Z Guarantee Claim?", "acceptedAnswer": { "@@type": "Answer", "text": "An A-to-Z Guarantee Claim is a buyer-initiated dispute Amazon files when the customer believes they did not receive the item or it differs significantly from the listing. Unresolved A-to-Z claims hurt the Order Defect Rate and need a fact-based appeal within 30 days." } }
   ]
 }
 </script>
-@endverbatim
 @endpush
 
 @section('content')

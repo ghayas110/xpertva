@@ -6,6 +6,7 @@
     id="task-{{ $task->id }}"
     data-client-id="{{ $task->client_id ?? '' }}"
     data-assignee-ids="{{ $task->assignees ? $task->assignees->pluck('id')->implode(',') : '' }}"
+    data-completed-date="{{ $task->completed_at ? $task->completed_at->format('Y-m-d') : ($task->status === 'Completed' ? $task->updated_at->format('Y-m-d') : '') }}"
     draggable="true"
     ondragstart="drag(event)"
     onclick="openEditModal({{ $task->id }})">

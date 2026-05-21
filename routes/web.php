@@ -66,15 +66,6 @@ Route::prefix('services')->name('services.')->group(function () {
     Route::get('/mobile-app-development', function () {
         return view('services.mobile-app-development');
     })->name('mobile-app');
-
-    Route::prefix('amazon')->name('amazon.')->group(function () {
-        Route::get('/listing-optimization', fn() => view('services.amazon.listing-optimization'))->name('listing-optimization');
-        Route::get('/ppc-management', fn() => view('services.amazon.ppc-management'))->name('ppc-management');
-        Route::get('/seo-keyword-research', fn() => view('services.amazon.seo-keyword-research'))->name('seo-keyword-research');
-        Route::get('/a-plus-storefront', fn() => view('services.amazon.a-plus-storefront'))->name('a-plus-storefront');
-        Route::get('/account-management', fn() => view('services.amazon.account-management'))->name('account-management');
-        Route::get('/brand-protection', fn() => view('services.amazon.brand-protection'))->name('brand-protection');
-    });
 });
 
 Route::get('/work', function () {
@@ -92,6 +83,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\NoteController;
 
 // Dashboard Routes
 Route::middleware(['auth'])->group(function () {
@@ -144,6 +136,20 @@ Route::middleware(['auth'])->group(function () {
         return back();
     })->name('notifications.markAllRead');
 
+    Route::get('/notifications/poll', function () {
+        $user = auth()->user();
+        $unread = $user->unreadNotifications;
+        $latest = $unread->first();
+        return response()->json([
+            'count' => $unread->count(),
+            'latest' => $latest ? [
+                'title'   => $latest->data['title'] ?? 'New Notification',
+                'message' => $latest->data['message'] ?? '',
+                'url'     => isset($latest->data['task_id']) ? route('tasks.index') . '?open_task=' . $latest->data['task_id'] : null,
+            ] : null,
+        ]);
+    })->name('notifications.poll');
+
     // Employee Activity
     Route::post('/employee-activity', [\App\Http\Controllers\EmployeeActivityController::class, 'store'])->name('activity.store');
 
@@ -159,6 +165,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/email/disconnect', [\App\Http\Controllers\WebmailController::class, 'disconnect'])->name('webmail.disconnect');
     Route::get('/email/fetch', [\App\Http\Controllers\WebmailController::class, 'fetchMessages'])->name('webmail.fetch');
     Route::post('/email/send', [\App\Http\Controllers\WebmailController::class, 'sendEmail'])->name('webmail.send');
+    Route::post('/email/mark-seen', [\App\Http\Controllers\WebmailController::class, 'markSeen'])->name('webmail.mark-seen');
+
+    // Notes (Google Keep-like)
+    Route::get('/notes', [NoteController::class, 'index'])->name('notes.index');
+    Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
+    Route::patch('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
+    Route::delete('/notes/{note}', [NoteController::class, 'destroy'])->name('notes.destroy');
+
+    // Attendance heartbeat (keep-alive for online status)
+    Route::post('/attendance/heartbeat', [AttendanceController::class, 'heartbeat'])->name('attendance.heartbeat');
 
     // Leaves
     Route::get('/leaves', [\App\Http\Controllers\LeaveController::class, 'index'])->name('leaves.index');
@@ -166,6 +182,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/leaves', [\App\Http\Controllers\LeaveController::class, 'store'])->name('leaves.store');
     Route::get('/leaves/{leave}/edit', [\App\Http\Controllers\LeaveController::class, 'edit'])->name('leaves.edit');
     Route::put('/leaves/{leave}', [\App\Http\Controllers\LeaveController::class, 'update'])->name('leaves.update');
+
+    // Profile
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::patch('/profile/contact', [\App\Http\Controllers\ProfileController::class, 'updateContact'])->name('profile.contact');
+
+    // Settings (Super Admin & HR only; admin can also edit company shift schedule)
+    Route::middleware('role:super_admin,hr')->group(function () {
+        Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    });
+    Route::middleware('role:super_admin')->group(function () {
+        Route::patch('/settings/shift', [\App\Http\Controllers\SettingsController::class, 'update'])->name('settings.shift');
+    });
 
     // Admin Blog Management
     Route::middleware('role:super_admin')->group(function () {
@@ -263,8 +293,3 @@ Route::prefix('blog')->name('blog.')->group(function () {
 Route::post('/contact/submit', [PublicLeadController::class, 'contactSubmit'])->name('contact.submit');
 Route::post('/audit/submit', [PublicLeadController::class, 'auditSubmit'])->name('audit.submit');
 
-Route::get('/autologin-test', function () {
-    auth()->login(\App\Models\User::first());
-    return redirect('/email');
-});
-require __DIR__.'/test_webmail.php';

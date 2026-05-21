@@ -11,34 +11,30 @@
 @endpush
 
 @push('schema')
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
+  "@@context": "https://schema.org",
+  "@@type": "Service",
   "name": "Amazon SEO & Keyword Research",
   "serviceType": "Amazon Search Engine Optimization",
-  "provider": { "@id": "https://xpertva.com/#organization" },
+  "provider": { "@@id": "https://xpertva.com/#organization" },
   "areaServed": "Worldwide",
   "description": "Data-driven Amazon keyword research and SEO services. We map high-volume buyer-intent keywords to your listings, backend search terms, and PPC campaigns to rank higher in Amazon's A10 search algorithm.",
   "url": "{{ url('/services/amazon/seo-keyword-research') }}"
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "What is Amazon SEO?", "acceptedAnswer": { "@type": "Answer", "text": "Amazon SEO is the practice of optimizing product listings — title, bullets, description, A+ content, images, backend keywords, reviews, and pricing — to rank higher in Amazon's A10 search algorithm and increase organic sales." } },
-    { "@type": "Question", "name": "How does the Amazon A10 algorithm work?", "acceptedAnswer": { "@type": "Answer", "text": "The Amazon A10 algorithm ranks products based on relevance (keyword match), conversion rate, sales velocity, organic sales weight, seller authority, click-through rate, and review quality. Internal traffic and direct shopper conversion are weighted more heavily than in the older A9 algorithm." } },
-    { "@type": "Question", "name": "Which Amazon keyword research tools are best?", "acceptedAnswer": { "@type": "Answer", "text": "The top Amazon keyword research tools are Helium 10 Cerebro and Magnet, Jungle Scout Keyword Scout, Amazon Brand Analytics Search Query Performance, and DataDive. Brand Analytics is the most authoritative because the data comes directly from Amazon." } },
-    { "@type": "Question", "name": "How many keywords should an Amazon listing target?", "acceptedAnswer": { "@type": "Answer", "text": "A well-optimized Amazon listing typically indexes for 200–500 relevant keywords through the title, bullets, description, A+ content, and 250-byte backend search terms field. Focus on 5–10 primary buyer-intent keywords for the title and bullets." } }
+    { "@@type": "Question", "name": "What is Amazon SEO?", "acceptedAnswer": { "@@type": "Answer", "text": "Amazon SEO is the practice of optimizing product listings — title, bullets, description, A+ content, images, backend keywords, reviews, and pricing — to rank higher in Amazon's A10 search algorithm and increase organic sales." } },
+    { "@@type": "Question", "name": "How does the Amazon A10 algorithm work?", "acceptedAnswer": { "@@type": "Answer", "text": "The Amazon A10 algorithm ranks products based on relevance (keyword match), conversion rate, sales velocity, organic sales weight, seller authority, click-through rate, and review quality. Internal traffic and direct shopper conversion are weighted more heavily than in the older A9 algorithm." } },
+    { "@@type": "Question", "name": "Which Amazon keyword research tools are best?", "acceptedAnswer": { "@@type": "Answer", "text": "The top Amazon keyword research tools are Helium 10 Cerebro and Magnet, Jungle Scout Keyword Scout, Amazon Brand Analytics Search Query Performance, and DataDive. Brand Analytics is the most authoritative because the data comes directly from Amazon." } },
+    { "@@type": "Question", "name": "How many keywords should an Amazon listing target?", "acceptedAnswer": { "@@type": "Answer", "text": "A well-optimized Amazon listing typically indexes for 200–500 relevant keywords through the title, bullets, description, A+ content, and 250-byte backend search terms field. Focus on 5–10 primary buyer-intent keywords for the title and bullets." } }
   ]
 }
 </script>
-@endverbatim
 @endpush
 
 @section('content')

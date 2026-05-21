@@ -11,34 +11,30 @@
 @endpush
 
 @push('schema')
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
+  "@@context": "https://schema.org",
+  "@@type": "Service",
   "name": "Amazon Brand Protection Services",
   "serviceType": "Amazon Brand Protection and IP Enforcement",
-  "provider": { "@id": "https://xpertva.com/#organization" },
+  "provider": { "@@id": "https://xpertva.com/#organization" },
   "description": "Amazon brand protection services including listing hijacker removal, counterfeit and IP infringement takedowns, MAP policy enforcement, Brand Registry support, Transparency, and Project Zero enrollment.",
   "url": "{{ url('/services/amazon/brand-protection') }}"
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "What is an Amazon listing hijacker?", "acceptedAnswer": { "@type": "Answer", "text": "An Amazon hijacker is an unauthorized seller who lists their product on your branded ASIN to win the Buy Box, often selling counterfeit, expired, or used inventory. Hijackers are removed through test buys, IP complaints, cease-and-desist notices, and Brand Registry reports." } },
-    { "@type": "Question", "name": "How do you remove an Amazon hijacker?", "acceptedAnswer": { "@type": "Answer", "text": "We perform a test buy to document the violation, file an IP infringement or counterfeit report through Brand Registry, send a cease-and-desist letter, and escalate to Amazon's Counterfeit Crimes Unit if needed. Most hijackers are removed within 24–72 hours." } },
-    { "@type": "Question", "name": "What is MAP enforcement on Amazon?", "acceptedAnswer": { "@type": "Answer", "text": "MAP (Minimum Advertised Price) enforcement is the process of monitoring resellers and stopping those who advertise below your floor price. We track price violations daily, send MAP warning letters, and remove repeat-offender resellers through unauthorized-seller policies." } },
-    { "@type": "Question", "name": "What is Amazon Brand Registry?", "acceptedAnswer": { "@type": "Answer", "text": "Amazon Brand Registry is a free program for trademarked brands that unlocks A+ Content, Storefronts, brand analytics, automated brand protection, and access to the Report a Violation tool used to remove hijackers, counterfeits, and policy violators." } },
-    { "@type": "Question", "name": "What are Project Zero and Transparency?", "acceptedAnswer": { "@type": "Answer", "text": "Project Zero gives qualified brands self-service counterfeit removal authority. Transparency is a unit-level serialization program where every product carries a unique scannable code that Amazon verifies in the FBA fulfillment center, blocking counterfeits before they ship." } }
+    { "@@type": "Question", "name": "What is an Amazon listing hijacker?", "acceptedAnswer": { "@@type": "Answer", "text": "An Amazon hijacker is an unauthorized seller who lists their product on your branded ASIN to win the Buy Box, often selling counterfeit, expired, or used inventory. Hijackers are removed through test buys, IP complaints, cease-and-desist notices, and Brand Registry reports." } },
+    { "@@type": "Question", "name": "How do you remove an Amazon hijacker?", "acceptedAnswer": { "@@type": "Answer", "text": "We perform a test buy to document the violation, file an IP infringement or counterfeit report through Brand Registry, send a cease-and-desist letter, and escalate to Amazon's Counterfeit Crimes Unit if needed. Most hijackers are removed within 24–72 hours." } },
+    { "@@type": "Question", "name": "What is MAP enforcement on Amazon?", "acceptedAnswer": { "@@type": "Answer", "text": "MAP (Minimum Advertised Price) enforcement is the process of monitoring resellers and stopping those who advertise below your floor price. We track price violations daily, send MAP warning letters, and remove repeat-offender resellers through unauthorized-seller policies." } },
+    { "@@type": "Question", "name": "What is Amazon Brand Registry?", "acceptedAnswer": { "@@type": "Answer", "text": "Amazon Brand Registry is a free program for trademarked brands that unlocks A+ Content, Storefronts, brand analytics, automated brand protection, and access to the Report a Violation tool used to remove hijackers, counterfeits, and policy violators." } },
+    { "@@type": "Question", "name": "What are Project Zero and Transparency?", "acceptedAnswer": { "@@type": "Answer", "text": "Project Zero gives qualified brands self-service counterfeit removal authority. Transparency is a unit-level serialization program where every product carries a unique scannable code that Amazon verifies in the FBA fulfillment center, blocking counterfeits before they ship." } }
   ]
 }
 </script>
-@endverbatim
 @endpush
 
 @section('content')

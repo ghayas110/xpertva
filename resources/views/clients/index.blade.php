@@ -13,13 +13,48 @@
         </div>
     @endif
 
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Client Management</h2>
         @if(in_array(auth()->user()->role, ['sales', 'super_admin']))
         <button onclick="document.getElementById('createLeadModal').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-sm flex items-center gap-2 transition-colors">
             <i class="fa-solid fa-plus"></i> Create company
         </button>
         @endif
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-100 dark:border-slate-700 p-4 mb-4 flex flex-col sm:flex-row gap-3 items-start sm:items-center flex-wrap">
+        <!-- Search -->
+        <div class="relative flex-1 min-w-[180px]">
+            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+            <input type="text" id="clientSearch" oninput="filterClients()" placeholder="Search company, email, contact..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-600 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
+        </div>
+        <!-- Source Filter -->
+        <select id="sourceFilter" onchange="filterClients()" class="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 dark:text-white min-w-[130px]">
+            <option value="">All Sources</option>
+            @foreach($clients->pluck('source')->filter()->unique()->sort() as $source)
+                <option value="{{ $source }}">{{ $source }}</option>
+            @endforeach
+        </select>
+        <!-- Status Filter -->
+        <select id="statusFilter" onchange="filterClients()" class="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 dark:text-white min-w-[130px]">
+            <option value="">All Statuses</option>
+            <option value="Lead">Lead</option>
+            <option value="Onboarding">Onboarding</option>
+            <option value="Active">Active</option>
+            <option value="Churned">Churned</option>
+        </select>
+        <!-- Company Name Quick Picker -->
+        <select id="companyFilter" onchange="filterClients()" class="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 dark:text-white min-w-[160px]">
+            <option value="">All Companies</option>
+            @foreach($clients->sortBy('company_name') as $c)
+                <option value="{{ $c->company_name }}">{{ $c->company_name }}</option>
+            @endforeach
+        </select>
+        <button onclick="clearClientFilters()" class="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1 whitespace-nowrap">
+            <i class="fa-solid fa-rotate-left text-xs"></i> Reset
+        </button>
+        <span id="clientCount" class="text-xs text-slate-500 dark:text-slate-400 ml-auto whitespace-nowrap"></span>
     </div>
 
     <div class="bg-white dark:bg-slate-800 rounded shadow overflow-hidden">
@@ -38,7 +73,11 @@
             </thead>
             <tbody>
                 @forelse($clients as $client)
-                <tr class="border-b hover:bg-gray-50 dark:bg-slate-700">
+                <tr class="client-row border-b hover:bg-gray-50 dark:bg-slate-700"
+                    data-company="{{ strtolower($client->company_name) }}"
+                    data-source="{{ strtolower($client->source ?? '') }}"
+                    data-status="{{ $client->status }}"
+                    data-search="{{ strtolower($client->company_name . ' ' . (is_array($client->email) ? implode(' ', $client->email) : ($client->email ?? '')) . ' ' . (is_array($client->phone) ? implode(' ', $client->phone) : ($client->phone ?? '')) . ' ' . ($client->assignedSales->name ?? '') . ' ' . ($client->assignedVA->name ?? '')) }}">
                     <td class="py-3 px-6">{{ $client->id }}</td>
                     <td class="py-3 px-6 font-bold">
                         {{ $client->company_name }}
@@ -419,6 +458,51 @@
         // Insert before the "Add another" button
         container.insertBefore(newRow, container.lastElementChild);
     }
+
+    // ── Client Search & Filters ──────────────────────────────────────────────
+    function filterClients() {
+        const q = (document.getElementById('clientSearch')?.value || '').toLowerCase().trim();
+        const srcFilter = (document.getElementById('sourceFilter')?.value || '').toLowerCase();
+        const statusFilter = document.getElementById('statusFilter')?.value || '';
+        const companyFilter = (document.getElementById('companyFilter')?.value || '').toLowerCase();
+
+        let visible = 0;
+        document.querySelectorAll('.client-row').forEach(row => {
+            const search = row.getAttribute('data-search') || '';
+            const source = row.getAttribute('data-source') || '';
+            const status = row.getAttribute('data-status') || '';
+            const company = row.getAttribute('data-company') || '';
+
+            const matchSearch = !q || search.includes(q);
+            const matchSource = !srcFilter || source === srcFilter;
+            const matchStatus = !statusFilter || status === statusFilter;
+            const matchCompany = !companyFilter || company === companyFilter;
+
+            if (matchSearch && matchSource && matchStatus && matchCompany) {
+                row.style.display = '';
+                visible++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        const countEl = document.getElementById('clientCount');
+        if (countEl) {
+            const total = document.querySelectorAll('.client-row').length;
+            countEl.textContent = visible < total ? `${visible} of ${total} shown` : `${total} total`;
+        }
+    }
+
+    function clearClientFilters() {
+        document.getElementById('clientSearch').value = '';
+        document.getElementById('sourceFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('companyFilter').value = '';
+        filterClients();
+    }
+
+    // Init count on load
+    document.addEventListener('DOMContentLoaded', filterClients);
 
     function openEditClientModal(id, companyName, email, phone, website, source, backgroundInfo, assignedVaId) {
         document.getElementById('editCompanyName').value = companyName || '';

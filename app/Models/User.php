@@ -27,7 +27,25 @@ class User extends Authenticatable
         'salary',
         'total_leaves',
         'used_leaves',
+        'avatar_path',
+        'phone',
+        'secondary_phone',
+        'secondary_email',
     ];
+
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar_path) {
+            // New uploads live under public/assets/images/avatars/... matching
+            // the blog-image convention (works on shared hosts that block the
+            // storage symlink). Legacy rows still reference the old storage path.
+            if (str_starts_with($this->avatar_path, 'assets/')) {
+                return asset($this->avatar_path);
+            }
+            return asset('storage/' . $this->avatar_path);
+        }
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=E0E7FF&color=4F46E5';
+    }
 
     /**
      * The attributes that should be hidden for serialization.

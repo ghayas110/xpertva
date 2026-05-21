@@ -9,16 +9,32 @@
         </div>
 
         <!-- Employee Selection Form -->
-        <form action="{{ route('attendance.manage') }}" method="GET" class="flex items-center space-x-2">
-            <select name="user_id" onchange="this.form.submit()" class="shadow-sm border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[250px]">
+        <form action="{{ route('attendance.manage') }}" method="GET" class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="employeeSearchInput" placeholder="Search employee..." oninput="filterEmployeeSelect()" class="pl-9 pr-3 py-2 text-sm border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[200px]">
+            </div>
+            <select id="attendanceEmployeeSelect" name="user_id" onchange="this.form.submit()" class="shadow-sm border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded py-2 px-3 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-[250px]">
                 <option value="">-- Select Employee --</option>
                 @foreach($users as $userOption)
-                    <option value="{{ $userOption->id }}" {{ ($selectedUser && $selectedUser->id === $userOption->id) ? 'selected' : '' }}>
+                    <option value="{{ $userOption->id }}" {{ ($selectedUser && $selectedUser->id === $userOption->id) ? 'selected' : '' }}
+                        data-name="{{ strtolower($userOption->name) }} {{ strtolower($userOption->role ?? '') }}">
                         {{ $userOption->name }} ({{ $userOption->role ?? 'Employee' }})
                     </option>
                 @endforeach
             </select>
         </form>
+        <script>
+        function filterEmployeeSelect() {
+            const q = document.getElementById('employeeSearchInput').value.toLowerCase();
+            const sel = document.getElementById('attendanceEmployeeSelect');
+            Array.from(sel.options).forEach(opt => {
+                if (!opt.value) { opt.style.display = ''; return; }
+                const name = opt.getAttribute('data-name') || opt.text.toLowerCase();
+                opt.style.display = name.includes(q) ? '' : 'none';
+            });
+        }
+        </script>
     </div>
 
     @if(!$selectedUser)
@@ -81,7 +97,7 @@
                 @foreach($calendarData['years'] as $year => $months)
                 <div x-show="selectedYear === {{ $year }}" class="space-y-4">
                     @foreach($months as $month => $monthData)
-                        <div class="border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 overflow-hidden shadow-sm" x-data="{ expandedMonth: false }">
+                        <div class="attendance-month-block border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 overflow-hidden shadow-sm" x-data="{ expandedMonth: false }" data-month-label="{{ strtolower($monthData['month_name']) }} {{ $year }}">
                             <button @click="expandedMonth = !expandedMonth" class="w-full px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
                                 <div class="flex items-center text-xl font-semibold text-indigo-600 dark:text-indigo-400">
                                     {{ $monthData['month_name'] }} {{ $year }}

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
+use App\Models\CompanySetting;
 use App\Models\LeaveRequest;
 use App\Models\User;
 use Carbon\Carbon;
@@ -13,6 +14,19 @@ use Carbon\CarbonPeriod;
 
 class AttendanceController extends Controller
 {
+    public function heartbeat()
+    {
+        $user = Auth::user();
+        if ($user->status !== 'online') {
+            $user->update(['status' => 'online']);
+            Attendance::create([
+                'user_id' => $user->id,
+                'clock_in_time' => Carbon::now(),
+            ]);
+        }
+        return response()->json(['status' => 'ok']);
+    }
+
     public function toggle()
     {
         $user = Auth::user();
@@ -219,8 +233,10 @@ class AttendanceController extends Controller
                 $data[$yr][$mo]['days'][$dy]['status'] = 'present';
                 $data[$yr][$mo]['days'][$dy]['record'] = $att;
                 
-                // Add Late Flag: Cutoff is 16:55 (4:55 PM)
-                $cutoff = $date->copy()->setTime(16, 55, 0);
+                // Add Late Flag: configurable cutoff from CompanySetting
+                $cutoffTime = CompanySetting::current()->late_cutoff;
+                [$ch, $cm, $cs] = array_pad(explode(':', $cutoffTime), 3, 0);
+                $cutoff = $date->copy()->setTime((int)$ch, (int)$cm, (int)$cs);
                 $data[$yr][$mo]['days'][$dy]['is_late'] = $date->greaterThan($cutoff);
 
                 if ($prevStatus !== 'present') {

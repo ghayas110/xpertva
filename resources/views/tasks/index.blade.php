@@ -19,29 +19,54 @@
     </div>
 
     <!-- Filters Block -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-slate-700">
-        <div class="flex-1 w-full overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-            <div class="flex gap-2">
-                <button onclick="filterTasks('client', '')" id="filter-btn-all" class="client-pill whitespace-nowrap bg-blue-600 text-white border-blue-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors border">All Tasks</button>
-                @foreach($clients as $client)
-                    <button onclick="filterTasks('client', '{{ $client->id }}')" id="filter-btn-{{ $client->id }}" class="client-pill whitespace-nowrap bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors border border-transparent flex items-center gap-2" data-client-id="{{ $client->id }}">
-                        <i class="fa-solid fa-building text-gray-400 dark:text-slate-500"></i> {{ $client->company_name }}
-                    </button>
-                @endforeach
+    <div class="flex flex-col gap-3 mb-6 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-slate-700">
+        <!-- Row 1: Client pills + employee filter -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+            <div class="flex-1 w-full overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+                <div class="flex gap-2">
+                    <button onclick="filterTasks('client', '')" id="filter-btn-all" class="client-pill whitespace-nowrap bg-blue-600 text-white border-blue-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors border">All Tasks</button>
+                    @foreach($clients as $client)
+                        <button onclick="filterTasks('client', '{{ $client->id }}')" id="filter-btn-{{ $client->id }}" class="client-pill whitespace-nowrap bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-colors border border-transparent flex items-center gap-2" data-client-id="{{ $client->id }}">
+                            <i class="fa-solid fa-building text-gray-400 dark:text-slate-500"></i> {{ $client->company_name }}
+                        </button>
+                    @endforeach
+                </div>
             </div>
+            @if(auth()->user()->role === 'super_admin')
+            <div class="flex items-center gap-3 shrink-0">
+                <label class="text-sm font-bold text-gray-600 dark:text-slate-400 whitespace-nowrap"><i class="fa-solid fa-filter text-indigo-500"></i> Employee:</label>
+                <select id="employeeFilter" onchange="filterTasks('employee', this.value)" class="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 text-sm rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none text-gray-700 dark:text-white font-medium cursor-pointer max-w-[200px]">
+                    <option value="">All Employees</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }} ({{ ucwords(str_replace('_', ' ', $user->role)) }})</option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
         </div>
 
-        @if(auth()->user()->role === 'super_admin')
-        <div class="flex items-center gap-3 shrink-0">
-            <label class="text-sm font-bold text-gray-600 dark:text-slate-400 whitespace-nowrap"><i class="fa-solid fa-filter text-indigo-500"></i> Employee SID:</label>
-            <select id="employeeFilter" onchange="filterTasks('employee', this.value)" class="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 text-sm rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none text-gray-700 dark:text-white font-medium cursor-pointer max-w-[200px]">
-                <option value="">All Employees</option>
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }} ({{ ucwords(str_replace('_', ' ', $user->role)) }})</option>
-                @endforeach
-            </select>
+        <!-- Row 2: Search + Completed Date Filter + PDF Download -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-3 border-t border-gray-100 dark:border-slate-700">
+            <!-- Task Search -->
+            <div class="relative flex-1 min-w-0">
+                <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="taskSearch" oninput="searchTasks()" placeholder="Search tasks..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-600 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
+            </div>
+
+            <!-- Completed Tasks Date Filter -->
+            <div class="flex items-center gap-2 shrink-0 flex-wrap">
+                <span class="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wide whitespace-nowrap"><i class="fa-solid fa-check-circle text-emerald-500 mr-1"></i>Completed:</span>
+                <button id="completed-filter-today" onclick="setCompletedFilter('today')" class="completed-date-pill bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-600 transition-colors">Today</button>
+                <button id="completed-filter-tomorrow" onclick="setCompletedFilter('tomorrow')" class="completed-date-pill bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-200 text-xs font-bold px-3 py-1.5 rounded-full border border-transparent transition-colors">Tomorrow</button>
+                <input type="date" id="completedDatePicker" onchange="setCompletedFilter('custom', this.value)" class="text-xs bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-600 rounded-lg px-2 py-1.5 outline-none focus:ring-2 focus:ring-emerald-500 dark:text-white cursor-pointer" title="Select specific date">
+                <button onclick="setCompletedFilter('all')" class="completed-date-pill bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-200 text-xs font-bold px-3 py-1.5 rounded-full border border-transparent transition-colors">All</button>
+            </div>
+
+            <!-- PDF Download -->
+            <button onclick="downloadProgressPDF()" class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold px-3 py-2 rounded-lg transition-colors shadow-sm shrink-0" title="Download Progress Report">
+                <i class="fa-solid fa-file-pdf"></i> <span class="hidden sm:inline">PDF Report</span>
+            </button>
         </div>
-        @endif
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
@@ -86,9 +111,12 @@
 
         <!-- Completed Column -->
         <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg shadow-inner p-4 min-h-[400px]" data-status="Completed" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="flex items-center justify-between mb-4 border-b border-emerald-200 dark:border-emerald-800 pb-2">
-                <h3 class="font-bold text-lg text-emerald-800 dark:text-emerald-300">Completed</h3>
-                <span class="bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 text-xs font-bold px-2 py-1 rounded-full">{{ $tasks->where('status', 'Completed')->count() }}</span>
+            <div class="flex flex-col mb-4 border-b border-emerald-200 dark:border-emerald-800 pb-2 gap-1">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-lg text-emerald-800 dark:text-emerald-300">Completed</h3>
+                    <span id="completed-count-badge" class="bg-emerald-200 dark:bg-emerald-800 text-emerald-800 dark:text-emerald-200 text-xs font-bold px-2 py-1 rounded-full">{{ $tasks->where('status', 'Completed')->count() }}</span>
+                </div>
+                <p id="completed-filter-label" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Showing: Today</p>
             </div>
             <div class="task-list space-y-3 min-h-[300px]">
                 @foreach($tasks->where('status', 'Completed') as $task)
@@ -1524,11 +1552,16 @@
             }
 
             if (showClient && showEmployee) {
+                card.setAttribute('data-filtered-out', '0');
                 card.style.display = 'block';
             } else {
+                card.setAttribute('data-filtered-out', '1');
                 card.style.display = 'none';
             }
         });
+
+        // Re-apply completed date filter after client/employee filter changes
+        applyCompletedFilter();
 
         // Update column counts and handle empty state
         ['To-Do', 'In-Progress', 'Waiting-Approval', 'Completed'].forEach(status => {
@@ -1554,7 +1587,7 @@
                 const countBadge = col.querySelector('.rounded-full');
                 if (countBadge) {
                     countBadge.textContent = visibleCards.length;
-                    
+
                     if (visibleCards.length === 0) {
                         countBadge.classList.add('opacity-50');
                     } else {
@@ -1564,5 +1597,174 @@
             }
         });
     }
+
+    // ── Task Search ──────────────────────────────────────────────────────────
+    function searchTasks() {
+        const q = document.getElementById('taskSearch').value.toLowerCase().trim();
+        document.querySelectorAll('.task-card').forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = (!q || text.includes(q)) ? '' : 'none';
+        });
+        applyCompletedFilter();
+    }
+
+    // ── Completed Tasks Date Filter ───────────────────────────────────────────
+    let completedFilterMode = 'today';
+    let completedFilterDate = null;
+
+    function todayStr() {
+        return new Date().toISOString().split('T')[0];
+    }
+    function tomorrowStr() {
+        const d = new Date(); d.setDate(d.getDate() + 1);
+        return d.toISOString().split('T')[0];
+    }
+
+    function setCompletedFilter(mode, date) {
+        completedFilterMode = mode;
+        completedFilterDate = date || null;
+
+        // Update pill styles
+        document.querySelectorAll('.completed-date-pill').forEach(btn => {
+            btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+            btn.classList.add('bg-gray-100', 'dark:bg-slate-700', 'text-gray-700', 'dark:text-slate-300', 'border-transparent');
+        });
+        const activeId = mode === 'today' ? 'completed-filter-today' : mode === 'tomorrow' ? 'completed-filter-tomorrow' : null;
+        if (activeId) {
+            const btn = document.getElementById(activeId);
+            if (btn) {
+                btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+                btn.classList.remove('bg-gray-100', 'dark:bg-slate-700', 'text-gray-700', 'dark:text-slate-300', 'border-transparent');
+            }
+        }
+
+        // Update label
+        const label = document.getElementById('completed-filter-label');
+        if (label) {
+            if (mode === 'today') label.textContent = 'Showing: Today (' + todayStr() + ')';
+            else if (mode === 'tomorrow') label.textContent = 'Showing: Tomorrow (' + tomorrowStr() + ')';
+            else if (mode === 'custom') label.textContent = 'Showing: ' + date;
+            else label.textContent = 'Showing: All time';
+        }
+
+        applyCompletedFilter();
+    }
+
+    function applyCompletedFilter() {
+        const completedCol = document.querySelector('[data-status="Completed"]');
+        if (!completedCol) return;
+
+        let targetDate = null;
+        if (completedFilterMode === 'today') targetDate = todayStr();
+        else if (completedFilterMode === 'tomorrow') targetDate = tomorrowStr();
+        else if (completedFilterMode === 'custom') targetDate = completedFilterDate;
+
+        let visible = 0;
+        completedCol.querySelectorAll('.task-card').forEach(card => {
+            // Respect existing client/employee filter (if already hidden, leave it)
+            const hiddenByOtherFilter = card.getAttribute('data-filtered-out') === '1';
+            if (hiddenByOtherFilter) return;
+
+            if (targetDate) {
+                const completedDate = card.getAttribute('data-completed-date') || '';
+                if (completedDate === targetDate) {
+                    card.style.display = '';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            } else {
+                // All mode
+                card.style.display = '';
+                visible++;
+            }
+        });
+
+        const badge = document.getElementById('completed-count-badge');
+        if (badge) badge.textContent = visible;
+    }
+
+    // ── PDF Progress Report ───────────────────────────────────────────────────
+    function downloadProgressPDF() {
+        const title = 'Task Progress Report';
+        const dateLabel = document.getElementById('completed-filter-label')?.textContent || '';
+        const sections = [
+            { label: 'To-Do', status: 'To-Do', color: '#374151' },
+            { label: 'In Progress', status: 'In-Progress', color: '#1d4ed8' },
+            { label: 'Waiting for Approval', status: 'Waiting-Approval', color: '#d97706' },
+            { label: 'Completed', status: 'Completed', color: '#059669' },
+        ];
+
+        let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+        <title>${title}</title>
+        <style>
+            body { font-family: Arial, sans-serif; color: #1e293b; margin: 0; padding: 32px; }
+            h1 { font-size: 22px; margin-bottom: 4px; }
+            .subtitle { color: #64748b; font-size: 13px; margin-bottom: 24px; }
+            .section { margin-bottom: 24px; }
+            .section-header { padding: 8px 14px; border-radius: 8px 8px 0 0; font-weight: bold; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+            .task-table { width: 100%; border-collapse: collapse; }
+            .task-table th { text-align: left; padding: 8px 12px; font-size: 11px; text-transform: uppercase; color: #64748b; border-bottom: 1px solid #e2e8f0; }
+            .task-table td { padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #f1f5f9; }
+            .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+            .priority-high { background: #fee2e2; color: #991b1b; }
+            .priority-medium { background: #fef9c3; color: #92400e; }
+            .priority-low { background: #dbeafe; color: #1e40af; }
+            .footer { margin-top: 40px; font-size: 11px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 16px; }
+        </style></head><body>
+        <h1>${title}</h1>
+        <p class="subtitle">Generated: ${new Date().toLocaleString()} &nbsp;|&nbsp; ${dateLabel}</p>`;
+
+        sections.forEach(sec => {
+            const col = document.querySelector(`[data-status="${sec.status}"]`);
+            if (!col) return;
+            const cards = Array.from(col.querySelectorAll('.task-card')).filter(c => c.style.display !== 'none');
+            const bgColor = sec.color + '15';
+
+            html += `<div class="section">
+                <div class="section-header" style="background:${bgColor}; color:${sec.color}; border-left: 4px solid ${sec.color};">
+                    <span>${sec.label}</span><span>${cards.length} task(s)</span>
+                </div>
+                <table class="task-table"><thead><tr>
+                    <th>Task</th><th>Assignees</th><th>Client</th><th>Priority</th><th>Created</th>
+                </tr></thead><tbody>`;
+
+            if (cards.length === 0) {
+                html += `<tr><td colspan="5" style="color:#94a3b8;text-align:center;">No tasks</td></tr>`;
+            } else {
+                cards.forEach(card => {
+                    const taskTitle = card.querySelector('h4')?.textContent?.trim() || '';
+                    const assignees = Array.from(card.querySelectorAll('[id^="assignee-name-"]')).map(el => el.textContent.trim()).join(', ') || 'Unassigned';
+                    const client = card.querySelector('.fa-building')?.parentElement?.textContent?.trim() || '-';
+                    const createdEl = card.querySelector('.fa-calendar')?.parentElement?.textContent?.trim() || '-';
+                    const priorityClass = card.classList.contains('border-red-500') ? 'priority-high' : card.classList.contains('border-yellow-500') ? 'priority-medium' : 'priority-low';
+                    const priorityLabel = card.classList.contains('border-red-500') ? 'High' : card.classList.contains('border-yellow-500') ? 'Medium' : 'Low';
+
+                    html += `<tr>
+                        <td>${taskTitle}</td>
+                        <td>${assignees}</td>
+                        <td>${client}</td>
+                        <td><span class="badge ${priorityClass}">${priorityLabel}</span></td>
+                        <td>${createdEl}</td>
+                    </tr>`;
+                });
+            }
+
+            html += `</tbody></table></div>`;
+        });
+
+        html += `<div class="footer">XpertVA &mdash; Task Progress Report &mdash; Confidential</div></body></html>`;
+
+        const win = window.open('', '_blank');
+        win.document.write(html);
+        win.document.close();
+        win.focus();
+        setTimeout(() => win.print(), 500);
+    }
+
+    // Apply default "Today" completed filter on load
+    document.addEventListener('DOMContentLoaded', function() {
+        setCompletedFilter('today');
+    });
 </script>
 @endpush

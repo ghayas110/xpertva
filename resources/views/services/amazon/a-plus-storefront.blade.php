@@ -11,33 +11,29 @@
 @endpush
 
 @push('schema')
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
+  "@@context": "https://schema.org",
+  "@@type": "Service",
   "name": "Amazon A+ Content & Storefront Design",
   "serviceType": "Amazon Brand Content Design",
-  "provider": { "@id": "https://xpertva.com/#organization" },
+  "provider": { "@@id": "https://xpertva.com/#organization" },
   "description": "Design and copywriting for Amazon A+ Content (EBC), Premium A+ Content, Brand Story modules, and Amazon Storefront pages — exclusive to Brand Registered sellers.",
   "url": "{{ url('/services/amazon/a-plus-storefront') }}"
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "What is Amazon A+ Content?", "acceptedAnswer": { "@type": "Answer", "text": "Amazon A+ Content (formerly Enhanced Brand Content or EBC) is a free design feature for Brand Registered sellers that replaces the standard product description with image and text modules — comparison charts, brand story, lifestyle imagery — proven to lift conversion by 5–10%." } },
-    { "@type": "Question", "name": "What is the difference between A+ Content and Premium A+ Content?", "acceptedAnswer": { "@type": "Answer", "text": "Standard A+ Content offers seven modules and is free for Brand Registered sellers. Premium A+ Content adds video, interactive comparison charts, hover hotspots, Q&A modules, and a wider layout. It is invitation-based and reserved for top brands." } },
-    { "@type": "Question", "name": "What is an Amazon Storefront?", "acceptedAnswer": { "@type": "Answer", "text": "An Amazon Storefront (Brand Store) is a free multi-page website inside Amazon, exclusive to Brand Registered sellers, with custom URL, navigation, video tiles, and shoppable galleries. Storefronts have their own Sponsored Brands ad placement and analytics dashboard." } },
-    { "@type": "Question", "name": "Do I need Amazon Brand Registry for A+ Content?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Both A+ Content and Amazon Storefronts require Amazon Brand Registry, which requires a registered trademark in the country of sale. We help sellers complete Brand Registry as part of A+ Content onboarding." } }
+    { "@@type": "Question", "name": "What is Amazon A+ Content?", "acceptedAnswer": { "@@type": "Answer", "text": "Amazon A+ Content (formerly Enhanced Brand Content or EBC) is a free design feature for Brand Registered sellers that replaces the standard product description with image and text modules — comparison charts, brand story, lifestyle imagery — proven to lift conversion by 5–10%." } },
+    { "@@type": "Question", "name": "What is the difference between A+ Content and Premium A+ Content?", "acceptedAnswer": { "@@type": "Answer", "text": "Standard A+ Content offers seven modules and is free for Brand Registered sellers. Premium A+ Content adds video, interactive comparison charts, hover hotspots, Q&A modules, and a wider layout. It is invitation-based and reserved for top brands." } },
+    { "@@type": "Question", "name": "What is an Amazon Storefront?", "acceptedAnswer": { "@@type": "Answer", "text": "An Amazon Storefront (Brand Store) is a free multi-page website inside Amazon, exclusive to Brand Registered sellers, with custom URL, navigation, video tiles, and shoppable galleries. Storefronts have their own Sponsored Brands ad placement and analytics dashboard." } },
+    { "@@type": "Question", "name": "Do I need Amazon Brand Registry for A+ Content?", "acceptedAnswer": { "@@type": "Answer", "text": "Yes. Both A+ Content and Amazon Storefronts require Amazon Brand Registry, which requires a registered trademark in the country of sale. We help sellers complete Brand Registry as part of A+ Content onboarding." } }
   ]
 }
 </script>
-@endverbatim
 @endpush
 
 @section('content')

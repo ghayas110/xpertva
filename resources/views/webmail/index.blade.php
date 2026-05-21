@@ -5,76 +5,100 @@
     
     @if(!$emailAccount)
         <!-- UNINTEGRATED STATE: CONFIGURATION VIEW -->
-        <div class="flex-1 flex items-center justify-center p-4 bg-[#f0f4f9] dark:bg-slate-900 border-none">
-            <div class="bg-white dark:bg-slate-800 rounded-3xl w-full max-w-[450px] p-10 mt-10" style="padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                <div class="text-center mb-8">
-                    <div class="mb-4 flex justify-center">
-                        <svg viewBox="0 0 75 24" width="75" height="24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="l5Lhkf"><g id="qaEJec"><path fill="#ea4335" d="M67.954 16.303c-1.33 0-2.278-.608-2.886-1.804l7.967-3.3-.27-.68c-.495-1.33-2.008-3.79-5.102-3.79-3.068 0-5.622 2.41-5.622 5.96 0 3.34 2.53 5.96 5.92 5.96 2.73 0 4.31-1.67 4.97-2.64l-2.03-1.35c-.673.98-1.6 1.64-2.93 1.64zm-.203-7.27c1.04 0 1.92.52 2.21 1.264l-5.32 2.21c-.06-2.3 1.79-3.474 3.12-3.474z"></path></g><g id="YGlOvc"><path fill="#34a853" d="M58.193.67h2.564v17.44h-2.564z"></path></g><g id="BWfIk"><path fill="#4285f4" d="M54.152 8.066h-.088c-.588-.697-1.716-1.33-3.136-1.33-2.98 0-5.71 2.614-5.71 5.98 0 3.338 2.73 5.933 5.71 5.933 1.42 0 2.548-.64 3.136-1.36h.088v.86c0 2.28-1.217 3.5-3.183 3.5-1.61 0-2.6-1.15-3-2.12l-2.28.94c.65 1.58 2.39 3.52 5.28 3.52 3.06 0 5.66-1.807 5.66-6.206V7.21h-2.5v.858zm-2.88 9.693c-1.898 0-3.388-1.54-3.388-3.44 0-1.92 1.49-3.46 3.38-3.46 1.9 0 3.44 1.54 3.44 3.46 0 1.9-1.54 3.44-3.44 3.44z"></path></g><g id="e6K1"><path fill="#fbbc05" d="M38.17 6.735c-3.28 0-5.953 2.506-5.953 5.96 0 3.432 2.673 5.96 5.954 5.96 3.33 0 5.96-2.528 5.96-5.96 0-3.46-2.63-5.96-5.96-5.96zm0 9.568c-1.798 0-3.434-1.46-3.434-3.608 0-2.14 1.636-3.6 3.433-3.6 1.77 0 3.433 1.46 3.433 3.6 0 2.14-1.663 3.6-3.433 3.6z"></path></g><g id="JJ0eO"><path fill="#ea4335" d="M25.17 6.735c-3.28 0-5.954 2.506-5.954 5.96 0 3.432 2.673 5.96 5.954 5.96 3.33 0 5.96-2.528 5.96-5.96 0-3.46-2.63-5.96-5.96-5.96zm0 9.568c-1.798 0-3.434-1.46-3.434-3.608 0-2.14 1.636-3.6 3.433-3.6 1.77 0 3.433 1.46 3.433 3.6 0 2.14-1.663 3.6-3.433 3.6z"></path></g><g id="nlI0H"><path fill="#4285f4" d="M14.152 22.29V11.234H9.77v10.37h-3.42V11.234H2V8.04h15.572v14.25z"></path></g></svg>
+        <div class="flex-1 flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-[420px] shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+
+                <!-- Header with XpertVA branding -->
+                <div class="bg-indigo-600 px-8 py-8 text-center">
+                    <div class="flex justify-center mb-3">
+                        <img src="{{ asset('assets/images/logo-xpertva.png') }}" alt="XpertVA" class="h-12 w-12 object-contain rounded-xl bg-white/20 p-1.5">
                     </div>
-                    <h1 class="text-[#202124] dark:text-gray-100 text-2xl font-normal tracking-wide">Sign in</h1>
-                    <p class="text-[#202124] dark:text-gray-300 mt-2 text-base">to continue to XpertVA Mail</p>
+                    <h1 class="text-white text-2xl font-bold tracking-tight">XpertVA Mail</h1>
+                    <p class="text-indigo-200 text-sm mt-1">Connect your email account to get started</p>
                 </div>
 
-                <div class="px-2">
-                    <form id="native-login-form" onsubmit="event.preventDefault(); submitWebmailConfig();" class="space-y-6">
-                        <div class="space-y-6">
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
-                                <input type="email" name="email" id="email" value="developer@xpertva.com" required 
-                                    class="block w-full px-4 py-3 bg-transparent border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8]" 
-                                    placeholder="developer@xpertva.com">
-                            </div>
-                            
-                            <div>
-                                <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
-                                <input type="password" name="password" id="password" value="Dev@2026#" required 
-                                    class="block w-full px-4 py-3 bg-transparent border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1a73e8] focus:border-[#1a73e8]" 
-                                    placeholder="Enter your password">
+                <!-- Form -->
+                <div class="px-8 py-8">
+                    <form id="native-login-form" onsubmit="event.preventDefault(); submitWebmailConfig();" class="space-y-5">
+
+                        <!-- Email -->
+                        <div>
+                            <label for="wm_email" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email Address</label>
+                            <div class="relative">
+                                <i class="fa-regular fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="email" name="email" id="wm_email" required autocomplete="off"
+                                    class="block w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-colors"
+                                    placeholder="you@example.com">
                             </div>
                         </div>
 
-                        <div class="pt-2">
-                            <p class="text-sm text-[#1a73e8] hover:text-[#174ea6] font-medium cursor-pointer mb-10 w-max">Forgot password?</p>
-                            
-                            <div id="errorMessage" class="text-red-600 text-sm mb-4 items-start bg-red-50 p-3 rounded hidden">
-                                <i class="fa-solid fa-circle-exclamation mt-0.5 mr-2"></i> <span id="errorText"></span>
-                            </div>
-                            
-                            <div id="successMessage" class="text-green-600 text-sm mb-4 items-start bg-green-50 p-3 rounded hidden">
-                                <i class="fa-solid fa-circle-check mt-0.5 mr-2"></i> <span id="successText"></span>
-                            </div>
-                            
-                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-2 gap-4">
-                                <p class="text-sm text-[#1a73e8] hover:text-[#174ea6] font-medium cursor-pointer">Create account</p>
-                                <button type="submit" id="submitBtn" class="inline-flex justify-center items-center py-2 px-6 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a73e8] hover:bg-[#1b66c9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1a73e8] disabled:opacity-50 transition-colors">
-                                    <svg id="submitSpinner" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                    <span id="submitText">Next</span>
+                        <!-- Password -->
+                        <div>
+                            <label for="wm_password" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="password" name="password" id="wm_password" required autocomplete="new-password"
+                                    class="block w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg shadow-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition-colors"
+                                    placeholder="Enter your email password">
+                                <button type="button" id="togglePwd" onclick="togglePasswordVisibility()"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                                    <i id="eyeIcon" class="fa-regular fa-eye text-sm"></i>
                                 </button>
                             </div>
+                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1.5">Use your SiteGround email app password or IMAP password.</p>
                         </div>
+
+                        <!-- Messages -->
+                        <div id="errorMessage" class="hidden flex items-start gap-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm p-3 rounded-lg">
+                            <i class="fa-solid fa-circle-exclamation mt-0.5 shrink-0"></i>
+                            <span id="errorText"></span>
+                        </div>
+                        <div id="successMessage" class="hidden flex items-start gap-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 text-sm p-3 rounded-lg">
+                            <i class="fa-solid fa-circle-check mt-0.5 shrink-0"></i>
+                            <span id="successText"></span>
+                        </div>
+
+                        <button type="submit" id="submitBtn"
+                                class="w-full flex justify-center items-center gap-2 py-2.5 px-6 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <svg id="submitSpinner" class="animate-spin h-4 w-4 text-white hidden" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span id="submitText">Connect Email</span>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
         <script>
+            function togglePasswordVisibility() {
+                const input = document.getElementById('wm_password');
+                const icon  = document.getElementById('eyeIcon');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fa-regular fa-eye-slash text-sm';
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fa-regular fa-eye text-sm';
+                }
+            }
+
             async function submitWebmailConfig() {
-                const btn = document.getElementById('submitBtn');
+                const btn     = document.getElementById('submitBtn');
                 const spinner = document.getElementById('submitSpinner');
-                const text = document.getElementById('submitText');
-                const errBox = document.getElementById('errorMessage');
+                const text    = document.getElementById('submitText');
+                const errBox  = document.getElementById('errorMessage');
                 const errText = document.getElementById('errorText');
                 const succBox = document.getElementById('successMessage');
-                const succText = document.getElementById('successText');
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
+                const succText= document.getElementById('successText');
+                const email   = document.getElementById('wm_email').value;
+                const password= document.getElementById('wm_password').value;
 
                 btn.disabled = true;
                 spinner.classList.remove('hidden');
-                text.innerText = 'Signing in...';
+                text.innerText = 'Connecting...';
                 errBox.classList.add('hidden');
-                errBox.classList.remove('flex');
                 succBox.classList.add('hidden');
-                succBox.classList.remove('flex');
 
                 try {
                     const response = await fetch('{{ route('webmail.save-config') }}', {
@@ -83,26 +107,23 @@
                         body: JSON.stringify({ email, password })
                     });
                     const data = await response.json();
-                    if (data.success) { 
-                        succText.innerText = 'Connection Successful! Loading Inbox...';
+                    if (data.success) {
+                        succText.innerText = 'Connected successfully! Loading your inbox...';
                         succBox.classList.remove('hidden');
-                        succBox.classList.add('flex');
                         setTimeout(() => window.location.reload(), 1500);
-                    } else { 
-                        errText.innerText = data.message || 'Failed to connect. Please check credentials.'; 
+                    } else {
+                        errText.innerText = data.message || 'Failed to connect. Please check your credentials.';
                         errBox.classList.remove('hidden');
-                        errBox.classList.add('flex');
                         btn.disabled = false;
                         spinner.classList.add('hidden');
-                        text.innerText = 'Next';
+                        text.innerText = 'Connect Email';
                     }
-                } catch (error) { 
-                    errText.innerText = 'A network error occurred: ' + error.message; 
+                } catch (error) {
+                    errText.innerText = 'Network error: ' + error.message;
                     errBox.classList.remove('hidden');
-                    errBox.classList.add('flex');
                     btn.disabled = false;
                     spinner.classList.add('hidden');
-                    text.innerText = 'Next';
+                    text.innerText = 'Connect Email';
                 }
             }
         </script>
@@ -207,12 +228,13 @@
                         </div>
                         <div class="text-xs text-slate-500 flex items-center space-x-4">
                             <span id="viewDate"></span>
-                            <i class="fa-solid fa-reply cursor-pointer hover:text-slate-700"></i>
-                            <i class="fa-solid fa-ellipsis-vertical cursor-pointer hover:text-slate-700"></i>
+                            <button type="button" onclick="openReplyModal()" title="Reply" class="hover:bg-slate-100 p-1.5 rounded-full transition-colors">
+                                <i class="fa-solid fa-reply"></i>
+                            </button>
                         </div>
                     </div>
                     <!-- Email Body -->
-                    <iframe id="viewBodyFrame" class="w-full border-none ml-14" style="min-height: 400px;" sandbox="allow-same-origin"></iframe>
+                    <iframe id="viewBodyFrame" class="w-full border-none ml-14" style="min-height: 400px;" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads"></iframe>
                 </div>
             </div>
             
@@ -236,13 +258,20 @@
                         <div class="border-b border-[#f2f2f4] flex flex-col justify-end px-4 min-h-[40px]">
                             <input type="text" id="composeSubject" placeholder="Subject" required class="w-full py-1 bg-transparent border-none focus:ring-0 text-[0.875rem] text-[#202124] placeholder-slate-500 focus:outline-none">
                         </div>
-                        <div class="flex-1 px-4 py-2">
-                            <textarea id="composeBody" placeholder="" required class="w-full h-full resize-none border-none bg-transparent focus:ring-0 text-[0.875rem] text-[#202124] p-0 focus:outline-none"></textarea>
-                        </div>
-                        
+                        <!-- Rich text body (contenteditable so we can embed images and links) -->
+                        <div id="composeBody" contenteditable="true" data-placeholder="Write your message here..."
+                             class="flex-1 px-4 py-2 text-[0.875rem] text-[#202124] outline-none overflow-y-auto compose-body-placeholder"
+                             style="min-height: 100px;"></div>
+
+                        <!-- Hidden file input (any type) -->
+                        <input type="file" id="composeFileInput" multiple class="hidden" onchange="handleComposeFiles(event)">
+
+                        <!-- Attached files list -->
+                        <div id="composeAttachments" class="hidden px-4 py-2 border-t border-[#f2f2f4] flex flex-wrap gap-2"></div>
+
                         <!-- Error Message -->
                         <div id="composeErrorBox" class="hidden mx-2 mb-2 p-2 bg-red-100 text-red-700 text-xs rounded"></div>
-                        
+
                         <!-- Footer -->
                         <div class="p-3 border-t border-[#f2f2f4] flex items-center justify-between bg-white rounded-b-xl">
                             <div class="flex items-center">
@@ -250,12 +279,18 @@
                                     <svg id="composeSpinner" class="hidden animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                     <span id="composeBtnText">Send</span>
                                 </button>
-                                <div class="w-px h-6 bg-slate-200 mx-4"></div>
-                                <i class="fa-solid fa-font text-slate-500 hover:text-slate-700 mr-4 cursor-pointer"></i>
-                                <i class="fa-solid fa-paperclip text-slate-500 hover:text-slate-700 mr-4 cursor-pointer"></i>
-                                <i class="fa-solid fa-link text-slate-500 hover:text-slate-700 mr-4 cursor-pointer"></i>
+                                <div class="w-px h-6 bg-slate-200 mx-3"></div>
+                                <button type="button" onclick="composeBold()" title="Bold" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors">
+                                    <i class="fa-solid fa-bold text-sm"></i>
+                                </button>
+                                <button type="button" onclick="document.getElementById('composeFileInput').click()" title="Attach file" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors ml-1">
+                                    <i class="fa-solid fa-paperclip text-sm"></i>
+                                </button>
+                                <button type="button" onclick="composeInsertLink()" title="Insert link" class="px-2 py-1 hover:bg-slate-100 rounded text-slate-600 transition-colors ml-1">
+                                    <i class="fa-solid fa-link text-sm"></i>
+                                </button>
                             </div>
-                            <button type="button" onclick="closeComposeModal()" class="text-slate-500 hover:text-slate-700 p-2"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" onclick="closeComposeModal()" class="text-slate-500 hover:text-slate-700 p-2" title="Discard"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </form>
                 </div>
@@ -263,12 +298,24 @@
 
         </div>
 
+        <style>
+            .compose-body-placeholder:empty:before {
+                content: attr(data-placeholder);
+                color: #9ca3af;
+                pointer-events: none;
+            }
+            #composeBody img { max-width: 100%; height: auto; display: block; margin: 4px 0; }
+            #composeBody a   { color: #1a73e8; text-decoration: underline; }
+            #composeBody b, #composeBody strong { font-weight: 700; }
+        </style>
+
         <script>
             let currentFolder = 'INBOX';
             let activeEmails = [];
             let isLoading = false;
             let selectedEmails = new Set();
             let starredEmails = new Set();
+            let currentOpenMail = null;
 
             document.addEventListener('DOMContentLoaded', () => {
                 updateSidebarUI();
@@ -290,6 +337,7 @@
 
             function closeComposeModal() {
                 document.getElementById('composeModal').classList.add('hidden');
+                if (typeof resetComposeAttachments === 'function') resetComposeAttachments();
             }
 
             function changeFolder(folder) {
@@ -329,7 +377,7 @@
                 refreshIcon.classList.add('animate-spin');
 
                 try {
-                    const fetchUrl = `{{ route('webmail.fetch') }}?folder=${encodeURIComponent(currentFolder)}`;
+                    const fetchUrl = `{{ route('webmail.fetch') }}?folder=${encodeURIComponent(currentFolder)}&limit=200`;
                     const response = await fetch(fetchUrl, { headers: { 'Accept': 'application/json' } });
                     const data = await response.json();
                     console.log(data, "data");
@@ -425,8 +473,87 @@
                 renderList();
             }
 
+            function openReplyModal() {
+                const mail = currentOpenMail;
+                if (!mail) {
+                    alert('Open an email first to reply.');
+                    return;
+                }
+                const replyTo = mail.reply_to || mail.from;
+                const subject = mail.subject && mail.subject.match(/^Re:/i) ? mail.subject : 'Re: ' + (mail.subject || '');
+                document.getElementById('composeTo').value = replyTo || '';
+                document.getElementById('composeSubject').value = subject;
+                document.getElementById('composeBody').innerHTML = '';
+                if (typeof resetComposeAttachments === 'function') resetComposeAttachments();
+                openComposeModal();
+                setTimeout(() => document.getElementById('composeBody').focus(), 50);
+            }
+
+            /* ─── Compose rich-text helpers ─── */
+            function composeBold() {
+                document.getElementById('composeBody').focus();
+                document.execCommand('bold', false, null);
+            }
+
+            function composeInsertLink() {
+                const url = prompt('Enter URL (e.g. https://example.com):');
+                if (!url) return;
+                const body = document.getElementById('composeBody');
+                body.focus();
+                const sel = window.getSelection();
+                if (sel && sel.toString().length > 0) {
+                    document.execCommand('createLink', false, url);
+                } else {
+                    // No selection — insert the URL as both text and href
+                    document.execCommand('insertHTML', false,
+                        `<a href="${url}" target="_blank">${url}</a>`);
+                }
+            }
+
+            /* ─── File attachment handling ─── */
+            let composeAttachments = [];
+
+            function handleComposeFiles(e) {
+                const files = Array.from(e.target.files || []);
+                files.forEach(f => composeAttachments.push(f));
+                renderComposeAttachments();
+                e.target.value = '';
+            }
+
+            function renderComposeAttachments() {
+                const wrap = document.getElementById('composeAttachments');
+                wrap.innerHTML = '';
+                if (composeAttachments.length === 0) {
+                    wrap.classList.add('hidden');
+                    return;
+                }
+                wrap.classList.remove('hidden');
+                composeAttachments.forEach((f, idx) => {
+                    const sizeKb = (f.size / 1024).toFixed(1);
+                    const chip = document.createElement('div');
+                    chip.className = 'inline-flex items-center gap-2 bg-[#e8f0fe] text-[#1a73e8] text-xs px-3 py-1.5 rounded-full';
+                    chip.innerHTML =
+                        `<i class="fa-solid fa-paperclip text-xs"></i>` +
+                        `<span class="max-w-[160px] truncate" title="${f.name.replace(/"/g, '&quot;')}">${f.name}</span>` +
+                        `<span class="text-slate-500">${sizeKb} KB</span>` +
+                        `<button type="button" onclick="removeComposeAttachment(${idx})" class="ml-1 text-slate-500 hover:text-red-600"><i class="fa-solid fa-xmark text-xs"></i></button>`;
+                    wrap.appendChild(chip);
+                });
+            }
+
+            function removeComposeAttachment(idx) {
+                composeAttachments.splice(idx, 1);
+                renderComposeAttachments();
+            }
+
+            function resetComposeAttachments() {
+                composeAttachments = [];
+                renderComposeAttachments();
+            }
+
             function openEmail(index) {
                 const mail = activeEmails[index];
+                currentOpenMail = mail;
                 document.getElementById('emailList').classList.add('hidden');
                 document.getElementById('emailReadingPane').classList.remove('hidden');
                 
@@ -468,49 +595,80 @@
                     } catch(e) {}
                 }, 500);
 
-                mail.flags.seen = true; // Mark as seen locally
+                // Mark as seen — locally for immediate UI feedback, and on the
+                // server so the seen state survives refreshes/sessions.
+                if (!mail.flags.seen) {
+                    mail.flags.seen = true;
+                    fetch('{{ route('webmail.mark-seen') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ uid: mail.id, folder: currentFolder })
+                    }).catch(() => {});
+                }
             }
 
             function closeEmail() {
                 document.getElementById('emailReadingPane').classList.add('hidden');
                 document.getElementById('emailList').classList.remove('hidden');
-                // Re-render list to reflect any "seen" changes if applicable
+                currentOpenMail = null;
                 renderList();
             }
 
             async function sendMail() {
-                const btn = document.getElementById('btnSendMail');
-                const spinner = document.getElementById('composeSpinner');
-                const btnText = document.getElementById('composeBtnText');
+                const btn      = document.getElementById('btnSendMail');
+                const spinner  = document.getElementById('composeSpinner');
+                const btnText  = document.getElementById('composeBtnText');
                 const errorBox = document.getElementById('composeErrorBox');
-                
-                const to = document.getElementById('composeTo').value;
-                const subject = document.getElementById('composeSubject').value;
-                const body = document.getElementById('composeBody').value;
+
+                const to      = document.getElementById('composeTo').value.trim();
+                const subject = document.getElementById('composeSubject').value.trim();
+                const bodyEl  = document.getElementById('composeBody');
+                const body    = bodyEl.innerHTML.trim();
+
+                errorBox.classList.add('hidden');
+
+                if (!to || !subject) {
+                    errorBox.innerText = 'Please fill in To and Subject.';
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
+                if (!body || body === '<br>') {
+                    errorBox.innerText = 'Message body cannot be empty.';
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
 
                 btn.disabled = true;
                 spinner.classList.remove('hidden');
                 btnText.innerText = 'Sending...';
-                errorBox.classList.add('hidden');
 
                 try {
+                    const fd = new FormData();
+                    fd.append('to', to);
+                    fd.append('subject', subject);
+                    fd.append('body', body);
+                    composeAttachments.forEach(f => fd.append('attachments[]', f, f.name));
+
                     const response = await fetch('{{ route('webmail.send') }}', {
                         method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json', 
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json'
                         },
-                        body: JSON.stringify({ to, subject, body })
+                        body: fd
                     });
                     const data = await response.json();
-                    
+
                     if (data.success) {
                         document.getElementById('composeTo').value = '';
                         document.getElementById('composeSubject').value = '';
-                        document.getElementById('composeBody').value = '';
+                        bodyEl.innerHTML = '';
+                        resetComposeAttachments();
                         closeComposeModal();
-                        
-                        // Always refresh if on Sent or Inbox
+                        // Refresh after a short delay so server-side Sent append has time to land
                         setTimeout(() => fetchMails(), 1500);
                         showToast("Message sent.");
                     } else {

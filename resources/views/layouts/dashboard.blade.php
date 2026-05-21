@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" :class="{ 'dark': darkMode }" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,33 @@
     <title>@yield('title', 'Dashboard') - Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js for interactivity (sidebar, dropdowns) -->
+    <!-- Apply theme class BEFORE Alpine boots to avoid flash of light/dark -->
+    <script>
+        (function() {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <!-- Alpine.js: register a global theme store, then load the library -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('theme', {
+                dark: localStorage.getItem('darkMode') === 'true',
+                init() {
+                    document.documentElement.classList.toggle('dark', this.dark);
+                },
+                toggle() { this.set(!this.dark); },
+                set(val) {
+                    this.dark = !!val;
+                    localStorage.setItem('darkMode', this.dark ? 'true' : 'false');
+                    document.documentElement.classList.toggle('dark', this.dark);
+                },
+            });
+        });
+    </script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -121,9 +147,14 @@
                 <a href="{{ route('messages.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('messages.*') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white' }} transition-colors group relative">
                     <i class="fa-regular fa-envelope w-5 text-center {{ request()->routeIs('messages.*') ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200' }}"></i>
                     <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Inbox</span>
-                    <!-- Example badge -->
-                    <!-- <span x-show="sidebarOpen" class="absolute right-3 top-1/2 -translate-y-1/2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span> -->
                 </a>
+
+                @if(auth()->user()->role !== 'super_admin')
+                <a href="{{ route('notes.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('notes.*') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white' }} transition-colors group">
+                    <i class="fa-regular fa-lightbulb w-5 text-center {{ request()->routeIs('notes.*') ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200' }}"></i>
+                    <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Notes</span>
+                </a>
+                @endif
 
                 @if(auth()->user()->role === 'super_admin')
                 <p x-show="sidebarOpen" class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-6 transition-opacity">Admin</p>
@@ -201,9 +232,9 @@
                     </form>
 
                     <!-- Dark Mode Toggle -->
-                    <button @click="darkMode = !darkMode" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
-                        <i class="fa-regular fa-moon" x-show="!darkMode"></i>
-                        <i class="fa-regular fa-sun text-yellow-400" x-show="darkMode" x-cloak></i>
+                    <button @click="$store.theme.toggle()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+                        <i class="fa-regular fa-moon" x-show="!$store.theme.dark"></i>
+                        <i class="fa-regular fa-sun text-yellow-400" x-show="$store.theme.dark" x-cloak></i>
                     </button>
 
                     <!-- Notifications -->
@@ -256,7 +287,7 @@
                     <!-- Profile Dropdown -->
                     <div class="relative ml-2" @click.away="profileDropdownOpen = false">
                         <button @click="profileDropdownOpen = !profileDropdownOpen" class="flex items-center gap-2 focus:outline-none">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=E0E7FF&color=4F46E5" alt="Profile" class="h-8 w-8 rounded-full object-cover ring-2 ring-white dark:ring-slate-700 shadow-sm">
+                            <img src="{{ auth()->user()->avatar_url }}" alt="Profile" class="h-8 w-8 rounded-full object-cover ring-2 ring-white dark:ring-slate-700 shadow-sm">
                             <span class="hidden md:block text-sm font-medium text-slate-700 dark:text-slate-200">{{ explode(' ', trim(auth()->user()->name))[0] }}</span>
                             <i class="fa-solid fa-chevron-down text-xs text-slate-400 hidden md:block"></i>
                         </button>
@@ -268,8 +299,10 @@
                                 <p class="text-xs text-slate-500 dark:text-slate-400 truncate">{{ auth()->user()->email }}</p>
                                 <p class="text-xs text-indigo-600 dark:text-indigo-400 mt-1 uppercase font-semibold">{{ str_replace('_', ' ', auth()->user()->role) }}</p>
                             </div>
-                            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Your Profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Settings</a>
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"><i class="fa-regular fa-user mr-2 text-slate-400"></i>Your Profile</a>
+                            @if(in_array(auth()->user()->role, ['super_admin', 'hr']))
+                            <a href="{{ route('settings.index') }}" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"><i class="fa-solid fa-gear mr-2 text-slate-400"></i>Settings</a>
+                            @endif
                             
                             <form action="{{ route('logout') }}" method="POST" class="border-t border-slate-100 dark:border-slate-700 m-0">
                                 @csrf
@@ -327,6 +360,86 @@
     @stack('scripts')
 
     @auth
+    <script>
+    // ── OS / Browser Push Notifications ──────────────────────────────────────
+    (function() {
+        let lastNotifCount = {{ auth()->user()->unreadNotifications->count() }};
+        const CSRF = '{{ csrf_token() }}';
+
+        function showBrowserNotif(title, body, url) {
+            if (Notification.permission !== 'granted') return;
+            const n = new Notification(title, {
+                body: body,
+                icon: '{{ asset("assets/images/logo-xpertva.png") }}',
+                badge: '{{ asset("assets/images/logo-xpertva.png") }}',
+                tag: 'xpertva-' + Date.now(),
+                requireInteraction: false,
+            });
+            if (url) n.onclick = () => { window.focus(); window.location.href = url; n.close(); };
+        }
+
+        async function requestPermission() {
+            if (!('Notification' in window)) return;
+            if (Notification.permission === 'default') {
+                await Notification.requestPermission();
+            }
+        }
+
+        async function pollNotifications() {
+            try {
+                const res = await fetch('/notifications/poll', { headers: { 'X-CSRF-TOKEN': CSRF } });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.count > lastNotifCount) {
+                    const diff = data.count - lastNotifCount;
+                    if (data.latest) {
+                        showBrowserNotif(
+                            data.latest.title || 'New Notification',
+                            data.latest.message || '',
+                            data.latest.url || null
+                        );
+                    } else {
+                        showBrowserNotif('XpertVA', `You have ${diff} new notification${diff > 1 ? 's' : ''}`);
+                    }
+                    // Update badge in header
+                    const badge = document.querySelector('.notification-badge');
+                    if (badge) { badge.textContent = data.count; badge.classList.remove('hidden'); }
+                }
+                lastNotifCount = data.count;
+            } catch(e) {}
+        }
+
+        // Request permission on first load then poll every 30s
+        requestPermission().then(() => {
+            setInterval(pollNotifications, 30000);
+        });
+    })();
+
+    // ── Attendance Heartbeat (keep online while tab is open) ────────────────
+    @if(auth()->user()->status === 'online')
+    (function() {
+        const CSRF = '{{ csrf_token() }}';
+        function sendHeartbeat() {
+            navigator.sendBeacon ? sendBeacon() : fetchHeartbeat();
+        }
+        function fetchHeartbeat() {
+            fetch('{{ route("attendance.heartbeat") }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
+                body: '{}'
+            }).catch(() => {});
+        }
+        // Ping every 5 minutes to confirm still online
+        setInterval(sendHeartbeat, 5 * 60 * 1000);
+
+        // On visibility change: when tab becomes visible again, send heartbeat
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) sendHeartbeat();
+        });
+    })();
+    @endif
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let activeTime = 0;

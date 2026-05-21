@@ -13,35 +13,31 @@
 @endpush
 
 @push('schema')
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
+  "@@context": "https://schema.org",
+  "@@type": "Service",
   "name": "Amazon PPC Management Services",
   "serviceType": "Amazon Advertising Management",
-  "provider": { "@id": "https://xpertva.com/#organization" },
+  "provider": { "@@id": "https://xpertva.com/#organization" },
   "areaServed": "Worldwide",
   "description": "Full-service Amazon PPC management including Sponsored Products, Sponsored Brands, Sponsored Display, and Amazon DSP. We lower ACoS, scale profitable spend, and protect branded search.",
   "url": "{{ url('/services/amazon/ppc-management') }}"
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "What is Amazon PPC management?", "acceptedAnswer": { "@type": "Answer", "text": "Amazon PPC management is the ongoing process of building, optimizing, and scaling Sponsored Products, Sponsored Brands, Sponsored Display, and DSP campaigns inside Amazon Ads to drive profitable sales while controlling ACoS and TACoS." } },
-    { "@type": "Question", "name": "What is a good ACoS on Amazon?", "acceptedAnswer": { "@type": "Answer", "text": "A healthy Amazon ACoS depends on profit margin, but most sellers target an ACoS between 15% and 30%. The break-even ACoS equals your profit margin before ad spend; anything below that is profitable." } },
-    { "@type": "Question", "name": "What is the difference between ACoS and TACoS?", "acceptedAnswer": { "@type": "Answer", "text": "ACoS (Advertising Cost of Sale) measures ad spend against ad-attributed revenue only. TACoS (Total ACoS) measures ad spend against total revenue including organic. A falling TACoS while sales grow signals a healthy account." } },
-    { "@type": "Question", "name": "How much do Amazon PPC management services cost?", "acceptedAnswer": { "@type": "Answer", "text": "Amazon PPC management typically costs either a flat $500–$2,500 per month or 10%–20% of monthly ad spend, depending on account size, marketplaces, and whether DSP is included." } },
-    { "@type": "Question", "name": "How long does it take to lower ACoS?", "acceptedAnswer": { "@type": "Answer", "text": "Most accounts see ACoS drop within 30–60 days as negative keywords, bid adjustments, and search-term harvesting compound. Significant restructures can show measurable change within the first 14 days." } }
+    { "@@type": "Question", "name": "What is Amazon PPC management?", "acceptedAnswer": { "@@type": "Answer", "text": "Amazon PPC management is the ongoing process of building, optimizing, and scaling Sponsored Products, Sponsored Brands, Sponsored Display, and DSP campaigns inside Amazon Ads to drive profitable sales while controlling ACoS and TACoS." } },
+    { "@@type": "Question", "name": "What is a good ACoS on Amazon?", "acceptedAnswer": { "@@type": "Answer", "text": "A healthy Amazon ACoS depends on profit margin, but most sellers target an ACoS between 15% and 30%. The break-even ACoS equals your profit margin before ad spend; anything below that is profitable." } },
+    { "@@type": "Question", "name": "What is the difference between ACoS and TACoS?", "acceptedAnswer": { "@@type": "Answer", "text": "ACoS (Advertising Cost of Sale) measures ad spend against ad-attributed revenue only. TACoS (Total ACoS) measures ad spend against total revenue including organic. A falling TACoS while sales grow signals a healthy account." } },
+    { "@@type": "Question", "name": "How much do Amazon PPC management services cost?", "acceptedAnswer": { "@@type": "Answer", "text": "Amazon PPC management typically costs either a flat $500–$2,500 per month or 10%–20% of monthly ad spend, depending on account size, marketplaces, and whether DSP is included." } },
+    { "@@type": "Question", "name": "How long does it take to lower ACoS?", "acceptedAnswer": { "@@type": "Answer", "text": "Most accounts see ACoS drop within 30–60 days as negative keywords, bid adjustments, and search-term harvesting compound. Significant restructures can show measurable change within the first 14 days." } }
   ]
 }
 </script>
-@endverbatim
 @endpush
 
 @section('content')

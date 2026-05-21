@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->foreignId('parent_id')->nullable()->constrained('tasks')->onDelete('cascade');
-        });
+        if (!Schema::hasColumn('tasks', 'parent_id')) {
+            Schema::table('tasks', function (Blueprint $table) {
+                $table->foreignId('parent_id')->nullable()->constrained('tasks')->onDelete('cascade');
+            });
+        }
     }
 
     /**

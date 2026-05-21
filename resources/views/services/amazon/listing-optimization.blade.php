@@ -13,69 +13,63 @@
 @endpush
 
 @push('schema')
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "Service",
+  "@@context": "https://schema.org",
+  "@@type": "Service",
   "name": "Amazon Listing Optimization Services",
   "serviceType": "Amazon SEO and Listing Optimization",
-  "provider": { "@id": "https://xpertva.com/#organization" },
+  "provider": { "@@id": "https://xpertva.com/#organization" },
   "areaServed": "Worldwide",
   "description": "End-to-end Amazon listing optimization including keyword research, title and bullet copywriting, A+ content, image optimization, and backend search terms to improve organic ranking and conversion rate on Amazon Seller Central.",
   "url": "{{ url('/services/amazon/listing-optimization') }}",
-  "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
+  "offers": { "@@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  "@@context": "https://schema.org",
+  "@@type": "FAQPage",
   "mainEntity": [
     {
-      "@type": "Question",
+      "@@type": "Question",
       "name": "What is Amazon listing optimization?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Amazon listing optimization is the process of improving a product detail page — title, bullet points, description, A+ content, images, and backend keywords — so it ranks higher in Amazon search results and converts more shoppers into buyers." }
+      "acceptedAnswer": { "@@type": "Answer", "text": "Amazon listing optimization is the process of improving a product detail page — title, bullet points, description, A+ content, images, and backend keywords — so it ranks higher in Amazon search results and converts more shoppers into buyers." }
     },
     {
-      "@type": "Question",
+      "@@type": "Question",
       "name": "How long does it take to see results from Amazon listing optimization?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Most Amazon sellers see ranking and conversion improvements within 2 to 4 weeks after a fully optimized listing is published, depending on category competitiveness, review velocity, and PPC support." }
+      "acceptedAnswer": { "@@type": "Answer", "text": "Most Amazon sellers see ranking and conversion improvements within 2 to 4 weeks after a fully optimized listing is published, depending on category competitiveness, review velocity, and PPC support." }
     },
     {
-      "@type": "Question",
+      "@@type": "Question",
       "name": "How much does Amazon listing optimization cost?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Professional Amazon listing optimization typically ranges from $150 to $600 per listing depending on whether A+ content, lifestyle images, and brand storefront work are included." }
+      "acceptedAnswer": { "@@type": "Answer", "text": "Professional Amazon listing optimization typically ranges from $150 to $600 per listing depending on whether A+ content, lifestyle images, and brand storefront work are included." }
     },
     {
-      "@type": "Question",
+      "@@type": "Question",
       "name": "What is the difference between Amazon SEO and Amazon PPC?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Amazon SEO improves organic ranking through optimized listing copy, keywords, images, and reviews. Amazon PPC is paid advertising through Sponsored Products, Sponsored Brands, and Sponsored Display campaigns. The two work together: better listings convert PPC clicks more cheaply." }
+      "acceptedAnswer": { "@@type": "Answer", "text": "Amazon SEO improves organic ranking through optimized listing copy, keywords, images, and reviews. Amazon PPC is paid advertising through Sponsored Products, Sponsored Brands, and Sponsored Display campaigns. The two work together: better listings convert PPC clicks more cheaply." }
     },
     {
-      "@type": "Question",
+      "@@type": "Question",
       "name": "Do you optimize listings for Amazon US, UK, and EU marketplaces?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. XpertVA optimizes listings across Amazon US, UK, Canada, Mexico, Germany, France, Italy, Spain, and the UAE marketplaces, with localized keywords and translated copy for each region." }
+      "acceptedAnswer": { "@@type": "Answer", "text": "Yes. XpertVA optimizes listings across Amazon US, UK, Canada, Mexico, Germany, France, Italy, Spain, and the UAE marketplaces, with localized keywords and translated copy for each region." }
     }
   ]
 }
 </script>
-@endverbatim
-@verbatim
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
+  "@@context": "https://schema.org",
+  "@@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Services", "item": "{{ url('/services') }}" },
-    { "@type": "ListItem", "position": 2, "name": "Amazon", "item": "{{ url('/services/amazon') }}" },
-    { "@type": "ListItem", "position": 3, "name": "Listing Optimization", "item": "{{ url('/services/amazon/listing-optimization') }}" }
+    { "@@type": "ListItem", "position": 1, "name": "Services", "item": "{{ url('/services') }}" },
+    { "@@type": "ListItem", "position": 2, "name": "Amazon", "item": "{{ url('/services/amazon') }}" },
+    { "@@type": "ListItem", "position": 3, "name": "Listing Optimization", "item": "{{ url('/services/amazon/listing-optimization') }}" }
   ]
 }
 </script>
-@endverbatim
 @endpush
 
 @section('content')

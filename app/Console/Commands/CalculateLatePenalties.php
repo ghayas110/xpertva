@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Attendance;
+use App\Models\CompanySetting;
 use App\Models\LateRecord;
 use App\Mail\LateWarningMail;
 use App\Mail\SalaryDeductionMail;
@@ -35,7 +36,8 @@ class CalculateLatePenalties extends Command
         $targetDate = $this->option('date') ? Carbon::parse($this->option('date')) : Carbon::yesterday();
         $this->info("Processing late penalties for: " . $targetDate->toDateString());
 
-        $lateCutoffTime = Carbon::parse($targetDate->toDateString() . ' 16:55:00'); // 4:55 PM cutoff
+        $cutoff = CompanySetting::current()->late_cutoff;
+        $lateCutoffTime = Carbon::parse($targetDate->toDateString() . ' ' . $cutoff);
         
         // 1. Find all users who clocked in yesterday after 04:55
         // Or didn\'t clock in (for a more advanced system, but rule only mentions "clocking in late")

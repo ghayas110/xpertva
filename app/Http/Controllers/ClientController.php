@@ -54,7 +54,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'company_name' => 'required|string|max:255',
-            'company_logo' => 'nullable|image|max:2048',
+            'company_logo' => 'nullable|image',
             'email' => 'nullable|array',
             'email.*' => 'nullable|email|max:255',
             'phone' => 'nullable|array',
