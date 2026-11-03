@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'XpertVA - Professional Virtual Assistant Services')</title>
     <meta name="description" content="@yield('meta_description', 'Professional virtual assistant services to help you grow your business. Streamline operations, manage ecommerce stores, support Amazon sellers, and more.')">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     
     <!-- Original Preloads -->
     <link rel="preload" as="image" href="/logos/FLY.png"/><link rel="preload" as="image" href="/logos/GAX.png"/><link rel="preload" as="image" href="/logos/GLOBAL WALKOUT.png"/><link rel="preload" as="image" href="/logos/GRAPEXX.png"/><link rel="preload" as="image" href="/logos/GYMKHANA.png"/><link rel="preload" as="image" href="/logos/H.png"/><link rel="preload" as="image" href="/logos/HOLIDAY APARTMENT.png"/><link rel="preload" as="image" href="/logos/HOMELUX.png"/><link rel="preload" as="image" href="/logos/LONDON LABS.png"/><link rel="preload" as="image" href="/logos/LOOKSMITT.png"/>

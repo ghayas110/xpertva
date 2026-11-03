@@ -6,6 +6,10 @@
     <title>@yield('title', 'XpertVA - eCommerce operations for Amazon, Shopify, Walmart and eBay brands')</title>
     <meta name="description" content="@yield('meta_description', 'XpertVA runs marketplace operations for eCommerce brands. Listings, advertising, account health and creative on Amazon, Shopify, Walmart and eBay. Founded 2017.')">
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#FAF9F6">
 
