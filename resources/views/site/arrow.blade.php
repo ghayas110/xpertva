@@ -1,0 +1,1 @@
+<svg class="{{ $class ?? 'btn__arrow' }}" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 4.5h7v7"/><path d="M4.5 11.5 11.5 4.5"/></svg>

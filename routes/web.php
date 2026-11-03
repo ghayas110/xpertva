@@ -130,6 +130,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/{user}/fire', [\App\Http\Controllers\UserController::class, 'fire'])->name('users.fire');
     Route::get('/activities', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('admin.activities');
 
+    // Desktop monitoring agent provisioning (super admin only)
+    Route::get('/admin/agents', [\App\Http\Controllers\Admin\AgentProvisionController::class, 'index'])->name('admin.agents');
+    Route::post('/admin/agents/{user}/regenerate', [\App\Http\Controllers\Admin\AgentProvisionController::class, 'regenerate'])->name('admin.agents.regenerate');
+
     // Notifications
     Route::post('/notifications/mark-all-read', function () {
         auth()->user()->unreadNotifications->markAsRead();

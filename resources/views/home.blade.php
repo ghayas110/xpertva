@@ -1,147 +1,299 @@
-@extends('layouts.app')
+@extends('layouts.site')
 
 @section('title', 'Virtual Assistant Services for Amazon, eBay, Shopify & Walmart Sellers | XpertVA')
 @section('meta_description', 'Expert virtual assistant services for Amazon, eBay, Shopify, and Walmart sellers. Listing optimization, PPC management, account health, and storefront design. 500+ brands scaled since 2017.')
 
 @push('head')
 <link rel="canonical" href="{{ url('/') }}">
+<link rel="preload" as="image" href="{{ asset('assets/proof/hero-dashboard.jpg') }}" fetchpriority="high">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Virtual Assistant Services for Amazon, eBay, Shopify & Walmart Sellers | XpertVA">
 <meta property="og:description" content="Expert virtual assistant services for eCommerce sellers. Listing optimization, PPC, A+ content, account health, and brand protection on Amazon, eBay, Shopify, and Walmart.">
 <meta property="og:url" content="{{ url('/') }}">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
 <meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @section('content')
-<!-- Hero Section -->
-<section class="text-white flex flex-col px-4 sm:px-6 md:px-12 py-24 sm:py-32 md:py-44 text-center">
-    <div class="w-full mt-10">
-        <h1 class="text-3xl sm:text-4xl md:text-7xl font-light mb-8 leading-snug md:leading-tight">Virtual assistant services <br class="hidden md:block"/>that scale your <span class="text-indigo-500 font-medium transition-all duration-500">Amazon sales</span></h1>
-        
-        <div class="w-full mt-12 sm:mt-16 md:mt-20 mx-auto">
-            <video autoplay loop muted playsinline preload="metadata" poster="{{ asset('assets/images/hero-poster.jpg') }}" fetchpriority="high" class="w-full max-w-7xl mx-auto rounded-xl shadow-xl border border-gray-700 cursor-pointer" title="XpertVA virtual assistant services showcase" aria-label="XpertVA virtual assistant services showcase">
-                <source src="{{ asset('assets/videos/hero-video.mp4') }}" type="video/mp4"/>
-                Your browser does not support video.
-            </video>
+
+{{-- 1. Hero: asymmetric split. Real Seller Central proof sits above the fold. --}}
+<section class="hero">
+    <div class="wrap">
+        <div class="hero__grid">
+            <div>
+                <h1 class="display hero__title">
+                    <span class="reveal-line"><span>The team that runs</span></span>
+                    <span class="reveal-line"><span>your <em>marketplace</em>.</span></span>
+                </h1>
+                <p class="lede" data-hero-in>
+                    Listings, advertising, account health and creative for brands selling on
+                    Amazon, Shopify, Walmart and eBay.
+                </p>
+                <div class="hero__ctas" data-hero-in>
+                    <button type="button" class="btn btn--primary btn--lg" data-open="consult">
+                        Book a consultation
+                        @include('site.arrow')
+                    </button>
+                    <a class="btn btn--ghost btn--lg" href="{{ route('work') }}">See the work</a>
+                </div>
+            </div>
+
+            {{-- The people, and the report they produced. Both above the fold. --}}
+            <figure class="hero__stage" style="margin:0" data-hero-in>
+                <div class="photo">
+                    <img src="{{ asset('assets/photos/team-laptops.jpg') }}"
+                         width="1800" height="1800" fetchpriority="high" decoding="async"
+                         alt="Account managers working through marketplace reports together at a shared desk.">
+                </div>
+                <div class="hero__proof">
+                    <img src="{{ asset('assets/proof/hero-dashboard.jpg') }}"
+                         width="1600" height="1000" fetchpriority="high" decoding="async"
+                         alt="Amazon Seller Central sales dashboard for a managed XpertVA client account showing 9,226,488 dollars in ordered product sales and a rising units-ordered trend line from September 2024 to November 2025.">
+                </div>
+                <figcaption class="hero__caption">
+                    One managed account, 14 months. Brand name removed at the client's request.
+                </figcaption>
+            </figure>
         </div>
     </div>
 </section>
 
-<!-- Values Section -->
-<div class="transition-all duration-700 w-full bg-cover bg-center">
-    <div class="min-h-64 border-t border-white flex items-center text-white transition-all duration-700 px-6 sm:px-12 md:px-24 justify-start text-left">
-        <h2 class="text-4xl sm:text-5xl md:text-7xl font-medium transform transition-all duration-700 ease-out -translate-x-10 opacity-50">Create</h2>
+{{-- 2. Client logos. Under the hero, marks only, one marquee on the page. --}}
+<section class="section--tight" aria-label="Brands we work with">
+    <div class="marquee">
+        <div class="marquee__track">
+            {{-- Only marks with a clean alpha channel are used here; the silhouette
+                 treatment in site.css turns a mixed set of source files into one strip. --}}
+            @foreach ([
+                'Bulbrite', 'HOMELUX', 'LONDON LABS', 'NOVAVITA NUTRITION',
+                'CREEK', 'ASTORIA', 'EAGLES', 'AGENTS MOTOR PARTS', 'ATTAR MIST',
+                'CONRAD SHOPPING', 'FLY', 'WE LOVE RESTURANT',
+                'DIAMOND EXCELLENCY', 'HOLIDAY APARTMENT',
+            ] as $logo)
+                <img src="{{ asset('assets/logos/' . $logo . '.png') }}" alt="{{ $logo }}" loading="lazy" decoding="async" height="40">
+            @endforeach
+        </div>
     </div>
-    <div class="min-h-64 border-t border-white flex items-center text-white transition-all duration-700 px-6 sm:px-12 md:px-24 justify-end text-right">
-        <h2 class="text-4xl sm:text-5xl md:text-7xl font-medium transform transition-all duration-700 ease-out -translate-x-10 opacity-50">Collaborate</h2>
-    </div>
-    <div class="min-h-64 border-t border-white flex items-center text-white transition-all duration-700 border-b px-6 sm:px-12 md:px-24 justify-start text-left">
-        <h2 class="text-4xl sm:text-5xl md:text-7xl font-medium transform transition-all duration-700 ease-out -translate-x-10 opacity-50">Disrupt</h2>
-    </div>
-    <div class="bg-black/60 text-white flex flex-col md:flex-row justify-end px-6 sm:px-12 py-12 space-y-8 md:space-y-0">
-        <p class="text-base sm:text-lg md:w-1/2 leading-relaxed">We view our clients as creative partners.</p>
-        <p class="text-base sm:text-lg md:w-1/2 leading-relaxed">Together, we transform digital platforms through the fusion of diverse ideas.</p>
-    </div>
-</div>
+</section>
 
-<!-- What We Do -->
-<section class="py-24 bg-black text-white px-6 sm:px-12 md:px-24">
-    <div class="flex justify-between items-center mb-16">
-        <h2 class="text-4xl font-semibold">What We Do</h2>
-        <a href="{{ route('services.index') }}" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-2 group">
-            All Services <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-        </a>
+{{-- 3. Proof numbers. --}}
+<section class="band section--tight">
+    <div class="wrap">
+        <ul class="stats">
+            <li data-anim>
+                <p class="stat__value"><span data-count="9.2" data-decimals="1" data-prefix="$" data-suffix="M">$9.2M</span></p>
+                <p class="stat__label">Ordered product sales on one managed account over 14 months</p>
+            </li>
+            <li data-anim data-anim-delay="0.08">
+                <p class="stat__value"><span data-count="54039">54,039</span></p>
+                <p class="stat__label">Orders processed on that same account</p>
+            </li>
+            <li data-anim data-anim-delay="0.16">
+                <p class="stat__value"><span data-count="500" data-suffix="+">500+</span></p>
+                <p class="stat__label">Brands supported since we opened in 2017</p>
+            </li>
+            <li data-anim data-anim-delay="0.24">
+                <p class="stat__value"><span data-count="98" data-suffix="%">98%</span></p>
+                <p class="stat__label">Client satisfaction across active accounts</p>
+            </li>
+        </ul>
     </div>
+</section>
 
-    <!-- Service Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+{{-- 4. Capability index. Hovering a discipline shows real work from that discipline. --}}
+<section class="section" data-cindex>
+    <div class="wrap">
+        <div class="cindex">
+            <div>
+                <h2 class="h2 mb-3" data-split-heading>Six disciplines,<br>run in house.</h2>
+                <p class="body mb-4" data-anim>
+                    No reselling to a third agency. Every account is worked by an operator who
+                    has run a Seller Central account of their own.
+                </p>
+
+                <ul class="cindex__list">
+                    @php
+                        $disciplines = [
+                            ['key' => 'listing', 'name' => 'Listing optimization', 'meta' => 'Titles, bullets, backend keywords and A+ modules written to rank and convert.', 'route' => 'services.amazon.listing-optimization'],
+                            ['key' => 'ppc',     'name' => 'Advertising and PPC',  'meta' => 'Sponsored Products, Brands, Display and DSP, structured for a target ACoS.',       'route' => 'services.amazon.ppc-management'],
+                            ['key' => 'seo',     'name' => 'SEO and keyword research', 'meta' => 'Helium 10, Cerebro and Brand Analytics, mapped to the terms that actually sell.', 'route' => 'services.amazon.seo-keyword-research'],
+                            ['key' => 'aplus',   'name' => 'A+ content and storefront', 'meta' => 'Premium A+, Brand Story and shoppable storefronts built around the catalogue.', 'route' => 'services.amazon.a-plus-storefront'],
+                            ['key' => 'health',  'name' => 'Account health',       'meta' => 'Cases, suspensions, stranded inventory and FBA reimbursement recovery.',        'route' => 'services.amazon.account-management'],
+                            ['key' => 'brand',   'name' => 'Brand protection',     'meta' => 'Hijacker removal, MAP enforcement, counterfeit takedowns and Brand Registry.',   'route' => 'services.amazon.brand-protection'],
+                        ];
+                    @endphp
+                    @foreach ($disciplines as $d)
+                        <li>
+                            <a class="cindex__row" href="{{ route($d['route']) }}" data-cindex-key="{{ $d['key'] }}">
+                                <span>
+                                    <span class="cindex__name">{{ $d['name'] }}</span>
+                                    <span class="cindex__meta">{{ $d['meta'] }}</span>
+                                </span>
+                                <span class="cindex__go" aria-hidden="true">@include('site.arrow', ['class' => 'btn__arrow'])</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="cindex__preview" aria-hidden="true">
+                <img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/Storefront/b1lyQ4S1zi.jpg') }}" alt="">
+                <img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/PPC Campaign Management & Optimization/gA69WkFEUI.jpg') }}" alt="">
+                <img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/Keyword Research/final.jpg') }}" alt="">
+                <img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/Premium-Basic A%2B Content/QlRcqWsLX5.jpg') }}" alt="">
+                <img data-cindex-img="health" loading="lazy" src="{{ asset('assets/Account Health/c3hrneItb1.jpg') }}" alt="">
+                <img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/MAP Enforcement/All Blur 2.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- 5. Case studies. The pan turns three accounts into one horizontal story. --}}
+<section class="pan" data-pan aria-label="Case studies">
+    <div class="pan__track">
+        <div class="pan__intro">
+            <p class="eyebrow mb-3">Reports, not renderings</p>
+            <h2 class="h2 mb-3" data-split-heading>Numbers straight<br>out of Seller Central.</h2>
+            <p class="body">
+                Every figure below is a screenshot of the client's own sales report.
+                Brand names are removed because the accounts are still live.
+            </p>
+        </div>
+
         @php
-        $main_services = [
-            ['title' => 'Amazon Services', 'icon' => 'shopping-cart', 'url' => route('services.amazon'), 'color' => 'text-yellow-400'],
-            ['title' => 'eBay Services', 'icon' => 'package', 'url' => route('services.ebay'), 'color' => 'text-blue-400'],
-            ['title' => 'Shopify Services', 'icon' => 'globe', 'url' => route('services.shopify'), 'color' => 'text-green-400'],
-            ['title' => 'Walmart Services', 'icon' => 'store', 'url' => route('services.walmart'), 'color' => 'text-blue-500']
-        ];
+            $cases = [
+                [
+                    'img'    => 'assets/proof/case-q1.jpg',
+                    'figure' => '$976,715.50',
+                    'title'  => 'A single quarter, one managed account',
+                    'body'   => '4,308 orders and 7,355 units of ordered product sales across the quarter.',
+                    'alt'    => 'Amazon Seller Central sales snapshot showing 976,715 dollars and 50 cents in ordered product sales from 4,308 order items.',
+                ],
+                [
+                    'img'    => 'assets/proof/case-q4.jpg',
+                    'figure' => '$2,086,577.20',
+                    'title'  => 'Peak season, October to December 2024',
+                    'body'   => '7,638 orders and 12,585 units through the busiest quarter of the year.',
+                    'alt'    => 'Amazon Seller Central sales snapshot for October to December 2024 showing 2,086,577 dollars and 20 cents in ordered product sales.',
+                ],
+                [
+                    'img'    => 'assets/proof/case-year.jpg',
+                    'figure' => '$9,226,488.00',
+                    'title'  => 'Fourteen months, September 2024 to November 2025',
+                    'body'   => '54,039 orders and 85,277 units, with units ordered climbing through the period.',
+                    'alt'    => 'Amazon Seller Central sales dashboard showing 9,226,488 dollars in ordered product sales and a rising units ordered trend from September 2024 to November 2025.',
+                ],
+            ];
         @endphp
 
-        @foreach($main_services as $service)
-        <a href="{{ $service['url'] }}" class="group bg-gray-900/50 border border-gray-800 p-10 rounded-3xl hover:bg-gray-800/50 transition duration-500">
-            <h3 class="text-2xl font-semibold mb-4 {{ $service['color'] }}">{{ $service['title'] }}</h3>
-            <p class="text-gray-400 mb-8 leading-relaxed">Expert management and growth strategies tailored for {{ $service['title'] }}.</p>
-            <div class="flex justify-end">
-                <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center group-hover:bg-indigo-600 transition duration-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        @foreach ($cases as $c)
+            <article class="case">
+                <div class="case__media reveal-media">
+                    <img src="{{ asset($c['img']) }}" alt="{{ $c['alt'] }}" loading="lazy" decoding="async" width="1800" height="900">
                 </div>
-            </div>
-        </a>
+                <div class="case__body">
+                    <p class="case__figure num">{{ $c['figure'] }}</p>
+                    <h3 class="h3">{{ $c['title'] }}</h3>
+                    <p class="body">{{ $c['body'] }}</p>
+                </div>
+            </article>
         @endforeach
     </div>
 </section>
 
-<!-- Success Stories -->
-<section class="py-24 bg-[#050505] text-white px-6 sm:px-12 md:px-24">
-    <div class="text-center mb-20">
-        <h2 class="text-4xl md:text-6xl font-bold mb-6">Success Stories</h2>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg">Real results from brands who trusted us. Explore how we helped them grow, scale, and succeed.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <article class="bg-[#111] border border-gray-800 rounded-3xl overflow-hidden group">
-            <div class="aspect-video overflow-hidden">
-                <img src="{{ asset('assets/images/1st-quarter.jpg') }}" alt="Amazon seller case study — Q1 sales chart showing $976,715 in product revenue from XpertVA virtual assistant services" loading="lazy" width="800" height="450" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-            </div>
-            <div class="p-8">
-                <h3 class="text-xl font-semibold mb-2">1st Quarter Sales</h3>
-                <p class="text-indigo-400 text-sm mb-4 font-medium uppercase tracking-wider">Case Study</p>
-                <p class="text-gray-400 line-clamp-3">Virtual Assistant Service Boosted Sales by 3x. Delivered $976,715.50 in ordered product sales.</p>
-            </div>
-        </article>
-        
-        <article class="bg-[#111] border border-gray-800 rounded-3xl overflow-hidden group">
-            <div class="aspect-video overflow-hidden">
-                <img src="{{ asset('assets/images/last-quarter.jpg') }}" alt="Amazon seller case study — quarterly sales chart showing $9.2M in ordered product revenue scaled by XpertVA" loading="lazy" width="800" height="450" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-            </div>
-            <div class="p-8">
-                <h3 class="text-xl font-semibold mb-2">Last Quarter Sales</h3>
-                <p class="text-indigo-400 text-sm mb-4 font-medium uppercase tracking-wider">Case Study</p>
-                <p class="text-gray-400 line-clamp-3">Virtual Assistant Service Boosted Sales by 6x. Generating $9,226,488.00 in ordered product sales.</p>
-            </div>
-        </article>
-
-        <article class="bg-[#111] border border-gray-800 rounded-3xl overflow-hidden group">
-            <div class="aspect-video overflow-hidden">
-                <img src="{{ asset('assets/images/SDS.jpg') }}" alt="Amazon seller case study — 3-month sales report showing $2,086,577 in ordered product revenue with 10x growth from XpertVA" loading="lazy" width="800" height="450" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-            </div>
-            <div class="p-8">
-                <h3 class="text-xl font-semibold mb-2">3 Months Sales</h3>
-                <p class="text-indigo-400 text-sm mb-4 font-medium uppercase tracking-wider">Case Study</p>
-                <p class="text-gray-400 line-clamp-3">Virtual Assistant Service Boosted Sales by 10x. Resulting in $2,086,577.20 in ordered product sales.</p>
-            </div>
-        </article>
+{{-- 6. Other channels. --}}
+<section class="section">
+    <div class="wrap">
+        <h2 class="h2 mb-4" data-split-heading>Amazon is where most<br>brands start with us.</h2>
+        <ul class="channels" data-anim>
+            @foreach ([
+                ['Shopify',  'Theme builds, app stacks, subscription flows and checkout work on your own store.',        'services.shopify'],
+                ['Walmart',  'Item setup, Walmart Fulfilment Services, Connect ads and Buy Box recovery.',              'services.walmart'],
+                ['eBay',     'Store design, listing templates, Promoted Listings and returns handling.',                'services.ebay'],
+                ['Web and marketing', 'Sites, mobile apps, SEO and paid social when the storefront is only part of it.', 'services.index'],
+            ] as [$name, $note, $r])
+                <li>
+                    <a href="{{ route($r) }}">
+                        <span class="channels__name">{{ $name }}</span>
+                        <span class="channels__note">{{ $note }}</span>
+                        <span class="cindex__go" aria-hidden="true">@include('site.arrow')</span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </section>
 
-<!-- CTA Section -->
+{{-- 7. Photographic band. The parallax drift gives the scroll a beat between two dense sections. --}}
+<section class="imgband" data-parallax>
+    <img class="imgband__img" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}"
+         alt="Long aisles of racked inventory inside a fulfilment warehouse." loading="lazy" decoding="async">
+    <div class="imgband__inner">
+        <h2 data-split-heading>Your catalogue is an operation,<br>not a side task.</h2>
+        <p data-anim data-anim-delay="0.1">
+            Pricing, stock, cases, ad bids and compliance move every day. We staff that work
+            so it stops landing on a founder at eleven at night.
+        </p>
+    </div>
+</section>
 
-
- <section class="relative w-full h-[60vh] overflow-hidden bg-black"><img alt="Call to Action Background"
-                decoding="async" data-nimg="fill" class="opacity-90"
-                style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent"
-                src="../assets/images/bg-call.jpg" />
-            <div
-                class="relative z-10 flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-between h-full px-6 sm:px-12 max-w-7xl mx-auto text-center sm:text-left">
-                <div class="text-white text-2xl sm:text-4xl md:text-6xl font-semibold leading-snug sm:leading-tight">
-                    <p>Have an idea?</p>
-                    <p>Let’s bring it to life</p>
-                </div><button
-                    class="mt-8 sm:mt-0 sm:absolute sm:bottom-8 sm:right-8 flex items-center justify-center  w-14 h-14 text-sm font-medium rounded-full  bg-[#6563ff] text-white hover:bg-indigo-600  transition-all duration-300 sm:w-32 sm:h-32 sm:text-lg"><span
-                        class="hidden sm:inline">Get started</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-arrow-up-right w-5 h-5 sm:ml-2" aria-hidden="true">
-                        <path d="M7 7h10v10"></path>
-                        <path d="M7 17 17 7"></path>
-                    </svg></button>
+{{-- 8. How an engagement runs. --}}
+<section class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+        <div class="proc">
+            <div class="proc__head">
+                <p class="eyebrow mb-3">How it runs</p>
+                <h2 class="h2 mb-3" data-split-heading>Four weeks in,<br>you stop guessing.</h2>
+                <div class="photo photo--wide reveal-media mt-2">
+                    <img src="{{ asset('assets/photos/studio-meeting.jpg') }}" loading="lazy" decoding="async"
+                         alt="An XpertVA account team reviewing marketplace performance together in the studio.">
+                </div>
             </div>
-        </section>
+            <div>
+                @foreach ([
+                    ['Audit',   'We pull the account apart. Listings, keyword coverage, ad structure, health metrics and reimbursement gaps. You get the findings in writing before anyone signs anything.'],
+                    ['Rebuild', 'Copy, backend keywords, imagery and A+ modules ship in a planned sequence, so we can attribute what moved and what did not.'],
+                    ['Run',     'A named operator works the account every day. Cases, inventory, pricing, campaign bids, competitor and MAP monitoring.'],
+                    ['Report',  'A weekly note in plain language: what changed, what it cost, what happens next. You can read it in two minutes.'],
+                ] as [$step, $desc])
+                    <div class="proc__row" data-anim>
+                        <h3 class="h3">{{ $step }}</h3>
+                        <p class="body">{{ $desc }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- 9. Testimonial. --}}
+<section class="section">
+    <div class="wrap">
+        <figure class="quote">
+            <div>
+                <blockquote data-split-heading>
+                    "XpertVA helped scale my Amazon business beyond expectations.
+                    Their understanding of eCommerce sets them apart."
+                </blockquote>
+                {{-- TODO: replace with the client's name and company once cleared for publication. --}}
+                <figcaption data-anim data-anim-delay="0.1">
+                    <strong>Managed Amazon seller</strong>
+                    US marketplace, home and lighting category
+                </figcaption>
+            </div>
+            <div class="quote__media reveal-media" data-anim data-anim-delay="0.15">
+                <video controls preload="none" playsinline
+                       poster="{{ asset('assets/images/customer-poster.jpg') }}"
+                       title="XpertVA client video testimonial">
+                    <source src="{{ asset('assets/videos/customer.mp4') }}" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+            </div>
+        </figure>
+    </div>
+</section>
+
+{{-- 10. Closing CTA. --}}
+@include('site.cta')
+
 @endsection

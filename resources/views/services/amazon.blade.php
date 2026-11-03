@@ -1,102 +1,173 @@
-@extends('layouts.app')
+@extends('layouts.site')
 
 @section('title', 'Amazon Services - XpertVA')
-@section('meta_description', 'XpertVA Amazon Seller Central management — listing optimization, PPC advertising, inventory management, BSR improvement, and full account management.')
+@section('meta_description', 'XpertVA Amazon Seller Central management, listing optimization, PPC advertising, inventory management, BSR improvement, and full account management.')
+@section('head_tone', 'site-head--on-dark')
+
+@push('head')
+<link rel="canonical" href="{{ url('/services/amazon') }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Amazon Services | XpertVA">
+<meta property="og:description" content="Amazon Seller Central run end to end: listings, advertising, creative, account health and brand protection.">
+<meta property="og:url" content="{{ url('/services/amazon') }}">
+<meta property="og:image" content="{{ asset('assets/proof/case-year.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
+@endpush
+
+@push('schema')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Service",
+  "name": "Amazon Seller Central Management",
+  "serviceType": "Amazon Marketplace Management",
+  "provider": { "@@id": "https://xpertva.com/#organization" },
+  "areaServed": "Worldwide",
+  "description": "Full service Amazon Seller Central management covering listing optimisation, PPC advertising, SEO and keyword research, A+ content and storefront design, account health and brand protection.",
+  "url": "{{ url('/services/amazon') }}",
+  "offers": { "@@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@@type": "ListItem", "position": 1, "name": "Services", "item": "{{ url('/services') }}" },
+    { "@@type": "ListItem", "position": 2, "name": "Amazon", "item": "{{ url('/services/amazon') }}" }
+  ]
+}
+</script>
+@endpush
 
 @section('content')
-<div class="min-h-screen bg-[#0b0b0b] text-white">
-    <!-- Hero Section -->
-    <section class="relative w-full pt-36 pb-20 bg-gradient-to-br from-[#0d0d0d] via-[#111] to-[#0c0c0c] overflow-hidden">
-        <!-- Top Glow -->
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,140,0,0.15),transparent_60%)]"></div>
 
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 text-gray-400 hover:text-orange-300 transition mb-8">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-                Back to Services
-            </a>
-
-            <div class="flex items-center gap-4 mb-6">
-                <!-- Icon Placeholder -->
-                <div class="p-3 rounded-2xl bg-orange-500/10 border border-orange-500/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-orange-300"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/></svg>
-                </div>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">
-                    Amazon Services
-                </h1>
-            </div>
-            <p class="text-gray-300 leading-relaxed max-w-2xl text-lg mb-8">
-                Comprehensive amazon services solutions tailored to your business needs. 
-                We handle the complexities so you can focus on growth.
-            </p>
-        </div>
-    </section>
-
-    <!-- Services Details Section -->
-    <section class="max-w-7xl mx-auto px-6 py-20">
-        <div class="mb-12">
-            <h2 class="text-3xl font-bold mb-4">What We Offer</h2>
-            <p class="text-gray-400 max-w-3xl">
-                Our specialized team provides end-to-end support for all your Amazon Services needs.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @php
-            $featured = [
-                ['Listing Optimization', 'SEO-optimized titles, bullets, A+ content, and backend keywords that rank and convert.', route('services.amazon.listing-optimization')],
-                ['PPC Management', 'Sponsored Products, Brands, Display, and DSP campaigns managed for lower ACoS.', route('services.amazon.ppc-management')],
-                ['SEO & Keyword Research', 'A10-aligned keyword research using Helium 10, Brand Analytics, and Cerebro.', route('services.amazon.seo-keyword-research')],
-                ['A+ Content & Storefront', 'A+ Content, Premium A+, Brand Story, and shoppable Storefront design.', route('services.amazon.a-plus-storefront')],
-                ['Account Management', 'Account Health, cases, FBA, suspensions, and reimbursement recovery.', route('services.amazon.account-management')],
-                ['Brand Protection', 'Hijacker removal, MAP enforcement, counterfeit takedowns, and Brand Registry.', route('services.amazon.brand-protection')],
-            ];
-            @endphp
-            @foreach($featured as [$f_title, $f_desc, $f_url])
-            <div class="bg-[#121212] border border-[#1f1f1f] rounded-2xl p-8 hover:border-orange-300 transition-all group flex flex-col items-start shadow-xl">
-                <div class="bg-orange-500/10 p-3 rounded-lg mb-4 group-hover:bg-orange-500/20 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-orange-300"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-3 text-white">{{ $f_title }}</h3>
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">{{ $f_desc }}</p>
-                <div class="mt-auto pt-6 border-t border-white/5 w-full">
-                    <a href="{{ $f_url }}" class="text-orange-300 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-                        Read More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-                    </a>
-                </div>
-            </div>
-            @endforeach
-            <!-- Repeat for other 15 items ... I'll include them all for "pixel-perfect" parity -->
-            @foreach(['Listing Optimization', 'Customer Support', 'A to Z Guarantee Claims', 'Amazon Cases', 'Account Health', 'Listing Issues', 'A+ (EBC) Creation', 'Storefront Creation', 'Campaign Management', 'Coupon/Promotion Management', 'Infringements', 'Hijacker Removal', 'Business Report', 'Account Management', 'MAP Enforcement'] as $item)
-            <div class="bg-[#121212] border border-[#1f1f1f] rounded-2xl p-8 hover:border-orange-300 transition-all group flex flex-col items-start shadow-xl">
-                <div class="bg-orange-500/10 p-3 rounded-lg mb-4 group-hover:bg-orange-500/20 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-orange-300"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-3 text-white">{{ $item }}</h3>
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Professional handling of your Amazon business needs.
+<section class="phead phead--photo">
+    <img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async">
+    <div class="wrap">
+        <a class="crumb" href="{{ route('services.index') }}">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
+            All services
+        </a>
+        <div class="phead__grid">
+            <h1 class="display">Amazon,<br>run properly.</h1>
+            <div>
+                <p class="lede">
+                    Six disciplines inside one Seller Central account, worked by operators who have run
+                    accounts of their own. No reselling to a third agency.
                 </p>
-                <div class="mt-auto pt-6 border-t border-white/5 w-full">
-                    <a href="#" class="text-orange-300 text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-                        Read More <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-                    </a>
+                <div class="mt-3" style="display:flex;flex-wrap:wrap;gap:.6rem">
+                    <button type="button" class="btn btn--primary" data-open="consult">
+                        Book a consultation
+                        @include('site.arrow')
+                    </button>
+                    <button type="button" class="btn btn--ghost" data-open="audit">Free listing audit</button>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+{{-- The proof, before the pitch --}}
+<section class="band section--tight">
+    <div class="wrap">
+        <ul class="stats">
+            <li data-anim>
+                <p class="stat__value"><span data-count="9.2" data-decimals="1" data-prefix="$" data-suffix="M">$9.2M</span></p>
+                <p class="stat__label">Ordered product sales on one managed account over 14 months</p>
+            </li>
+            <li data-anim data-anim-delay="0.08">
+                <p class="stat__value"><span data-count="85277">85,277</span></p>
+                <p class="stat__label">Units shipped on that same account</p>
+            </li>
+            <li data-anim data-anim-delay="0.16">
+                <p class="stat__value"><span data-count="500" data-suffix="+">500+</span></p>
+                <p class="stat__label">Brands supported since we opened in 2017</p>
+            </li>
+            <li data-anim data-anim-delay="0.24">
+                <p class="stat__value"><span data-count="98" data-suffix="%">98%</span></p>
+                <p class="stat__label">Client satisfaction across active accounts</p>
+            </li>
+        </ul>
+    </div>
+</section>
+
+{{-- Disciplines with real work behind each one --}}
+<section class="section" data-cindex>
+    <div class="wrap">
+        <div class="cindex">
+            <div>
+                <h2 class="h2 mb-3" data-split-heading>Six disciplines</h2>
+                <p class="body mb-4">
+                    Each one is a service in its own right. Most accounts need four or five of them
+                    running at once, which is the reason they sit under one team.
+                </p>
+                <ul class="cindex__list">
+                    @php
+                        $disciplines = [
+                            ['listing', 'Listing optimization', 'Titles, bullets, backend keywords and A+ modules written to rank and convert.', 'services.amazon.listing-optimization'],
+                            ['ppc',     'PPC management',       'Sponsored Products, Brands, Display and DSP, structured for a target ACoS.', 'services.amazon.ppc-management'],
+                            ['seo',     'SEO and keyword research', 'Helium 10, Cerebro and Brand Analytics mapped to the terms that actually sell.', 'services.amazon.seo-keyword-research'],
+                            ['aplus',   'A+ content and storefront', 'Premium A+, Brand Story and shoppable storefronts built around the catalogue.', 'services.amazon.a-plus-storefront'],
+                            ['health',  'Account management',   'Cases, suspensions, stranded inventory and FBA reimbursement recovery.', 'services.amazon.account-management'],
+                            ['brand',   'Brand protection',     'Hijacker removal, MAP enforcement, counterfeit takedowns and Brand Registry.', 'services.amazon.brand-protection'],
+                        ];
+                    @endphp
+                    @foreach ($disciplines as [$key, $name, $meta, $r])
+                        <li>
+                            <a class="cindex__row" href="{{ route($r) }}" data-cindex-key="{{ $key }}">
+                                <span>
+                                    <span class="cindex__name">{{ $name }}</span>
+                                    <span class="cindex__meta">{{ $meta }}</span>
+                                </span>
+                                <span class="cindex__go" aria-hidden="true">@include('site.arrow')</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="cindex__preview" aria-hidden="true">
+                <img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/Storefront/b1lyQ4S1zi.jpg') }}" alt="">
+                <img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/PPC Campaign Management & Optimization/gA69WkFEUI.jpg') }}" alt="">
+                <img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/Keyword Research/final.jpg') }}" alt="">
+                <img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/Premium-Basic A%2B Content/QlRcqWsLX5.jpg') }}" alt="">
+                <img data-cindex-img="health" loading="lazy" src="{{ asset('assets/Account Health/c3hrneItb1.jpg') }}" alt="">
+                <img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/MAP Enforcement/All Blur 2.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- Everything else that lands on an account manager --}}
+<section class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+        <h2 class="h2 mb-3" data-split-heading>And the rest of it</h2>
+        <p class="body mb-4">
+            The work nobody sells you on, which is usually the work that decides the quarter.
+        </p>
+        <div class="caps">
+            @foreach ([
+                ['Customer support', 'Buyer messages and returns answered inside Amazon response windows, every working day.'],
+                ['A to Z guarantee claims', 'Claims contested with evidence before they land on your order defect rate.'],
+                ['Seller Support cases', 'Cases opened, escalated and chased to a written resolution.'],
+                ['Listing issues', 'Suppressed and stranded listings, error 5665 and 8541, category approvals.'],
+                ['Coupons and promotions', 'Deal and coupon calendars planned around inventory rather than around Amazon emails.'],
+                ['Infringement reporting', 'IP complaints filed through Brand Registry with the documentation they require.'],
+                ['Business reports', 'A monthly profit view after fees, ads, returns and storage.'],
+                ['MAP enforcement', 'Unauthorised sellers identified, warned and removed on a repeating schedule.'],
+            ] as $item)
+                <div class="caps__item" data-anim>
+                    <h3>{{ $item[0] }}</h3>
+                    <p>{{ $item[1] }}</p>
+                </div>
             @endforeach
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="py-24 text-center bg-gradient-to-b from-[#1a1a1a] to-[#0b0b0b] border-t border-[#222]">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
-            Ready to Optimize Your Amazon Services?
-        </h2>
-        <p class="text-gray-400 max-w-2xl mx-auto mb-8 px-6">
-            Get in touch with us today for a free consultation and see how we can help you scale.
-        </p>
-        <button onclick="document.getElementById('audit-modal').classList.remove('hidden')" class="bg-orange-300 text-black px-10 py-4 rounded-xl text-lg font-semibold hover:opacity-80 transition shadow-xl inline-block">
-            Book Free Consultation
-        </button>
-    </section>
-</div>
+@include('site.cta', [
+    'heading' => 'Send us one ASIN.',
+    'body'    => 'We will return a written breakdown of the listing, its keyword coverage and the ad spend leaking against it. No charge, and no obligation to go further.',
+])
+
 @endsection

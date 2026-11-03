@@ -1,0 +1,5 @@
+requests>=2.31
+# Windows only (installed automatically by build_windows.bat):
+pywin32>=306 ; sys_platform == "win32"
+psutil>=5.9 ; sys_platform == "win32"
+uiautomation>=2.0 ; sys_platform == "win32"

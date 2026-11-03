@@ -6,8 +6,11 @@
 <div class="mb-6 flex flex-col sm:flex-row items-start font-inter sm:items-center justify-between gap-4">
     <div>
         <h1 class="text-2xl font-bold text-slate-800 dark:text-white">Activity Monitor</h1>
-        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Track employee mouse and keyboard activity</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Websites visited per employee, per shift &mdash; from the browser extension and desktop agent.</p>
     </div>
+    <a href="{{ route('admin.agents') }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors inline-flex items-center gap-2">
+        <i class="fa-solid fa-desktop"></i> Manage Agents
+    </a>
 </div>
 
 <!-- Filters -->
@@ -95,7 +98,8 @@
                     @if(!$selectedUserId)
                     <th class="px-6 py-3">Employee</th>
                     @endif
-                    <th class="px-6 py-3">URL</th>
+                    <th class="px-6 py-3">Source</th>
+                    <th class="px-6 py-3">Website / Window</th>
                     <th class="px-6 py-3 text-right">Active</th>
                     <th class="px-6 py-3 text-right">Idle</th>
                     <th class="px-6 py-3 text-right">Keystrokes</th>
@@ -113,14 +117,30 @@
                             {{ $activity->user->name }}
                         </td>
                         @endif
-                        <td class="px-6 py-3 min-w-[200px] max-w-[300px] truncate" title="{{ $activity->url }}">
-                            @if($isSocial)
-                                @php $platform = $activity->getSocialPlatform(); @endphp
-                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-medium bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 mr-2">
-                                    <i class="fa-brands fa-{{ strtolower($platform) }} text-[10px]"></i> {{ $platform }}
-                                </span>
+                        <td class="px-6 py-3">
+                            @if($activity->source === 'agent')
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400"><i class="fa-solid fa-desktop text-[10px]"></i> Agent</span>
+                            @else
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"><i class="fa-solid fa-puzzle-piece text-[10px]"></i> Extension</span>
                             @endif
-                            {{ str_replace(url('/'), '', $activity->url) ?: '/' }}
+                        </td>
+                        <td class="px-6 py-3 min-w-[220px] max-w-[360px]" title="{{ $activity->url }}">
+                            <div class="flex items-center gap-2 truncate">
+                                @if($isSocial)
+                                    @php $platform = $activity->getSocialPlatform(); @endphp
+                                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-medium bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 shrink-0">
+                                        <i class="fa-brands fa-{{ strtolower($platform) }} text-[10px]"></i> {{ $platform }}
+                                    </span>
+                                @endif
+                                <span class="truncate text-slate-800 dark:text-slate-100">
+                                    {{ $activity->url ? (parse_url($activity->url, PHP_URL_HOST) ?: $activity->url) : ($activity->window_title ?: '—') }}
+                                </span>
+                            </div>
+                            @if($activity->window_title || $activity->app_name)
+                                <div class="text-xs text-slate-400 dark:text-slate-500 truncate mt-0.5">
+                                    @if($activity->app_name)<i class="fa-solid fa-window-maximize mr-1"></i>{{ $activity->app_name }} &middot; @endif{{ $activity->window_title }}
+                                </div>
+                            @endif
                         </td>
                         <td class="px-6 py-3 text-right text-emerald-600 dark:text-emerald-400">{{ $activity->active_time }}s</td>
                         <td class="px-6 py-3 text-right {{ $activity->idle_time > 0 ? 'text-amber-600 dark:text-amber-400 font-medium' : 'text-slate-400 dark:text-slate-500' }}">{{ $activity->idle_time }}s</td>
@@ -130,7 +150,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="{{ $selectedUserId ? 7 : 8 }}" class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                        <td colspan="{{ $selectedUserId ? 8 : 9 }}" class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
                             <i class="fa-regular fa-folder-open text-4xl mb-3 text-slate-300 dark:text-slate-600"></i>
                             <p>No activity logged for this period.</p>
                         </td>

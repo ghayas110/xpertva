@@ -1,247 +1,212 @@
-@extends('layouts.app')
+@extends('layouts.site')
 
 @section('title', 'Work - XpertVA')
 @section('meta_description', 'XpertVA case studies: $9.2M in Amazon sales, 6x revenue growth, and proven eCommerce success stories across Amazon, Shopify, and Walmart.')
+@section('head_tone', 'site-head--on-dark')
+
+@push('head')
+<link rel="canonical" href="{{ url('/work') }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Work | XpertVA">
+<meta property="og:description" content="Real Seller Central reports and catalogue work from managed XpertVA client accounts.">
+<meta property="og:url" content="{{ url('/work') }}">
+<meta property="og:image" content="{{ asset('assets/proof/case-year.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
+@endpush
 
 @section('content')
-<section class="text-white overflow-hidden bg-black min-h-screen relative">
-    <!-- Background Image -->
-    <div class="absolute top-0 inset-0 z-0 h-[60vh]">
-        <img alt="Work Background" class="opacity-80 w-full h-full object-cover" src="{{ asset('assets/images/bg-work.jpg') }}"/>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+
+<section class="phead phead--photo">
+    <img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async">
+    <div class="wrap">
+        <div class="phead__grid">
+            <h1 class="display">Work</h1>
+            <div>
+                <p class="lede">
+                    Screenshots from live client accounts, not mockups. Brand names are removed
+                    because most of these accounts are still trading.
+                </p>
+            </div>
+        </div>
     </div>
+</section>
 
-    <div class="relative z-10 px-4 md:px-10 pt-36 pb-20 max-w-7xl mx-auto">
-        <!-- Hero Section -->
-        <div class="mb-12 pt-16 md:pt-32 px-4 md:px-12 text-left max-w-full">
-            <h1 class="text-4xl md:text-7xl font-bold mb-6 text-white">Work</h1>
-            <p class="text-lg md:text-2xl text-gray-200 max-w-4xl leading-relaxed">
-                We follow a creative step-by-step process to transform your vision into reality by creating a digital identity that integrates diverse marketing elements to resonate with your target audience. Explore our work by clicking on a case study below.
-            </p>
-        </div>
-
-        <!-- Category Filter -->
-        <div class="relative mb-16 px-4 md:px-12 max-w-[100vw] overflow-hidden md:overflow-visible">
-            <div class="relative group flex items-center">
-                <!-- Scroll Left Button -->
-                <button id="scroll-left-btn" class="absolute left-0 z-20 w-8 h-8 md:w-10 md:h-10 md:-ml-5 rounded-full bg-[#111] border border-white/20 text-white flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.8)] hover:bg-[#222] transition-colors hidden cursor-pointer">
-                    <i class="fa-solid fa-arrow-left text-xs md:text-sm"></i>
-                </button>
-
-                <div id="category-bar" class="flex gap-4 md:gap-6 overflow-x-auto pb-4 border-b border-white/10 no-scrollbar scroll-smooth w-full px-8 md:px-12">
-                    @php
-                    $categories = [
-                        'All', 'Keyword Research', 'Infographics', 'Listing Optimization', 
-                        'MAP Enforcement', 'A to Z Claim', 'Amazon Cases', 'Account Health', 
-                        'Listing Issues', 'A+ Premium', 'Storefront Creation', 
-                        'Amazon PPC Optimization', 'Coupon & Promotion', 
-                        'Reimbursement', 'Success Stories'
-                    ];
-                    @endphp
-                    
-                    @foreach($categories as $index => $cat)
-                    <button class="category-btn text-sm font-medium whitespace-nowrap px-4 py-2 border-b-2 transition-all duration-300 {{ $index === 0 ? 'border-indigo-500 text-white' : 'border-transparent text-gray-400 hover:text-white' }}" data-category="{{ $cat }}">
-                        {{ $cat }}
-                    </button>
-                    @endforeach
-                </div>
-
-                <!-- Scroll Right Button -->
-                <button id="scroll-right-btn" class="absolute right-0 z-20 w-8 h-8 md:w-10 md:h-10 md:-mr-5 rounded-full bg-[#111] border border-white/20 text-white flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.8)] hover:bg-[#222] transition-colors flex cursor-pointer">
-                    <i class="fa-solid fa-arrow-right text-xs md:text-sm"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Portfolio Grid -->
-        <div id="portfolio-grid" class="columns-1 md:columns-2 lg:columns-3 gap-8 px-4 md:px-12">
+{{-- The three headline reports, at full size --}}
+<section class="section">
+    <div class="wrap">
+        <h2 class="h2 mb-4" data-split-heading>Three reports worth<br>reading properly.</h2>
+        <div class="stack-lg">
             @php
-            $portfolio = [
-                // INFOGRAPHICS
-                ['title' => 'Collins smart Ceiling fan', 'cat' => 'Infographics', 'img' => 'images/fan.jpg', 'desc' => 'Infographics & lifestyle images.'],
-                ['title' => 'Rechargeable table lamps', 'cat' => 'Infographics', 'img' => 'images/lightning-lamp.jpg', 'desc' => 'Lighting solutions for modern living.'],
-                ['title' => 'Legrand - 15a Self Test Outlet', 'cat' => 'Infographics', 'img' => 'images/self-test-outlet.jpg', 'desc' => 'Product feature highlights.'],
-                ['title' => 'BUBRITE:Traverse LED', 'cat' => 'Infographics', 'img' => 'images/Transverse-led.jpg', 'desc' => 'High quality rendering.'],
-                ['title' => 'Chandelier Lift System', 'cat' => 'Infographics', 'img' => 'images/chandelier-lift-system.jpg', 'desc' => 'Infographics integration.'],
-
-                // A TO Z CLAIM
-                ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/1.jpg', 'desc' => 'Claim dispute resolution'],
-                ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/2.jpg', 'desc' => 'Claim dispute resolution'],
-                ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/3.jpg', 'desc' => 'Claim dispute resolution'],
-                ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/4.jpg', 'desc' => 'Claim dispute resolution'],
-                ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/5.jpg', 'desc' => 'Claim dispute resolution'],
-
-                // ACCOUNT HEALTH
-                ['title' => 'Account Health Safety', 'cat' => 'Account Health', 'img' => 'Account Health/c3hrneItb1.jpg', 'desc' => 'Account reinstatement & health'],
-
-                // AMAZON CASES
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/1.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/2.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/3.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/4.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/5.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/6.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/8.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/9.jpg', 'desc' => 'Seller support resolution'],
-                ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/10.jpg', 'desc' => 'Seller support resolution'],
-
-                // KEYWORD RESEARCH
-                ['title' => 'Keyword Optimization', 'cat' => 'Keyword Research', 'img' => 'Keyword Research/final.jpg', 'desc' => 'Search volume & rank tracking'],
-
-                // LISTING ISSUES
-                ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/74qzypE9bI.jpg', 'desc' => 'Stranded inventory fixed'],
-                ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/867qLvJCNQ.jpg', 'desc' => 'Category approvals'],
-                ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/VbUbvEIDmB.jpg', 'desc' => 'Suppressed listing active'],
-                ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/fAYJdtfv2V.jpg', 'desc' => 'Error 5665 / 8541 resolution'],
-
-                // LISTING OPTIMIZATION
-                ['title' => 'Listing Rank Boost', 'cat' => 'Listing Optimization', 'img' => 'Listing Optimization/final-1.jpg', 'desc' => 'SEO optimized copy'],
-
-                // MAP ENFORCEMENT
-                ['title' => 'Pricing Control', 'cat' => 'MAP Enforcement', 'img' => 'MAP Enforcement/All Blur 2.png', 'desc' => 'Unauthorized seller removal'],
-
-                // PPC OPTIMIZATION
-                ['title' => 'PPC ACOS Drop', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/TCWQ4nKt8K.jpg', 'desc' => 'Ad spend efficiency'],
-                ['title' => 'PPC Sales Boost', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/gA69WkFEUI.jpg', 'desc' => 'Campaign structure overview'],
-
-                // A+ PREMIUM
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/54kbqy3MU4.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/DO4pwaZzIp.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/QlRcqWsLX5.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/SIc4i0qSam.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/UzpT4epgtC.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/uRaNcIWJHx.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/xuJ2Pv0W3g.jpg', 'desc' => 'Brand registry EBC'],
-                ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/yzDXOce00J.jpg', 'desc' => 'Brand registry EBC'],
-
-                // STOREFRONT
-                ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/b1lyQ4S1zi.jpg', 'desc' => 'Custom branded pages'],
-                ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/yOhjU6le9N.jpg', 'desc' => 'Custom branded pages'],
-
-                // COUPON & PROMO
-                ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Coupon.png', 'desc' => 'Sales velocity increment'],
-                ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Running Coupon.png', 'desc' => 'Velocity campaign'],
-
-                // REIMBURSEMENT
-                ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/1.jpg', 'desc' => 'Lost inventory recovered'],
-                ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/2.jpg', 'desc' => 'Lost inventory recovered'],
-                ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/3.jpg', 'desc' => 'Lost inventory recovered'],
-
-                // SUCCESS STORIES
-                ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/March 2024.jpg', 'desc' => 'Yearly growth metrics'],
-                ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Last 3 month 2025.jpg', 'desc' => 'Quarterly progress'],
-                ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 1st quater.jpg', 'desc' => 'Sales explosion'],
-                ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 Last Quater.jpg', 'desc' => 'Peak season review'],
-                ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Sep 2024.jpg', 'desc' => 'Constant momentum'],
-                
-                ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/1st Qtr 2024.png', 'desc' => 'Bestseller rankings'],
-                ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/4th Qtr 2024.png', 'desc' => 'Holiday rush sales'],
-            ];
+                $reports = [
+                    [
+                        'img'    => 'assets/proof/case-year.jpg',
+                        'figure' => '$9,226,488.00',
+                        'title'  => 'Fourteen months on one managed account',
+                        'body'   => '54,039 orders and 85,277 units between September 2024 and November 2025, with units ordered climbing steadily across the period.',
+                        'alt'    => 'Amazon Seller Central sales dashboard showing 9,226,488 dollars in ordered product sales and a rising units ordered trend from September 2024 to November 2025.',
+                    ],
+                    [
+                        'img'    => 'assets/proof/case-q4.jpg',
+                        'figure' => '$2,086,577.20',
+                        'title'  => 'Peak season, October to December 2024',
+                        'body'   => '7,638 orders and 12,585 units through the busiest quarter of the retail year.',
+                        'alt'    => 'Amazon Seller Central sales snapshot for October to December 2024 showing 2,086,577 dollars and 20 cents in ordered product sales.',
+                    ],
+                    [
+                        'img'    => 'assets/proof/case-q1.jpg',
+                        'figure' => '$976,715.50',
+                        'title'  => 'A single quarter, earlier in the same account',
+                        'body'   => '4,308 orders and 7,355 units of ordered product sales across the quarter.',
+                        'alt'    => 'Amazon Seller Central sales snapshot showing 976,715 dollars and 50 cents in ordered product sales from 4,308 order items.',
+                    ],
+                ];
             @endphp
-
-            @foreach($portfolio as $item)
-            <div class="portfolio-item w-full break-inside-avoid relative rounded-2xl overflow-hidden group cursor-pointer bg-[#111] border border-white/5 hover:border-indigo-500/50 transition-all duration-500 mb-8" data-category="{{ $item['cat'] }}">
-                <div class="overflow-hidden w-full relative">
-                    <img alt="{{ $item['title'] }}" loading="lazy" class="w-full h-auto min-h-[200px] block object-cover group-hover:scale-110 transition-transform duration-700" src="{{ asset('assets/' . $item['img']) }}"/>
-                </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-100 group-hover:via-black/40 transition-all duration-500"></div>
-                <div class="absolute bottom-6 left-6 right-6 text-white z-10 transition-transform duration-500 group-hover:-translate-y-2">
-                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2 block">{{ $item['cat'] }}</span>
-                    <h3 class="text-xl md:text-2xl font-bold mb-1 drop-shadow-md">{{ $item['title'] }}</h3>
-                    <p class="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{{ $item['desc'] }}</p>
-                </div>
-            </div>
+            @foreach ($reports as $r)
+                <article class="duo {{ $loop->odd ? '' : 'duo--flip' }}" data-anim>
+                    <div class="photo reveal-media duo__media" style="aspect-ratio:2/1">
+                        <img src="{{ asset($r['img']) }}" alt="{{ $r['alt'] }}" loading="lazy" decoding="async">
+                    </div>
+                    <div>
+                        <p class="case__figure num mb-2">{{ $r['figure'] }}</p>
+                        <h3 class="h3 mb-2">{{ $r['title'] }}</h3>
+                        <p class="body">{{ $r['body'] }}</p>
+                    </div>
+                </article>
             @endforeach
         </div>
     </div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.category-btn');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
+{{-- Filterable catalogue of day to day work --}}
+<section class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+        <h2 class="h2 mb-3" data-split-heading>The daily record</h2>
+        <p class="body mb-3">
+            Claims won, cases closed, listings fixed, campaigns rebuilt.
+            Showing <span data-filter-count class="num">all</span> pieces of work.
+        </p>
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.getAttribute('data-category');
+        <div class="chips mb-4" data-filters role="group" aria-label="Filter work by category">
+            @php
+                $categories = [
+                    'All', 'Success Stories', 'Keyword Research', 'Infographics', 'Listing Optimization',
+                    'MAP Enforcement', 'A to Z Claim', 'Amazon Cases', 'Account Health',
+                    'Listing Issues', 'A+ Premium', 'Storefront Creation',
+                    'Amazon PPC Optimization', 'Coupon & Promotion', 'Reimbursement',
+                ];
+            @endphp
+            @foreach ($categories as $cat)
+                <button type="button" class="chip" data-cat-filter="{{ $cat }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">{{ $cat }}</button>
+            @endforeach
+        </div>
 
-            // Update button styles
-            filterButtons.forEach(btn => {
-                btn.classList.remove('border-indigo-500', 'text-white');
-                btn.classList.add('border-transparent', 'text-gray-400');
-            });
-            button.classList.add('border-indigo-500', 'text-white');
-            button.classList.remove('border-transparent', 'text-gray-400');
+        @php
+        $portfolio = [
+        // INFOGRAPHICS
+        ['title' => 'Collins smart Ceiling fan', 'cat' => 'Infographics', 'img' => 'images/fan.jpg', 'desc' => 'Infographics & lifestyle images.'],
+        ['title' => 'Rechargeable table lamps', 'cat' => 'Infographics', 'img' => 'images/lightning-lamp.jpg', 'desc' => 'Lighting solutions for modern living.'],
+        ['title' => 'Legrand - 15a Self Test Outlet', 'cat' => 'Infographics', 'img' => 'images/self-test-outlet.jpg', 'desc' => 'Product feature highlights.'],
+        ['title' => 'BUBRITE:Traverse LED', 'cat' => 'Infographics', 'img' => 'images/Transverse-led.jpg', 'desc' => 'High quality rendering.'],
+        ['title' => 'Chandelier Lift System', 'cat' => 'Infographics', 'img' => 'images/chandelier-lift-system.jpg', 'desc' => 'Infographics integration.'],
 
-            // Filter items
-            portfolioItems.forEach(item => {
-                if (category === 'All' || item.getAttribute('data-category') === category) {
-                    item.style.display = 'inline-block';
-                    setTimeout(() => {
-                        item.style.opacity = '1';
-                        item.style.transform = 'scale(1)';
-                    }, 10);
-                } else {
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        item.style.display = 'none';
-                    }, 300);
-                }
-            });
-        });
-    });
+        // A TO Z CLAIM
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/1.jpg', 'desc' => 'Claim dispute resolution'],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/2.jpg', 'desc' => 'Claim dispute resolution'],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/3.jpg', 'desc' => 'Claim dispute resolution'],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/4.jpg', 'desc' => 'Claim dispute resolution'],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/5.jpg', 'desc' => 'Claim dispute resolution'],
 
-    // --- Scrolling Logic ---
-    const catBar = document.getElementById('category-bar');
-    const scrollLeftBtn = document.getElementById('scroll-left-btn');
-    const scrollRightBtn = document.getElementById('scroll-right-btn');
+        // ACCOUNT HEALTH
+        ['title' => 'Account Health Safety', 'cat' => 'Account Health', 'img' => 'Account Health/c3hrneItb1.jpg', 'desc' => 'Account reinstatement & health'],
 
-    if (scrollLeftBtn && scrollRightBtn && catBar) {
-        scrollLeftBtn.addEventListener('click', () => {
-            catBar.scrollBy({ left: -300, behavior: 'smooth' });
-        });
+        // AMAZON CASES
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/1.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/2.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/3.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/4.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/5.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/6.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/8.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/9.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/10.jpg', 'desc' => 'Seller support resolution'],
 
-        scrollRightBtn.addEventListener('click', () => {
-            catBar.scrollBy({ left: 300, behavior: 'smooth' });
-        });
+        // KEYWORD RESEARCH
+        ['title' => 'Keyword Optimization', 'cat' => 'Keyword Research', 'img' => 'Keyword Research/final.jpg', 'desc' => 'Search volume & rank tracking'],
 
-        const updateScrollButtons = () => {
-            // Check if we can scroll left
-            if (catBar.scrollLeft <= 5) {
-                scrollLeftBtn.classList.remove('flex');
-                scrollLeftBtn.classList.add('hidden');
-            } else {
-                scrollLeftBtn.classList.add('flex');
-                scrollLeftBtn.classList.remove('hidden');
-            }
-            
-            // Check if we can scroll right
-            if (Math.ceil(catBar.scrollLeft + catBar.clientWidth) >= catBar.scrollWidth - 5) {
-                scrollRightBtn.classList.remove('flex');
-                scrollRightBtn.classList.add('hidden');
-            } else {
-                scrollRightBtn.classList.add('flex');
-                scrollRightBtn.classList.remove('hidden');
-            }
-        };
+        // LISTING ISSUES
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/74qzypE9bI.jpg', 'desc' => 'Stranded inventory fixed'],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/867qLvJCNQ.jpg', 'desc' => 'Category approvals'],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/VbUbvEIDmB.jpg', 'desc' => 'Suppressed listing active'],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/fAYJdtfv2V.jpg', 'desc' => 'Error 5665 / 8541 resolution'],
 
-        catBar.addEventListener('scroll', updateScrollButtons);
-        window.addEventListener('resize', updateScrollButtons);
-        
-        // Initial check 
-        setTimeout(updateScrollButtons, 100);
-    }
-});
-</script>
+        // LISTING OPTIMIZATION
+        ['title' => 'Listing Rank Boost', 'cat' => 'Listing Optimization', 'img' => 'Listing Optimization/final-1.jpg', 'desc' => 'SEO optimized copy'],
 
-<style>
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-</style>
+        // MAP ENFORCEMENT
+        ['title' => 'Pricing Control', 'cat' => 'MAP Enforcement', 'img' => 'MAP Enforcement/All Blur 2.png', 'desc' => 'Unauthorized seller removal'],
+
+        // PPC OPTIMIZATION
+        ['title' => 'PPC ACOS Drop', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/TCWQ4nKt8K.jpg', 'desc' => 'Ad spend efficiency'],
+        ['title' => 'PPC Sales Boost', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/gA69WkFEUI.jpg', 'desc' => 'Campaign structure overview'],
+
+        // A+ PREMIUM
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/54kbqy3MU4.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/DO4pwaZzIp.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/QlRcqWsLX5.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/SIc4i0qSam.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/UzpT4epgtC.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/uRaNcIWJHx.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/xuJ2Pv0W3g.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/yzDXOce00J.jpg', 'desc' => 'Brand registry EBC'],
+
+        // STOREFRONT
+        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/b1lyQ4S1zi.jpg', 'desc' => 'Custom branded pages'],
+        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/yOhjU6le9N.jpg', 'desc' => 'Custom branded pages'],
+
+        // COUPON & PROMO
+        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Coupon.png', 'desc' => 'Sales velocity increment'],
+        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Running Coupon.png', 'desc' => 'Velocity campaign'],
+
+        // REIMBURSEMENT
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/1.jpg', 'desc' => 'Lost inventory recovered'],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/2.jpg', 'desc' => 'Lost inventory recovered'],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/3.jpg', 'desc' => 'Lost inventory recovered'],
+
+        // SUCCESS STORIES
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/March 2024.jpg', 'desc' => 'Yearly growth metrics'],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Last 3 month 2025.jpg', 'desc' => 'Quarterly progress'],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 1st quater.jpg', 'desc' => 'Sales explosion'],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 Last Quater.jpg', 'desc' => 'Peak season review'],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Sep 2024.jpg', 'desc' => 'Constant momentum'],
+
+        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/1st Qtr 2024.png', 'desc' => 'Bestseller rankings'],
+        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/4th Qtr 2024.png', 'desc' => 'Holiday rush sales'],
+        ];
+        @endphp
+
+        <div class="masonry">
+            @foreach ($portfolio as $item)
+                <figure class="tile" data-cat="{{ $item['cat'] }}">
+                    <img src="{{ asset('assets/' . $item['img']) }}" alt="{{ $item['title'] }}: {{ $item['desc'] }}" loading="lazy" decoding="async">
+                    <figcaption class="tile__cap">
+                        <span class="eyebrow">{{ $item['cat'] }}</span>
+                        <h3>{{ $item['title'] }}</h3>
+                    </figcaption>
+                </figure>
+            @endforeach
+        </div>
+
+        <div class="empty mt-4" data-filter-empty hidden>
+            <p class="h3">Nothing in that category yet</p>
+            <p class="body">Pick another filter, or ask us for examples from your own category.</p>
+            <button type="button" class="btn btn--ghost mt-2" data-open="consult">Book a consultation</button>
+        </div>
+    </div>
+</section>
+
+@include('site.cta', [
+    'heading' => 'Want a report like these?',
+    'body'    => 'Book thirty minutes. We will look at your account together and tell you what we would change first, whether or not you hire us.',
+])
+
 @endsection
