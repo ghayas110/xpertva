@@ -8,12 +8,20 @@ class EmployeeActivity extends Model
 {
     protected $fillable = [
         'user_id',
+        'source',
         'url',
+        'app_name',
+        'window_title',
+        'captured_at',
         'active_time',
         'idle_time',
         'mouse_move_count',
         'click_count',
-        'keystroke_count'
+        'keystroke_count',
+    ];
+
+    protected $casts = [
+        'captured_at' => 'datetime',
     ];
 
     public function user()

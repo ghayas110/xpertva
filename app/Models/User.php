@@ -31,6 +31,8 @@ class User extends Authenticatable
         'phone',
         'secondary_phone',
         'secondary_email',
+        'agent_token',
+        'monitoring_consent_at',
     ];
 
     public function getAvatarUrlAttribute(): string
@@ -55,6 +57,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'agent_token',
     ];
 
     /**
@@ -67,7 +70,22 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'monitoring_consent_at' => 'datetime',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (User $user) {
+            if (empty($user->agent_token)) {
+                $user->agent_token = \Illuminate\Support\Str::random(48);
+            }
+        });
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(EmployeeActivity::class);
     }
 
     public function createdTasks()

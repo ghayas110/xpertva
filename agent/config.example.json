@@ -1,0 +1,5 @@
+{
+  "server_url": "https://xpertva.com",
+  "token": "PASTE-THE-EMPLOYEE-AGENT-TOKEN-HERE",
+  "idle_threshold_seconds": 60
+}
