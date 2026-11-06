@@ -149,6 +149,18 @@
                     <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Email</span>
                 </a>
 
+                <a href="{{ route('chat.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('chat.*') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white' }} transition-colors group relative">
+                    <i class="fa-regular fa-comments w-5 text-center"></i>
+                    <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Website Chat</span>
+                    @php
+                        // Degrades to zero if the chat migrations have not been run yet,
+                        // so a half finished deploy cannot take the whole portal down.
+                        try { $chatUnread = \App\Models\ChatConversation::sum('unread_for_agent'); }
+                        catch (\Throwable $e) { $chatUnread = 0; }
+                    @endphp
+                    <span id="nav-chat-unread" class="ml-auto text-[10px] font-bold text-white bg-red-500 rounded-full px-1.5 py-0.5 {{ $chatUnread ? '' : 'hidden' }}">{{ $chatUnread }}</span>
+                </a>
+
                 <a href="{{ route('messages.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('messages.*') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white' }} transition-colors group relative">
                     <i class="fa-regular fa-envelope w-5 text-center {{ request()->routeIs('messages.*') ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200' }}"></i>
                     <span x-show="sidebarOpen" class="font-medium whitespace-nowrap transition-opacity">Inbox</span>

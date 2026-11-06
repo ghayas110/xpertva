@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'XpertVA - eCommerce operations for Amazon, Shopify, Walmart and eBay brands')</title>
     <meta name="description" content="@yield('meta_description', 'XpertVA runs marketplace operations for eCommerce brands. Listings, advertising, account health and creative on Amazon, Shopify, Walmart and eBay. Founded 2017.')">
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
@@ -15,7 +16,7 @@
 
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/bricolage.woff2') }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/geist.woff2') }}" crossorigin>
-    <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=9">
 
     @stack('head')
 
@@ -77,11 +78,13 @@
 
     @include('site.footer')
     @include('site.modals')
+    @include('site.chat')
 
     <script src="{{ asset('assets/js/vendor/gsap.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/vendor/ScrollTrigger.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/vendor/lenis.min.js') }}" defer></script>
-    <script src="{{ asset('assets/js/site.js') }}?v=8" defer></script>
+    <script src="{{ asset('assets/js/site.js') }}?v=9" defer></script>
+    <script src="{{ asset('assets/js/chat.js') }}?v=2" defer></script>
     @stack('scripts')
 </body>
 </html>

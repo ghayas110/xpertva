@@ -16,30 +16,34 @@ class ClientController extends Controller
 
         // Admin and HR can see all
         if (in_array($user->role, ['super_admin', 'hr'])) {
-            $clients = Client::with(['assignedSales', 'assignedVA'])->get();
+            $clients = Client::with(['assignedSales', 'assignedVA'])->latest()->get();
         } 
         // Sales sees leads and clients assigned to them
         elseif ($user->role === 'sales') {
             $clients = Client::with(['assignedSales', 'assignedVA'])
                 ->where('assigned_sales_id', $user->id)
+                ->latest()
                 ->get();
         }
         // Onboarding sees clients that have passed the Lead stage
         elseif ($user->role === 'onboarding') {
             $clients = Client::with(['assignedSales', 'assignedVA'])
                 ->whereIn('status', ['Onboarding', 'Active', 'Churned'])
+                ->latest()
                 ->get();
         }
         // VAs see clients assigned to them
         elseif ($user->role === 'va') {
             $clients = Client::with(['assignedSales', 'assignedVA'])
                 ->where('assigned_va_id', $user->id)
+                ->latest()
                 ->get();
         }
         // Accounts see Active clients
         elseif ($user->role === 'accounts') {
             $clients = Client::with(['assignedSales', 'assignedVA'])
                 ->where('status', 'Active')
+                ->latest()
                 ->get();
         } 
         else {

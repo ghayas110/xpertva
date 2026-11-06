@@ -291,6 +291,103 @@
     });
   })();
 
+  /* ------------------------------------------------------ masonry balance */
+  /* CSS multi column fills top to bottom and leaves the three columns ending at
+     wildly different heights. This distributes tiles into real columns, always
+     into whichever column is currently shortest, so they finish close to level.
+     Heights come from each tile's declared --ar, so no image needs to load first. */
+  var masonry = (function () {
+    var grid = document.querySelector('.masonry');
+    if (!grid) return null;
+
+    var tiles = all('.tile', grid);
+    if (!tiles.length) return null;
+
+    // Keep the original order so filtering and re-layout stay deterministic.
+    tiles.forEach(function (t, i) { t.dataset.order = i; });
+
+    var colCount = function () {
+      var w = window.innerWidth;
+      return w >= 1100 ? 3 : (w >= 700 ? 2 : 1);
+    };
+
+    var current = 0;
+
+    function layout() {
+      var n = colCount();
+      var visible = tiles.filter(function (t) { return !t.classList.contains('is-hidden'); });
+
+      if (n === 1) {
+        grid.classList.remove('is-balanced');
+        all('.masonry__col', grid).forEach(function (c) { c.remove(); });
+        visible.sort(function (a, b) { return a.dataset.order - b.dataset.order; })
+               .forEach(function (t) { grid.appendChild(t); });
+        current = 1;
+        return;
+      }
+
+      var cols = [];
+      var heights = [];
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < n; i++) {
+        var col = document.createElement('div');
+        col.className = 'masonry__col';
+        cols.push(col);
+        heights.push(0);
+        frag.appendChild(col);
+      }
+
+      // Column width only matters as a shared scale factor, so relative
+      // ratios are enough to decide placement.
+      visible.sort(function (a, b) { return a.dataset.order - b.dataset.order; })
+        .forEach(function (tile) {
+          var ar = parseFloat(getComputedStyle(tile).getPropertyValue('--ar')) || 1;
+          var shortest = heights.indexOf(Math.min.apply(null, heights));
+          cols[shortest].appendChild(tile);
+          heights[shortest] += ar;
+        });
+
+      all('.masonry__col', grid).forEach(function (c) { c.remove(); });
+      grid.appendChild(frag);
+      grid.classList.add('is-balanced');
+      current = n;
+
+      // Greedy packing lands within a few percent. This last pass lets the
+      // bottom tile of each short column absorb the remainder, so all three
+      // columns finish exactly level.
+      requestAnimationFrame(function () {
+        cols.forEach(function (c) {
+          c.style.minHeight = '';
+          if (c.lastElementChild) c.lastElementChild.style.flexGrow = '';
+        });
+        var tallest = Math.max.apply(null, cols.map(function (c) {
+          return c.getBoundingClientRect().height;
+        }));
+        if (!isFinite(tallest) || tallest <= 0) return;
+        cols.forEach(function (c) {
+          if (!c.lastElementChild) return;
+          c.style.minHeight = tallest + 'px';
+          c.lastElementChild.style.flexGrow = '1';
+        });
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      });
+
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    }
+
+    layout();
+
+    var raf;
+    window.addEventListener('resize', function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        if (colCount() !== current) layout(); else layout();
+      });
+    });
+
+    return { layout: layout };
+  })();
+
   /* --------------------------------------------------------- work filters */
   (function filters() {
     var bar = document.querySelector('[data-filters]');
@@ -313,6 +410,7 @@
           { opacity: 0, y: 14 },
           { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out', stagger: 0.015, overwrite: true });
       }
+      if (masonry) masonry.layout();
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     };
 

@@ -65,6 +65,7 @@
                     <th class="py-3 px-6 cursor-pointer">Company Name</th>
                     <th class="py-3 px-6 cursor-pointer">Website</th>
                     <th class="py-3 px-6 cursor-pointer">Source</th>
+                    <th class="py-3 px-6 cursor-pointer">Received</th>
                     <th class="py-3 px-6 cursor-pointer">Status</th>
                     <th class="py-3 px-6 cursor-pointer">Sales Rep</th>
                     <th class="py-3 px-6 cursor-pointer">VA</th>
@@ -77,7 +78,7 @@
                     data-company="{{ strtolower($client->company_name) }}"
                     data-source="{{ strtolower($client->source ?? '') }}"
                     data-status="{{ $client->status }}"
-                    data-search="{{ strtolower($client->company_name . ' ' . (is_array($client->email) ? implode(' ', $client->email) : ($client->email ?? '')) . ' ' . (is_array($client->phone) ? implode(' ', $client->phone) : ($client->phone ?? '')) . ' ' . ($client->assignedSales->name ?? '') . ' ' . ($client->assignedVA->name ?? '')) }}">
+                    data-search="{{ strtolower($client->company_name . ' ' . (is_array($client->email) ? implode(' ', $client->email) : ($client->email ?? '')) . ' ' . (is_array($client->phone) ? implode(' ', $client->phone) : ($client->phone ?? '')) . ' ' . ($client->assignedSales->name ?? '') . ' ' . ($client->assignedVA->name ?? '') . ' ' . optional($client->created_at)->format('M j Y F')) }}">
                     <td class="py-3 px-6">{{ $client->id }}</td>
                     <td class="py-3 px-6 font-bold">
                         {{ $client->company_name }}
@@ -90,6 +91,14 @@
                         @else N/A @endif
                     </td>
                     <td class="py-3 px-6 text-sm text-gray-600 dark:text-slate-400">{{ $client->source ?? 'N/A' }}</td>
+                    <td class="py-3 px-6 text-sm text-gray-600 dark:text-slate-400 whitespace-nowrap">
+                        @if($client->created_at)
+                            <span title="{{ $client->created_at->format('l, j F Y \a\t g:i A') }}">{{ $client->created_at->format('M j, Y') }}</span>
+                            <span class="block text-xs text-gray-400 dark:text-slate-500">{{ $client->created_at->diffForHumans() }}</span>
+                        @else
+                            N/A
+                        @endif
+                    </td>
                     <td class="py-3 px-6">
                         <span class="px-2 py-1 rounded text-xs text-white 
                             @if($client->status == 'Lead') bg-gray-500 dark:bg-slate-500 
@@ -127,7 +136,7 @@
                             @endif
                             
                             @if(in_array(auth()->user()->role, ['sales', 'super_admin', 'onboarding']))
-                                <button onclick="openEditClientModal({{ $client->id }}, '{{ addslashes($client->company_name) }}', '{{ addslashes($clientEmailStr) }}', '{{ addslashes($clientPhoneStr) }}', '{{ addslashes($client->website) }}', '{{ addslashes($client->source) }}', '{{ addslashes($client->background_info) }}', '{{ $client->assigned_va_id }}')" class="text-blue-500 hover:text-blue-700 transition-colors block md:inline-block m-1" title="Edit">
+                                <button onclick="openEditClientModal({{ $client->id }}, '{{ addslashes($client->company_name ?? '') }}', '{{ addslashes($clientEmailStr ?? '') }}', '{{ addslashes($clientPhoneStr ?? '') }}', '{{ addslashes($client->website ?? '') }}', '{{ addslashes($client->source ?? '') }}', '{{ addslashes($client->background_info ?? '') }}', '{{ $client->assigned_va_id }}')" class="text-blue-500 hover:text-blue-700 transition-colors block md:inline-block m-1" title="Edit">
                                     <i class="fa-solid fa-pen-to-square text-lg"></i>
                                 </button>
                             @endif
@@ -149,7 +158,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="py-6 text-center text-gray-500 dark:text-slate-400">No records found.</td>
+                    <td colspan="9" class="py-6 text-center text-gray-500 dark:text-slate-400">No records found.</td>
                 </tr>
                 @endforelse
             </tbody>

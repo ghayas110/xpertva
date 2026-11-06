@@ -130,6 +130,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/{user}/fire', [\App\Http\Controllers\UserController::class, 'fire'])->name('users.fire');
     Route::get('/activities', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('admin.activities');
 
+    // Website chat inbox (operator side)
+    Route::get('/chat', [\App\Http\Controllers\Admin\ChatInboxController::class, 'index'])->name('chat.index');
+    Route::get('/chat/threads', [\App\Http\Controllers\Admin\ChatInboxController::class, 'threads'])->name('chat.threads');
+    Route::get('/chat/{conversation}/messages', [\App\Http\Controllers\Admin\ChatInboxController::class, 'messages'])->name('chat.messages');
+    Route::post('/chat/{conversation}/reply', [\App\Http\Controllers\Admin\ChatInboxController::class, 'reply'])->name('chat.reply');
+    Route::post('/chat/{conversation}/close', [\App\Http\Controllers\Admin\ChatInboxController::class, 'close'])->name('chat.close');
+
     // Desktop monitoring agent provisioning (super admin only)
     Route::get('/admin/agents', [\App\Http\Controllers\Admin\AgentProvisionController::class, 'index'])->name('admin.agents');
     Route::post('/admin/agents/{user}/regenerate', [\App\Http\Controllers\Admin\AgentProvisionController::class, 'regenerate'])->name('admin.agents.regenerate');
@@ -157,6 +164,8 @@ Route::middleware(['auth'])->group(function () {
             $url = null;
             if (isset($n->data['task_id'])) {
                 $url = route('tasks.index') . '?open_task=' . $n->data['task_id'];
+            } elseif (isset($n->data['conversation_id'])) {
+                $url = route('chat.index') . '?c=' . $n->data['conversation_id'];
             }
             return [
                 'id'         => $n->id,
@@ -314,6 +323,16 @@ Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/', [\App\Http\Controllers\BlogController::class, 'index'])->name('index');
     Route::get('/{slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('show');
 });
+
+// Public Website Chat (anonymous visitors, throttled)
+Route::middleware('throttle:30,1')->prefix('chat')->name('chat.')->group(function () {
+    Route::get('/token', [\App\Http\Controllers\ChatController::class, 'token'])->name('token');
+    Route::post('/start', [\App\Http\Controllers\ChatController::class, 'start'])->name('start');
+    Route::post('/{token}/send', [\App\Http\Controllers\ChatController::class, 'send'])->name('send');
+});
+Route::middleware('throttle:120,1')
+    ->get('/chat/{token}/poll', [\App\Http\Controllers\ChatController::class, 'poll'])
+    ->name('chat.poll');
 
 // Public Lead Submissions
 Route::post('/contact/submit', [PublicLeadController::class, 'contactSubmit'])->name('contact.submit');

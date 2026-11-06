@@ -103,90 +103,90 @@
         @php
         $portfolio = [
         // INFOGRAPHICS
-        ['title' => 'Collins smart Ceiling fan', 'cat' => 'Infographics', 'img' => 'images/fan.jpg', 'desc' => 'Infographics & lifestyle images.'],
-        ['title' => 'Rechargeable table lamps', 'cat' => 'Infographics', 'img' => 'images/lightning-lamp.jpg', 'desc' => 'Lighting solutions for modern living.'],
-        ['title' => 'Legrand - 15a Self Test Outlet', 'cat' => 'Infographics', 'img' => 'images/self-test-outlet.jpg', 'desc' => 'Product feature highlights.'],
-        ['title' => 'BUBRITE:Traverse LED', 'cat' => 'Infographics', 'img' => 'images/Transverse-led.jpg', 'desc' => 'High quality rendering.'],
-        ['title' => 'Chandelier Lift System', 'cat' => 'Infographics', 'img' => 'images/chandelier-lift-system.jpg', 'desc' => 'Infographics integration.'],
+        ['title' => 'Collins smart Ceiling fan', 'cat' => 'Infographics', 'img' => 'images/fan.jpg', 'desc' => 'Infographics & lifestyle images.', 'ar' => 1.0],
+        ['title' => 'Rechargeable table lamps', 'cat' => 'Infographics', 'img' => 'images/lightning-lamp.jpg', 'desc' => 'Lighting solutions for modern living.', 'ar' => 1.0],
+        ['title' => 'Legrand - 15a Self Test Outlet', 'cat' => 'Infographics', 'img' => 'images/self-test-outlet.jpg', 'desc' => 'Product feature highlights.', 'ar' => 1.0],
+        ['title' => 'BUBRITE:Traverse LED', 'cat' => 'Infographics', 'img' => 'images/Transverse-led.jpg', 'desc' => 'High quality rendering.', 'ar' => 1.0],
+        ['title' => 'Chandelier Lift System', 'cat' => 'Infographics', 'img' => 'images/chandelier-lift-system.jpg', 'desc' => 'Infographics integration.', 'ar' => 1.0],
 
         // A TO Z CLAIM
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/1.jpg', 'desc' => 'Claim dispute resolution'],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/2.jpg', 'desc' => 'Claim dispute resolution'],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/3.jpg', 'desc' => 'Claim dispute resolution'],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/4.jpg', 'desc' => 'Claim dispute resolution'],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/5.jpg', 'desc' => 'Claim dispute resolution'],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/1.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.256],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/2.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.26],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/3.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.16],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/4.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.35],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/5.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.175],
 
         // ACCOUNT HEALTH
-        ['title' => 'Account Health Safety', 'cat' => 'Account Health', 'img' => 'Account Health/c3hrneItb1.jpg', 'desc' => 'Account reinstatement & health'],
+        ['title' => 'Account Health Safety', 'cat' => 'Account Health', 'img' => 'Account Health/c3hrneItb1.jpg', 'desc' => 'Account reinstatement & health', 'ar' => 0.497],
 
         // AMAZON CASES
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/1.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/2.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/3.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/4.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/5.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/6.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/8.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/9.jpg', 'desc' => 'Seller support resolution'],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/10.jpg', 'desc' => 'Seller support resolution'],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/1.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.266],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/2.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.376],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/3.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.281],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/4.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.256],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/5.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.235],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/6.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.309],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/8.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.527],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/9.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.344],
+        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/10.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.284],
 
         // KEYWORD RESEARCH
-        ['title' => 'Keyword Optimization', 'cat' => 'Keyword Research', 'img' => 'Keyword Research/final.jpg', 'desc' => 'Search volume & rank tracking'],
+        ['title' => 'Keyword Optimization', 'cat' => 'Keyword Research', 'img' => 'Keyword Research/final.jpg', 'desc' => 'Search volume & rank tracking', 'ar' => 0.412],
 
         // LISTING ISSUES
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/74qzypE9bI.jpg', 'desc' => 'Stranded inventory fixed'],
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/867qLvJCNQ.jpg', 'desc' => 'Category approvals'],
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/VbUbvEIDmB.jpg', 'desc' => 'Suppressed listing active'],
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/fAYJdtfv2V.jpg', 'desc' => 'Error 5665 / 8541 resolution'],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/74qzypE9bI.jpg', 'desc' => 'Stranded inventory fixed', 'ar' => 0.387],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/867qLvJCNQ.jpg', 'desc' => 'Category approvals', 'ar' => 0.52],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/VbUbvEIDmB.jpg', 'desc' => 'Suppressed listing active', 'ar' => 0.554],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/fAYJdtfv2V.jpg', 'desc' => 'Error 5665 / 8541 resolution', 'ar' => 0.628],
 
         // LISTING OPTIMIZATION
-        ['title' => 'Listing Rank Boost', 'cat' => 'Listing Optimization', 'img' => 'Listing Optimization/final-1.jpg', 'desc' => 'SEO optimized copy'],
+        ['title' => 'Listing Rank Boost', 'cat' => 'Listing Optimization', 'img' => 'Listing Optimization/final-1.jpg', 'desc' => 'SEO optimized copy', 'ar' => 0.355],
 
         // MAP ENFORCEMENT
-        ['title' => 'Pricing Control', 'cat' => 'MAP Enforcement', 'img' => 'MAP Enforcement/All Blur 2.png', 'desc' => 'Unauthorized seller removal'],
+        ['title' => 'Pricing Control', 'cat' => 'MAP Enforcement', 'img' => 'MAP Enforcement/All Blur 2.png', 'desc' => 'Unauthorized seller removal', 'ar' => 0.573],
 
         // PPC OPTIMIZATION
-        ['title' => 'PPC ACOS Drop', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/TCWQ4nKt8K.jpg', 'desc' => 'Ad spend efficiency'],
-        ['title' => 'PPC Sales Boost', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/gA69WkFEUI.jpg', 'desc' => 'Campaign structure overview'],
+        ['title' => 'PPC ACOS Drop', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/TCWQ4nKt8K.jpg', 'desc' => 'Ad spend efficiency', 'ar' => 0.492],
+        ['title' => 'PPC Sales Boost', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/gA69WkFEUI.jpg', 'desc' => 'Campaign structure overview', 'ar' => 0.492],
 
         // A+ PREMIUM
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/54kbqy3MU4.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/DO4pwaZzIp.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/QlRcqWsLX5.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/SIc4i0qSam.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/UzpT4epgtC.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/uRaNcIWJHx.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/xuJ2Pv0W3g.jpg', 'desc' => 'Brand registry EBC'],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/yzDXOce00J.jpg', 'desc' => 'Brand registry EBC'],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/54kbqy3MU4.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/DO4pwaZzIp.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/QlRcqWsLX5.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/SIc4i0qSam.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/UzpT4epgtC.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/uRaNcIWJHx.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/xuJ2Pv0W3g.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/yzDXOce00J.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
 
         // STOREFRONT
-        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/b1lyQ4S1zi.jpg', 'desc' => 'Custom branded pages'],
-        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/yOhjU6le9N.jpg', 'desc' => 'Custom branded pages'],
+        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/b1lyQ4S1zi.jpg', 'desc' => 'Custom branded pages', 'ar' => 1.8],
+        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/yOhjU6le9N.jpg', 'desc' => 'Custom branded pages', 'ar' => 1.8],
 
         // COUPON & PROMO
-        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Coupon.png', 'desc' => 'Sales velocity increment'],
-        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Running Coupon.png', 'desc' => 'Velocity campaign'],
+        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Coupon.png', 'desc' => 'Sales velocity increment', 'ar' => 0.437],
+        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Running Coupon.png', 'desc' => 'Velocity campaign', 'ar' => 0.461],
 
         // REIMBURSEMENT
-        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/1.jpg', 'desc' => 'Lost inventory recovered'],
-        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/2.jpg', 'desc' => 'Lost inventory recovered'],
-        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/3.jpg', 'desc' => 'Lost inventory recovered'],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/1.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.34],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/2.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.348],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/3.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.228],
 
         // SUCCESS STORIES
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/March 2024.jpg', 'desc' => 'Yearly growth metrics'],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Last 3 month 2025.jpg', 'desc' => 'Quarterly progress'],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 1st quater.jpg', 'desc' => 'Sales explosion'],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 Last Quater.jpg', 'desc' => 'Peak season review'],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Sep 2024.jpg', 'desc' => 'Constant momentum'],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/March 2024.jpg', 'desc' => 'Yearly growth metrics', 'ar' => 0.506],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Last 3 month 2025.jpg', 'desc' => 'Quarterly progress', 'ar' => 0.5],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 1st quater.jpg', 'desc' => 'Sales explosion', 'ar' => 0.506],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 Last Quater.jpg', 'desc' => 'Peak season review', 'ar' => 0.509],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Sep 2024.jpg', 'desc' => 'Constant momentum', 'ar' => 0.505],
 
-        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/1st Qtr 2024.png', 'desc' => 'Bestseller rankings'],
-        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/4th Qtr 2024.png', 'desc' => 'Holiday rush sales'],
+        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/1st Qtr 2024.png', 'desc' => 'Bestseller rankings', 'ar' => 0.556],
+        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/4th Qtr 2024.png', 'desc' => 'Holiday rush sales', 'ar' => 0.555],
         ];
         @endphp
 
         <div class="masonry">
             @foreach ($portfolio as $item)
-                <figure class="tile" data-cat="{{ $item['cat'] }}">
+                <figure class="tile" data-cat="{{ $item['cat'] }}" style="--ar:{{ $item['ar'] ?? 1 }}">
                     <img src="{{ asset('assets/' . $item['img']) }}" alt="{{ $item['title'] }}: {{ $item['desc'] }}" loading="lazy" decoding="async">
                     <figcaption class="tile__cap">
                         <span class="eyebrow">{{ $item['cat'] }}</span>
