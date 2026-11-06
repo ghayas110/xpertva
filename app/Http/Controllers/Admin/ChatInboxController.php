@@ -27,6 +27,9 @@ class ChatInboxController extends Controller
         return view('chat.index', [
             'conversations' => $conversations,
             'active'        => $active,
+            // Desktop auto-opens the newest thread so the pane is never empty.
+            // Phones must not: they need the list first, thread only once tapped.
+            'explicit'      => $request->filled('c'),
             'messages'      => $active ? $active->messages()->orderBy('id')->get() : collect(),
         ]);
     }

@@ -9,7 +9,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    {{-- Portal manifest so the installed app keeps its own identity and start URL. --}}
+    <link rel="manifest" href="{{ asset('portal.webmanifest') }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="XpertVA">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Apply theme class BEFORE Alpine boots to avoid flash of light/dark -->
@@ -50,6 +55,9 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Without this, x-cloak elements flash before Alpine boots. The backdrop
+           in particular would cover the screen for a moment on every load. */
+        [x-cloak] { display: none !important; }
         /* Custom scrollbar for sidebar */
         .sidebar-scroll::-webkit-scrollbar {
             width: 4px;
@@ -74,12 +82,27 @@
         }
     </script>
 </head>
-<body class="text-slate-800 dark:text-slate-200 antialiased bg-[#f8fafc] dark:bg-slate-900 transition-colors duration-300" x-data="{ sidebarOpen: true, profileDropdownOpen: false, notificationsOpen: false }">
+<body class="text-slate-800 dark:text-slate-200 antialiased bg-[#f8fafc] dark:bg-slate-900 transition-colors duration-300" x-data="{
+        // On a phone the sidebar is an overlay drawer, so it starts closed and
+        // nothing is squeezed. From lg up it is a normal column, as before.
+        sidebarOpen: window.innerWidth >= 1024,
+        profileDropdownOpen: false,
+        notificationsOpen: false,
+        get isDesktop() { return window.innerWidth >= 1024 }
+      }"
+      x-init="window.addEventListener('resize', () => { if (window.innerWidth >= 1024) sidebarOpen = true })">
 
     <div class="flex h-screen overflow-hidden">
 
         <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'w-64' : 'w-20'" class="flex-shrink-0 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transition-all duration-300 flex flex-col z-20 h-full">
+        <!-- Backdrop, phones only -->
+        <div x-show="sidebarOpen" x-transition.opacity @click="sidebarOpen = false" x-cloak
+             class="lg:hidden fixed inset-0 bg-slate-900/50 z-30"></div>
+
+        <aside :class="sidebarOpen
+                        ? 'translate-x-0 w-64'
+                        : '-translate-x-full lg:translate-x-0 w-64 lg:w-20'"
+               class="fixed lg:static inset-y-0 left-0 z-40 lg:z-20 flex-shrink-0 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transition-all duration-300 flex flex-col h-full">
             <!-- Logo area -->
             <div class="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-700">
                 <div class="flex items-center gap-3 overflow-hidden">
@@ -87,13 +110,14 @@
                     <span x-show="sidebarOpen" x-transition.opacity class="font-bold text-xl text-slate-800 dark:text-white tracking-tight whitespace-nowrap">XpertVA</span>
                 </div>
                 <!-- Mobile close button -->
-                <button @click="sidebarOpen = false" class="md:hidden text-slate-500 hover:text-slate-700">
+                <button @click="sidebarOpen = false" class="lg:hidden text-slate-500 hover:text-slate-700">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <!-- Navigation Links -->
-            <nav class="flex-1 overflow-y-auto sidebar-scroll py-4 px-3 space-y-1">
+            <nav class="flex-1 overflow-y-auto sidebar-scroll py-4 px-3 space-y-1"
+                 @click="if (window.innerWidth < 1024) sidebarOpen = false">
                 <p x-show="sidebarOpen" class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 mt-4 transition-opacity">Menu</p>
                 
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white' }} transition-colors group">
@@ -192,7 +216,7 @@
             <!-- Bottom settings / logout area -->
             <div class="p-4 border-t border-slate-200 dark:border-slate-700">
                 <!-- Toggle sidebar button (desktop only) -->
-                <button @click="sidebarOpen = !sidebarOpen" class="hidden md:flex w-full items-center justify-center py-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg mb-2">
+                <button @click="sidebarOpen = !sidebarOpen" class="hidden lg:flex w-full items-center justify-center py-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-lg mb-2">
                     <i class="fa-solid fa-chevron-left transition-transform duration-300" :class="!sidebarOpen && 'rotate-180'"></i>
                 </button>
             </div>
@@ -205,7 +229,7 @@
             <header class="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-4 sm:px-6 lg:px-8 shrink-0 z-10">
                 
                 <div class="flex items-center gap-4 flex-1">
-                    <button @click="sidebarOpen = true" class="md:hidden text-slate-500 hover:text-slate-700">
+                    <button @click="sidebarOpen = true" class="lg:hidden text-slate-500 hover:text-slate-700">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
                     
@@ -278,7 +302,18 @@
                             </div>
                             <div class="max-h-72 overflow-y-auto">
                                 @forelse(auth()->user()->notifications()->latest()->take(10)->get() as $notification)
-                                    <a href="{{ isset($notification->data['task_id']) ? route('tasks.index') . '?open_task=' . $notification->data['task_id'] : '#' }}" class="block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-100 dark:border-slate-700/50 {{ is_null($notification->read_at) ? 'bg-indigo-50/50 dark:bg-indigo-900/20' : '' }}">
+                                    @php
+                                        // Match the destinations the /notifications/poll endpoint builds,
+                                        // so a notification opens the same page whether it is clicked in
+                                        // this dropdown or as an OS alert.
+                                        $notifUrl = '#';
+                                        if (isset($notification->data['task_id'])) {
+                                            $notifUrl = route('tasks.index') . '?open_task=' . $notification->data['task_id'];
+                                        } elseif (isset($notification->data['conversation_id'])) {
+                                            $notifUrl = route('chat.index') . '?c=' . $notification->data['conversation_id'];
+                                        }
+                                    @endphp
+                                    <a href="{{ $notifUrl }}" class="block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-100 dark:border-slate-700/50 {{ is_null($notification->read_at) ? 'bg-indigo-50/50 dark:bg-indigo-900/20' : '' }}">
                                         <div class="flex items-start gap-3">
                                             <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 {{ is_null($notification->read_at) ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400' : 'bg-slate-100 dark:bg-slate-700 text-slate-400' }}">
                                                 <i class="{{ $notification->data['icon'] ?? 'fa-solid fa-bell' }} text-sm"></i>
@@ -383,7 +418,10 @@
     // ── OS / Browser Push Notifications ──────────────────────────────────────
     (function() {
         const CSRF        = '{{ csrf_token() }}';
-        const ICON        = '{{ asset("assets/images/logo-xpertva.png") }}';
+        // The old logo is navy ink on a transparent background, which is close to
+        // invisible in a phone's notification tray. These are the solid navy tiles.
+        const ICON        = '{{ asset("android-chrome-192x192.png") }}';
+        const BADGE       = '{{ asset("favicon-32x32.png") }}';
         const POLL_MS     = 15000; // 15 seconds
         const SINCE_KEY   = 'xpertva.notif.lastSeen';
 
@@ -427,7 +465,7 @@
             const opts = {
                 body: body || '',
                 icon: ICON,
-                badge: ICON,
+                badge: BADGE,
                 tag: tag || ('xpertva-' + Date.now()),
                 renotify: true,
                 requireInteraction: false,

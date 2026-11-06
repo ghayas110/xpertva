@@ -42,10 +42,10 @@
         {{-- Shown once, before the first message is sent. --}}
         <div class="chat__intro" id="chat-intro">
             <div class="chat__row">
-                <label class="sr-only" for="chat-name">Your name</label>
-                <input id="chat-name" type="text" placeholder="Your name" autocomplete="name" maxlength="120">
-                <label class="sr-only" for="chat-email">Email</label>
-                <input id="chat-email" type="email" placeholder="Email" autocomplete="email" maxlength="190">
+                <label class="sr-only" for="chat-name">Your name (required)</label>
+                <input id="chat-name" type="text" placeholder="Your name*" autocomplete="name" maxlength="120" required aria-required="true">
+                <label class="sr-only" for="chat-email">Email (optional)</label>
+                <input id="chat-email" type="email" placeholder="Email (optional)" autocomplete="email" maxlength="190">
             </div>
         </div>
 

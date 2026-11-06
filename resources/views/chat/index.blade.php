@@ -3,7 +3,7 @@
 @section('title', 'Website Chat')
 
 @section('content')
-<div class="mb-6 flex flex-wrap justify-between items-end gap-4">
+<div class="mb-6 flex-wrap justify-between items-end gap-4 {{ $explicit ? 'hidden lg:flex' : 'flex' }}">
     <div>
         <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Website Chat</h2>
         <p class="text-slate-500 dark:text-slate-400 mt-2 text-base">Live conversations from visitors on xpertva.com.</p>
@@ -20,7 +20,7 @@
      id="chat-console">
 
     {{-- Conversation list --}}
-    <aside class="lg:col-span-4 xl:col-span-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col max-h-[70vh]">
+    <aside class="lg:col-span-4 xl:col-span-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex-col h-[calc(100dvh-11rem)] lg:h-auto lg:max-h-[70vh] {{ $explicit ? 'hidden lg:flex' : 'flex' }}">
         <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
             <h3 class="font-semibold text-sm text-slate-800 dark:text-white">Conversations</h3>
             <span id="chat-unread-total" class="text-xs font-bold text-white bg-red-500 rounded-full px-2 py-0.5 {{ $conversations->sum('unread_for_agent') ? '' : 'hidden' }}">{{ $conversations->sum('unread_for_agent') }}</span>
@@ -48,28 +48,40 @@
     </aside>
 
     {{-- Active thread --}}
-    <section class="lg:col-span-8 xl:col-span-9 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col max-h-[70vh]"
+    <section class="lg:col-span-8 xl:col-span-9 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 flex-col h-[calc(100dvh-11rem)] lg:h-auto lg:max-h-[70vh] {{ $explicit ? 'flex' : 'hidden lg:flex' }}"
              @if($active) data-conversation="{{ $active->id }}"
                           data-messages-url="{{ route('chat.messages', $active) }}"
                           data-reply-url="{{ route('chat.reply', $active) }}"
                           data-close-url="{{ route('chat.close', $active) }}" @endif
              id="chat-thread">
         @if($active)
-            <header class="px-5 py-3 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center gap-3">
-                <div class="min-w-0">
-                    <p class="font-semibold text-slate-800 dark:text-white truncate">{{ $active->displayName() }}</p>
+            <header class="px-4 sm:px-5 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
+                <a href="{{ route('chat.index') }}"
+                   class="lg:hidden shrink-0 w-9 h-9 -ml-1 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                   aria-label="Back to conversations">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <div class="min-w-0 flex-1">
+                    <p class="font-semibold text-slate-800 dark:text-white truncate text-sm sm:text-base">{{ $active->displayName() }}</p>
                     <p class="text-xs text-slate-500 dark:text-slate-400 truncate">
                         @if($active->email)<a href="mailto:{{ $active->email }}" class="hover:underline">{{ $active->email }}</a> &middot; @endif
                         @if($active->phone){{ $active->phone }} &middot; @endif
                         from {{ $active->page_url ?: '/' }}
                     </p>
                 </div>
-                <div class="ml-auto flex items-center gap-2">
+                <div class="ml-auto flex items-center gap-1.5 shrink-0">
                     @if($active->email)
-                        <a href="mailto:{{ $active->email }}" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Email</a>
+                        <a href="mailto:{{ $active->email }}" title="Email {{ $active->email }}"
+                           class="w-9 h-9 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center justify-center">
+                            <i class="fa-regular fa-envelope sm:hidden"></i>
+                            <span class="hidden sm:inline">Email</span>
+                        </a>
                     @endif
-                    <button type="button" id="chat-resolve" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">
-                        {{ $active->status === 'closed' ? 'Resolved' : 'Mark resolved' }}
+                    <button type="button" id="chat-resolve"
+                            title="{{ $active->status === 'closed' ? 'Resolved' : 'Mark resolved' }}"
+                            class="w-9 h-9 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center justify-center whitespace-nowrap">
+                        <i class="fa-regular fa-circle-check sm:hidden"></i>
+                        <span class="hidden sm:inline">{{ $active->status === 'closed' ? 'Resolved' : 'Mark resolved' }}</span>
                     </button>
                 </div>
             </header>
@@ -93,7 +105,7 @@
 
             <form class="p-4 border-t border-slate-200 dark:border-slate-700 flex items-end gap-3" id="chat-reply-form">
                 @csrf
-                <textarea id="chat-reply" rows="1" maxlength="4000" required placeholder="Reply to {{ $active->displayName() }}"
+                <textarea id="chat-reply" rows="1" maxlength="4000" required placeholder="Write a reply"
                           class="flex-1 resize-none max-h-32 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 dark:text-slate-200 placeholder-slate-400"></textarea>
                 <button type="submit" id="chat-reply-send" class="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50">
                     Send

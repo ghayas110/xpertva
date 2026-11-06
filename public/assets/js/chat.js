@@ -243,8 +243,23 @@
     var done = function () { send.disabled = false; typing(false); };
 
     if (!token) {
-      var name  = (document.getElementById('chat-name')  || {}).value || '';
-      var email = (document.getElementById('chat-email') || {}).value || '';
+      var nameEl = document.getElementById('chat-name');
+      var name   = (nameEl || {}).value || '';
+      var email  = (document.getElementById('chat-email') || {}).value || '';
+
+      // An operator cannot follow anyone up without a name, so ask before sending.
+      if (!name.trim()) {
+        showError('Please add your name so we know who we are talking to.');
+        input.value = text;          // give the message back rather than losing it
+        autosize();
+        var last = body.querySelector('.chat__msg--me:last-of-type');
+        if (last) last.remove();
+        typing(false);
+        send.disabled = false;
+        if (nameEl) nameEl.focus();
+        return;
+      }
+
       post(startUrl, {
         name: name.trim() || null,
         email: email.trim() || null,

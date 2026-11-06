@@ -35,7 +35,7 @@ class ChatController extends Controller
     public function start(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'name'    => 'nullable|string|max:120',
+            'name'    => 'required|string|max:120',
             'email'   => 'nullable|email|max:190',
             'phone'   => 'nullable|string|max:40',
             'message' => 'required|string|max:2000',
