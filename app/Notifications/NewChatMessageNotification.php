@@ -6,6 +6,7 @@ use App\Models\ChatConversation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
+use App\Notifications\Channels\WebPushChannel;
 
 class NewChatMessageNotification extends Notification
 {
@@ -19,7 +20,7 @@ class NewChatMessageNotification extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', WebPushChannel::class];   // database drives the bell; WebPushChannel reaches closed devices
     }
 
     public function toArray(object $notifiable): array

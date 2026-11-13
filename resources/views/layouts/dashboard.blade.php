@@ -296,22 +296,23 @@
                                     </form>
                                 @endif
                             </div>
-                            <div id="osNotifBanner" class="hidden px-4 py-2 bg-amber-50 dark:bg-amber-900/20 border-b border-amber-100 dark:border-amber-800/40 text-xs text-amber-800 dark:text-amber-300 flex items-center justify-between gap-2">
-                                <span><i class="fa-solid fa-triangle-exclamation mr-1"></i> OS notifications are off.</span>
-                                <button type="button" id="enableOsNotifBtn" class="font-semibold text-amber-700 dark:text-amber-300 hover:underline">Enable</button>
+{{-- Notification status strip. Every state is driven from JS in one place
+                                 (setBanner), because "notifications are off" has several quite
+                                 different causes and each needs a different thing from the user. --}}
+                            <div id="osNotifBanner" class="hidden px-4 py-2 border-b text-xs flex items-start justify-between gap-2">
+                                <span class="flex-1 min-w-0">
+                                    <i id="osNotifIcon" class="fa-solid fa-triangle-exclamation mr-1"></i>
+                                    <span id="osNotifText">Notifications are off.</span>
+                                </span>
+                                <button type="button" id="enableOsNotifBtn" class="hidden font-semibold hover:underline shrink-0">Enable</button>
+                                <button type="button" id="testOsNotifBtn" class="hidden font-semibold hover:underline shrink-0">Send test</button>
                             </div>
                             <div class="max-h-72 overflow-y-auto">
                                 @forelse(auth()->user()->notifications()->latest()->take(10)->get() as $notification)
                                     @php
-                                        // Match the destinations the /notifications/poll endpoint builds,
-                                        // so a notification opens the same page whether it is clicked in
-                                        // this dropdown or as an OS alert.
-                                        $notifUrl = '#';
-                                        if (isset($notification->data['task_id'])) {
-                                            $notifUrl = route('tasks.index') . '?open_task=' . $notification->data['task_id'];
-                                        } elseif (isset($notification->data['conversation_id'])) {
-                                            $notifUrl = route('chat.index') . '?c=' . $notification->data['conversation_id'];
-                                        }
+                                        // Shared resolver, so a notification opens the same page whether it
+                                        // is clicked here, in an OS alert, or in a background push.
+                                        $notifUrl = \App\Support\NotificationLink::orDashboard((array) $notification->data);
                                     @endphp
                                     <a href="{{ $notifUrl }}" class="block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors border-b border-slate-100 dark:border-slate-700/50 {{ is_null($notification->read_at) ? 'bg-indigo-50/50 dark:bg-indigo-900/20' : '' }}">
                                         <div class="flex items-start gap-3">
@@ -414,8 +415,29 @@
     @stack('scripts')
 
     @auth
+    @php
+        // Resolved once per render; null when no VAPID keys are configured, in
+        // which case the portal falls back to in-page alerts only.
+        $xvPushKey = app(\App\Services\WebPush::class)->publicKey();
+    @endphp
     <script>
-    // ── OS / Browser Push Notifications ──────────────────────────────────────
+    // ── Notifications: background push, with in-page alerts as the fallback ──
+    //
+    // Two delivery routes exist, and only one of them is ever allowed to raise
+    // an alert for a given notification:
+    //
+    //   Background push — the server encrypts the notification and hands it to
+    //     the browser's push service. Arrives within seconds whether or not the
+    //     portal is open. Needs VAPID keys, and on iOS needs the portal to have
+    //     been added to the Home Screen.
+    //
+    //   In-page polling — the open tab asks every 15s and raises the alert
+    //     itself. Works everywhere, but only while a tab is open. Used when
+    //     push is unavailable or has not been granted.
+    //
+    // Once a push subscription is live and the server has confirmed it, the
+    // poller stops raising alerts and only keeps the unread badge current.
+    // Otherwise the same notification would appear twice.
     (function() {
         const CSRF        = '{{ csrf_token() }}';
         // The old logo is navy ink on a transparent background, which is close to
@@ -424,19 +446,101 @@
         const BADGE       = '{{ asset("favicon-32x32.png") }}';
         const POLL_MS     = 15000; // 15 seconds
         const SINCE_KEY   = 'xpertva.notif.lastSeen';
+        const VAPID_KEY   = @json($xvPushKey);
 
         let swRegistration = null;
+        let pushActive     = false; // true once the server has a working subscription
         let lastSeen = localStorage.getItem(SINCE_KEY) || new Date().toISOString();
 
-        function isSupported() { return 'Notification' in window; }
+        const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent)
+            || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-        function updateBanner() {
+        function isStandalone() {
+            return window.matchMedia('(display-mode: standalone)').matches
+                || navigator.standalone === true;
+        }
+
+        function supportsNotifications() { return 'Notification' in window; }
+
+        function supportsPush() {
+            return 'serviceWorker' in navigator && 'PushManager' in window && !!VAPID_KEY;
+        }
+
+        /* ── Status strip ────────────────────────────────────────────────── */
+
+        const TONES = {
+            warn: 'bg-amber-50 dark:bg-amber-900/20 border-amber-100 dark:border-amber-800/40 text-amber-800 dark:text-amber-300',
+            good: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-300',
+            info: 'bg-slate-50 dark:bg-slate-900/40 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+        };
+
+        function setBanner(tone, icon, text, buttons) {
             const banner = document.getElementById('osNotifBanner');
             if (!banner) return;
-            if (!isSupported())              { banner.classList.remove('hidden'); return; }
-            if (Notification.permission === 'granted') banner.classList.add('hidden');
-            else                                       banner.classList.remove('hidden');
+
+            banner.className = 'px-4 py-2 border-b text-xs flex items-start justify-between gap-2 ' + TONES[tone];
+            document.getElementById('osNotifIcon').className = icon + ' mr-1';
+            document.getElementById('osNotifText').textContent = text;
+
+            const enable = document.getElementById('enableOsNotifBtn');
+            const test   = document.getElementById('testOsNotifBtn');
+            enable.classList.toggle('hidden', buttons.indexOf('enable') === -1);
+            test.classList.toggle('hidden',   buttons.indexOf('test')   === -1);
+
+            // Buttons inherit the strip's text colour, so they stay legible in
+            // every tone without a second set of colour rules.
+            enable.classList.add('underline-offset-2');
+            test.classList.add('underline-offset-2');
         }
+
+        function hideBanner() {
+            const banner = document.getElementById('osNotifBanner');
+            if (banner) banner.className = 'hidden';
+        }
+
+        function updateBanner() {
+            if (!supportsNotifications()) {
+                setBanner('info', 'fa-solid fa-circle-info', 'This browser cannot show notifications.', []);
+                return;
+            }
+
+            // iOS only allows web push once the portal has been installed to the
+            // Home Screen. Offering an Enable button there would do nothing.
+            if (isIOS && !isStandalone()) {
+                setBanner('info', 'fa-solid fa-mobile-screen',
+                    'On iPhone, add XpertVA to your Home Screen first — then alerts arrive with the app closed.', []);
+                return;
+            }
+
+            if (Notification.permission === 'denied') {
+                setBanner('warn', 'fa-solid fa-bell-slash',
+                    'Notifications are blocked. Allow them for this site in your browser settings.', []);
+                return;
+            }
+
+            if (Notification.permission !== 'granted') {
+                setBanner('warn', 'fa-solid fa-triangle-exclamation', 'Notifications are off.', ['enable']);
+                return;
+            }
+
+            if (pushActive) {
+                setBanner('good', 'fa-solid fa-circle-check',
+                    'Background alerts are on — you will be notified with the portal closed.', ['test']);
+                return;
+            }
+
+            if (!supportsPush()) {
+                setBanner('info', 'fa-solid fa-circle-info',
+                    'Alerts will only arrive while the portal is open on this device.', []);
+                return;
+            }
+
+            // Permission is granted and push is possible, but no confirmed
+            // subscription yet — usually mid-handshake on first load.
+            hideBanner();
+        }
+
+        /* ── Service worker ──────────────────────────────────────────────── */
 
         async function registerServiceWorker() {
             if (!('serviceWorker' in navigator)) return null;
@@ -449,7 +553,7 @@
         }
 
         async function ensurePermission(fromUserGesture = false) {
-            if (!isSupported()) return false;
+            if (!supportsNotifications()) return false;
             if (Notification.permission === 'granted') return true;
             if (Notification.permission === 'denied')  return false;
             if (!fromUserGesture) return false; // most browsers block silent requests
@@ -460,6 +564,84 @@
             } catch (e) { return false; }
         }
 
+        /* ── Background push subscription ────────────────────────────────── */
+
+        // The applicationServerKey has to be raw bytes, not the base64url text
+        // the server sends.
+        function vapidKeyBytes(base64url) {
+            const padded = (base64url + '='.repeat((4 - base64url.length % 4) % 4))
+                .replace(/-/g, '+').replace(/_/g, '/');
+            const raw = atob(padded);
+            const bytes = new Uint8Array(raw.length);
+            for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+            return bytes;
+        }
+
+        function sameKey(buffer, bytes) {
+            if (!buffer) return false;
+            const existing = new Uint8Array(buffer);
+            if (existing.length !== bytes.length) return false;
+            for (let i = 0; i < bytes.length; i++) {
+                if (existing[i] !== bytes[i]) return false;
+            }
+            return true;
+        }
+
+        async function syncPushSubscription() {
+            if (!supportsPush() || Notification.permission !== 'granted') return false;
+
+            try {
+                const reg = swRegistration || await navigator.serviceWorker.ready;
+                if (!reg || !reg.pushManager) return false;
+
+                const wanted = vapidKeyBytes(VAPID_KEY);
+                let subscription = await reg.pushManager.getSubscription();
+
+                // A subscription made against a previous VAPID key can never be
+                // decrypted by this server, so replace it rather than keep it.
+                if (subscription && !sameKey(
+                    subscription.options && subscription.options.applicationServerKey, wanted)) {
+                    try { await subscription.unsubscribe(); } catch (e) {}
+                    subscription = null;
+                }
+
+                if (!subscription) {
+                    subscription = await reg.pushManager.subscribe({
+                        userVisibleOnly: true,          // required; Chrome rejects silent push
+                        applicationServerKey: wanted
+                    });
+                }
+
+                const keys = subscription.toJSON().keys || {};
+                const res = await fetch('{{ route('push.subscribe') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': CSRF
+                    },
+                    body: JSON.stringify({
+                        endpoint: subscription.endpoint,
+                        p256dh:   keys.p256dh,
+                        auth:     keys.auth
+                    })
+                });
+
+                // Only now is push trusted enough to switch the poller's alerts
+                // off. If the server could not store it, in-page alerts stay on
+                // rather than leaving the operator with nothing.
+                pushActive = res.ok;
+                updateBanner();
+                return pushActive;
+            } catch (e) {
+                pushActive = false;
+                updateBanner();
+                return false;
+            }
+        }
+
+        /* ── Raising an alert from the page ──────────────────────────────── */
+
         async function showOsNotif(title, body, url, tag) {
             if (Notification.permission !== 'granted') return;
             const opts = {
@@ -467,7 +649,7 @@
                 icon: ICON,
                 badge: BADGE,
                 tag: tag || ('xpertva-' + Date.now()),
-                renotify: true,
+                renotify: false,   // a push carrying the same tag must not buzz twice
                 requireInteraction: false,
                 data: { url: url || null }
             };
@@ -485,8 +667,6 @@
         }
 
         function updateBadge(count) {
-            const wrapper = document.querySelector('.notification-badge, [data-notif-badge]');
-            // Best-effort badge refresh (server-rendered span); soft-reload count via DOM:
             const bell = document.querySelector('button [class*="fa-bell"]');
             if (!bell) return;
             const btn = bell.closest('button');
@@ -502,6 +682,11 @@
             } else if (badge) {
                 badge.remove();
             }
+
+            // Home screen icon badge, where the platform supports it.
+            if (navigator.setAppBadge) {
+                (count > 0 ? navigator.setAppBadge(count) : navigator.clearAppBadge()).catch(() => {});
+            }
         }
 
         async function pollNotifications() {
@@ -511,7 +696,9 @@
                 if (!res.ok) return;
                 const data = await res.json();
 
-                if (Array.isArray(data.new) && data.new.length) {
+                // When background push is live the push service has already shown
+                // these, so the poller only keeps the badge and cursor current.
+                if (!pushActive && Array.isArray(data.new) && data.new.length) {
                     for (const item of data.new) {
                         await showOsNotif(item.title, item.message, item.url, 'xpertva-' + item.id);
                     }
@@ -523,33 +710,77 @@
             } catch (e) { /* network hiccup — ignore */ }
         }
 
-        // Manual enable button inside the bell dropdown
+        /* ── Buttons ─────────────────────────────────────────────────────── */
+
         document.addEventListener('click', async (e) => {
-            const btn = e.target.closest('#enableOsNotifBtn');
-            if (!btn) return;
-            e.preventDefault();
-            const ok = await ensurePermission(true);
-            if (ok) {
-                showOsNotif('XpertVA notifications enabled', 'You will now receive desktop alerts.', null, 'xpertva-enable');
+            const enableBtn = e.target.closest('#enableOsNotifBtn');
+            if (enableBtn) {
+                e.preventDefault();
+                const ok = await ensurePermission(true);
+                if (!ok) return;
+                const subscribed = await syncPushSubscription();
+                if (!subscribed) {
+                    showOsNotif('XpertVA notifications enabled',
+                        'Alerts will appear while the portal is open.', null, 'xpertva-enable');
+                }
+                // When push did subscribe, the test button is the honest proof,
+                // so no local toast is raised here.
+                return;
+            }
+
+            const testBtn = e.target.closest('#testOsNotifBtn');
+            if (testBtn) {
+                e.preventDefault();
+                testBtn.disabled = true;
+                const original = testBtn.textContent;
+                testBtn.textContent = 'Sending…';
+                try {
+                    const res = await fetch('{{ route('push.test') }}', {
+                        method: 'POST',
+                        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+                    });
+                    const body = await res.json().catch(() => ({}));
+                    testBtn.textContent = body.ok
+                        ? 'Sent to ' + body.delivered + (body.delivered === 1 ? ' device' : ' devices')
+                        : 'Could not send';
+                } catch (err) {
+                    testBtn.textContent = 'Could not send';
+                }
+                setTimeout(() => { testBtn.textContent = original; testBtn.disabled = false; }, 4000);
+                return;
             }
         });
 
-        // Boot
+        /* ── Boot ────────────────────────────────────────────────────────── */
+
         updateBanner();
-        registerServiceWorker().finally(() => {
+        registerServiceWorker().finally(async () => {
             // Try silent permission request once (will only succeed if previously granted)
-            ensurePermission(false);
+            await ensurePermission(false);
+
+            // Re-check the subscription on every load. This is what repairs a
+            // subscription the browser rotated while the portal was closed.
+            await syncPushSubscription();
+
+            updateBanner();
             // First poll immediately so any backlog fires now
             pollNotifications();
             setInterval(pollNotifications, POLL_MS);
         });
+
+        // The worker asks for this when the browser replaces a subscription;
+        // it cannot re-register by itself because it has no CSRF token.
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'xv-resubscribe') syncPushSubscription();
+            });
+        }
 
         // Re-poll when tab regains focus
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) pollNotifications();
         });
     })();
-
     // ── Attendance Heartbeat (keep online while tab is open) ────────────────
     @if(auth()->user()->status === 'online')
     (function() {

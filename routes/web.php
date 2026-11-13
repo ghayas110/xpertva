@@ -141,6 +141,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/agents', [\App\Http\Controllers\Admin\AgentProvisionController::class, 'index'])->name('admin.agents');
     Route::post('/admin/agents/{user}/regenerate', [\App\Http\Controllers\Admin\AgentProvisionController::class, 'regenerate'])->name('admin.agents.regenerate');
 
+    // Background push notification subscriptions (one row per browser)
+    Route::post('/push/subscribe', [\App\Http\Controllers\PushSubscriptionController::class, 'store'])->name('push.subscribe');
+    Route::post('/push/unsubscribe', [\App\Http\Controllers\PushSubscriptionController::class, 'destroy'])->name('push.unsubscribe');
+    Route::post('/push/test', [\App\Http\Controllers\PushSubscriptionController::class, 'test'])
+        ->middleware('throttle:6,1')
+        ->name('push.test');
+
     // Notifications
     Route::post('/notifications/mark-all-read', function () {
         auth()->user()->unreadNotifications->markAsRead();
@@ -161,12 +168,10 @@ Route::middleware(['auth'])->group(function () {
         $new = $query->orderBy('created_at')->get();
 
         $items = $new->map(function ($n) {
-            $url = null;
-            if (isset($n->data['task_id'])) {
-                $url = route('tasks.index') . '?open_task=' . $n->data['task_id'];
-            } elseif (isset($n->data['conversation_id'])) {
-                $url = route('chat.index') . '?c=' . $n->data['conversation_id'];
-            }
+            // One resolver for all three places a notification can be clicked:
+            // this poll response, the bell dropdown, and the background push.
+            $url = \App\Support\NotificationLink::for((array) $n->data);
+
             return [
                 'id'         => $n->id,
                 'title'      => $n->data['title']   ?? 'New Notification',

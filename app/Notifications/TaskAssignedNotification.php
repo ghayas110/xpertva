@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use App\Notifications\Channels\WebPushChannel;
 
 class TaskAssignedNotification extends Notification
 {
@@ -20,7 +21,7 @@ class TaskAssignedNotification extends Notification
 
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', WebPushChannel::class];   // database drives the bell; WebPushChannel reaches closed devices
     }
 
     public function toArray(object $notifiable): array

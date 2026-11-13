@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notification;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\Channels\WebPushChannel;
 
 class UserMentionedNotification extends Notification
 {
@@ -33,7 +34,7 @@ class UserMentionedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database']; // Store in DB so it shows in the bells dropdown
+        return ['database', WebPushChannel::class];   // database drives the bell; WebPushChannel reaches closed devices
     }
 
     /**
