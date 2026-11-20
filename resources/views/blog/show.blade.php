@@ -1,6 +1,8 @@
 @extends('layouts.site')
 
-@section('title', ($blog->title ?? 'Article') . ' | XpertVA Journal')
+{{-- Suffix kept short: titles were running to 113 characters and Google cuts
+     at about 60, so every post was being truncated mid-sentence in results. --}}
+@section('title', ($blog->title ?? 'Article') . ' | XpertVA')
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags($blog->description ?? $blog->content), 155))
 
 @push('head')
