@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon Account Management Services | Seller Central Health & Cases | XpertVA')
-@section('meta_description', 'Full-service Amazon Seller Central account management. Account health monitoring, case handling, suspension appeals, listing fixes, and FBA support from certified Amazon experts.')
+@section('title', 'Amazon Account Management Services | XpertVA')
+@section('meta_description', 'Full-service Amazon Seller Central account management: health monitoring, case handling, suspension appeals, listing fixes and FBA support.')
 @section('head_tone', 'site-head--on-dark')
 
 @push('head')
@@ -9,6 +9,9 @@
 <meta property="og:title" content="Amazon Account Management Services | XpertVA">
 <meta property="og:description" content="End-to-end Amazon Seller Central management, account health, cases, suspensions, FBA, and reimbursements.">
 <meta name="keywords" content="amazon account management, seller central management, amazon account health, amazon case management, amazon suspension appeal, amazon fba management, amazon reimbursement, amazon a-to-z claims">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta property="og:url" content="{{ url('/services/amazon/account-management') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @push('schema')

@@ -6,6 +6,12 @@
 @push('head')
 <link rel="canonical" href="{{ url('/privacy-policy') }}">
 <meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Policy | XpertVA">
+<meta property="og:description" content="How XpertVA collects, uses, shares and protects your data, and the choices you have.">
+<meta property="og:url" content="{{ url('/privacy-policy') }}">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @section('content')

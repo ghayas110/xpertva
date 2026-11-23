@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon Listing Optimization Services | SEO-Optimized Product Listings | XpertVA')
+@section('title', 'Amazon Listing Optimization Services | XpertVA')
 @section('meta_description', 'Amazon listing optimization services that boost organic ranking and conversion. SEO-driven titles, bullets, A+ content, and backend keywords for Seller Central.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -11,6 +11,8 @@
 <meta property="og:description" content="Rank higher and convert more on Amazon with SEO-optimized titles, bullets, descriptions, and A+ content built by certified Amazon specialists.">
 <meta property="og:url" content="{{ url('/services/amazon/listing-optimization') }}">
 <meta name="keywords" content="amazon listing optimization, amazon seo services, amazon product listing, optimize amazon listing, amazon listing optimization service, seller central listing optimization, amazon a+ content, amazon backend keywords">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @push('schema')

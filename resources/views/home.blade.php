@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Virtual Assistant Services for Amazon, eBay, Shopify & Walmart Sellers | XpertVA')
-@section('meta_description', 'Expert virtual assistant services for Amazon, eBay, Shopify, and Walmart sellers. Listing optimization, PPC management, account health, and storefront design. 500+ brands scaled since 2017.')
+@section('title', 'Virtual Assistant Services for Amazon Sellers | XpertVA')
+@section('meta_description', 'Virtual assistant services for Amazon, eBay, Shopify and Walmart sellers. Listings, PPC, account health and storefront design. 500+ brands scaled since 2017.')
 
 @push('head')
 <link rel="canonical" href="{{ url('/') }}">
@@ -42,7 +42,7 @@
             <figure class="hero__stage" style="margin:0" data-hero-in>
                 <div class="photo">
                     <img src="{{ asset('assets/photos/team-laptops.jpg') }}"
-                         width="1800" height="1800" fetchpriority="high" decoding="async"
+                         width="1600" height="1066" fetchpriority="high" decoding="async"
                          alt="Account managers working through marketplace reports together at a shared desk.">
                 </div>
                 <div class="hero__proof">
@@ -64,13 +64,26 @@
         <div class="marquee__track">
             {{-- Only marks with a clean alpha channel are used here; the silhouette
                  treatment in site.css turns a mixed set of source files into one strip. --}}
+            {{-- slug => brand name. The slug is the file on disk (lowercase,
+                 hyphenated, URL safe); the name is what a screen reader and an
+                 image search result actually read. --}}
             @foreach ([
-                'Bulbrite', 'HOMELUX', 'LONDON LABS', 'NOVAVITA NUTRITION',
-                'CREEK', 'ASTORIA', 'EAGLES', 'AGENTS MOTOR PARTS', 'ATTAR MIST',
-                'CONRAD SHOPPING', 'FLY', 'WE LOVE RESTURANT',
-                'DIAMOND EXCELLENCY', 'HOLIDAY APARTMENT',
-            ] as $logo)
-                <img src="{{ asset('assets/logos/' . $logo . '.png') }}" alt="{{ $logo }}" loading="lazy" decoding="async" height="40">
+                'bulbrite'           => 'Bulbrite',
+                'homelux'            => 'Homelux',
+                'london-labs'        => 'London Labs',
+                'novavita-nutrition' => 'NovaVita Nutrition',
+                'creek'              => 'Creek',
+                'astoria'            => 'Astoria',
+                'eagles'             => 'Eagles',
+                'agents-motor-parts' => 'Agents Motor Parts',
+                'attar-mist'         => 'Attar Mist',
+                'conrad-shopping'    => 'Conrad Shopping',
+                'fly'                => 'Fly',
+                'we-love-resturant'  => 'We Love Resturant',
+                'diamond-excellency' => 'Diamond Excellency',
+                'holiday-apartment'  => 'Holiday Apartment',
+            ] as $slug => $brand)
+                <img src="{{ asset('assets/logos/' . $slug . '.png') }}" alt="{{ $brand }}, an XpertVA eCommerce client" loading="lazy" decoding="async" height="40">
             @endforeach
         </div>
     </div>
@@ -137,12 +150,12 @@
             </div>
 
             <div class="cindex__preview" aria-hidden="true">
-                <img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/Storefront/b1lyQ4S1zi.jpg') }}" alt="">
-                <img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/PPC Campaign Management & Optimization/gA69WkFEUI.jpg') }}" alt="">
-                <img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/Keyword Research/final.jpg') }}" alt="">
-                <img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/Premium-Basic A%2B Content/QlRcqWsLX5.jpg') }}" alt="">
-                <img data-cindex-img="health" loading="lazy" src="{{ asset('assets/Account Health/c3hrneItb1.jpg') }}" alt="">
-                <img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/MAP Enforcement/All Blur 2.png') }}" alt="">
+                <img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="Amazon brand storefront layout built by XpertVA">
+                <img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="Amazon Sponsored Products campaign structure in Seller Central">
+                <img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="Amazon keyword research showing search volume and rank tracking">
+                <img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="Amazon A+ Content module comparing product variants">
+                <img data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="Amazon Seller Central account health dashboard">
+                <img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="MAP enforcement report listing unauthorised sellers">
             </div>
         </div>
     </div>

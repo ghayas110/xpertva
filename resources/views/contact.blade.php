@@ -10,6 +10,7 @@
 <meta property="og:description" content="Book a consultation with an operator who has run your marketplace. Replies within one business day.">
 <meta property="og:url" content="{{ url('/contact') }}">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
 @endpush
 
 @section('content')

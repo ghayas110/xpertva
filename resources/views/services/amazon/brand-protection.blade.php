@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon Brand Protection Services | Hijacker Removal & MAP Enforcement | XpertVA')
-@section('meta_description', 'Amazon brand protection services, hijacker removal, counterfeit takedowns, MAP enforcement, IP infringement reporting, and Brand Registry support to protect your listings.')
+@section('title', 'Amazon Brand Protection & Hijacker Removal | XpertVA')
+@section('meta_description', 'Amazon brand protection: hijacker removal, counterfeit takedowns, MAP enforcement, IP infringement reporting and Brand Registry support.')
 @section('head_tone', 'site-head--on-dark')
 
 @push('head')
@@ -9,6 +9,9 @@
 <meta property="og:title" content="Amazon Brand Protection Services | XpertVA">
 <meta property="og:description" content="Remove hijackers, enforce MAP, and stop counterfeit sellers on Amazon with Brand Registry-trained specialists.">
 <meta name="keywords" content="amazon brand protection, amazon hijacker removal, amazon map enforcement, amazon counterfeit removal, amazon ip infringement, amazon brand registry, transparency program, project zero amazon">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta property="og:url" content="{{ url('/services/amazon/brand-protection') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @push('schema')

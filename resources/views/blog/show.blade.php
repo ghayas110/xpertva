@@ -98,7 +98,19 @@
 
     <div class="section">
         <div class="wrap" style="max-width:56rem">
-            <div class="prose" id="article-body">{!! nl2br(e($blog->content)) !!}</div>
+            @php
+                // .prose styles h2, h3, ul, ol and blockquote, but escaping the
+                // content meant no article could ever use them — every post
+                // rendered as one unbroken wall of text with no headings.
+                //
+                // Posts written as HTML now render as HTML. The older plain-text
+                // posts carry no block tags, so they keep the nl2br treatment
+                // and look exactly as they do today.
+                $hasMarkup = (bool) preg_match('/<(h2|h3|p|ul|ol|blockquote|table|figure)\b/i', $blog->content);
+            @endphp
+            <div class="prose" id="article-body">
+                {!! $hasMarkup ? $blog->content : nl2br(e($blog->content)) !!}
+            </div>
 
             @if ($blog->tags)
                 <ul class="chips mt-4" style="flex-wrap:wrap">

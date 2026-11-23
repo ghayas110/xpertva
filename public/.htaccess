@@ -5,6 +5,62 @@
 
     RewriteEngine On
 
+    # ======================================================================
+    # Canonical URLs
+    #
+    # This app is served from a document root whose .htaccess rewrites every
+    # request into this folder. That left each page reachable twice — at
+    # /page and at /public/page — both returning 200, and each declaring
+    # itself canonical. Search engines treated them as separate pages and
+    # split the ranking signals between them.
+    #
+    # These rules test %{THE_REQUEST}, the original request line, and NOT
+    # %{REQUEST_URI}, which by this point has already been rewritten to
+    # /public/... for every visitor. Testing REQUEST_URI here would redirect
+    # ordinary traffic straight into the duplicate it is meant to remove.
+    #
+    # They are GET/HEAD only. A 301 turns a POST into a GET and discards the
+    # body, so form submissions must never be caught by them.
+    # ======================================================================
+
+    # /public/anything  ->  /anything
+    # [^\s?]* deliberately stops before the query string — mod_rewrite
+    # re-appends it on its own. Capturing it with \S* puts a literal "?"
+    # inside the path and the request 403s.
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+    RewriteCond %{THE_REQUEST} \s/+public/([^\s?]*)
+    RewriteRule ^ /%1 [L,R=301]
+
+    # /public  ->  /
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+    RewriteCond %{THE_REQUEST} \s/+public[\s?]
+    RewriteRule ^ / [L,R=301]
+
+    # /index.php  ->  /
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+    RewriteCond %{THE_REQUEST} \s/+index\.php[\s?]
+    RewriteRule ^ / [L,R=301]
+
+    # ======================================================================
+    # Serve WebP where the browser accepts it
+    #
+    # Each optimised image ships as a twin next to the original —
+    # photo.jpg and photo.webp. A browser that sends "image/webp" in its
+    # Accept header gets the smaller file; anything else gets the original
+    # byte for byte. No template, CSS or database reference changes, which
+    # matters because blog cover images are stored in the database.
+    #
+    # The rule matches the per-directory relative path rather than
+    # %{REQUEST_URI}: by this point the request has already been rewritten to
+    # /public/..., and using REQUEST_URI would bake that prefix into the
+    # target. Delete the .webp files to roll the whole thing back.
+    # ======================================================================
+    RewriteCond %{HTTP_ACCEPT} image/webp
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpe?g|png)$ [NC]
+    RewriteCond %1.webp -f
+    RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=WEBPSWAP:1,L,NC]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -14,12 +70,27 @@
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
     # Redirect Trailing Slashes If Not A Folder...
+    #
+    # Laravel's stock rule reads %{REQUEST_URI}, which here has already become
+    # /public/blog/ — so /blog/ was being 301'd to /public/blog, i.e. into the
+    # duplicate tree. Reading the original request line gives the right target.
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    RewriteCond %{THE_REQUEST} \s/+([^\s?]+?)/+[\s?]
+    RewriteRule ^ /%1 [L,R=301]
 
     # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Tell caches the response depends on the Accept header, so a WebP reply
+    # is never handed to a client that cannot read it.
+    Header append Vary Accept env=WEBPSWAP
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType image/webp .webp
 </IfModule>

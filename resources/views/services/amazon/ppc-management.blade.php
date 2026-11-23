@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon PPC Management Services | Sponsored Ads & ACoS Reduction | XpertVA')
-@section('meta_description', 'Amazon PPC management services that lower ACoS and scale revenue. Sponsored Products, Sponsored Brands, Sponsored Display, and DSP campaigns managed by certified Amazon Ads experts.')
+@section('title', 'Amazon PPC Management Services | XpertVA')
+@section('meta_description', 'Amazon PPC management that lowers ACoS and scales revenue. Sponsored Products, Brands, Display and DSP campaigns run by certified Amazon Ads experts.')
 @section('head_tone', 'site-head--on-dark')
 
 @push('head')
@@ -11,6 +11,8 @@
 <meta property="og:description" content="Lower ACoS, raise TACoS-aware profit, and scale Amazon ad spend with certified Amazon Ads specialists.">
 <meta property="og:url" content="{{ url('/services/amazon/ppc-management') }}">
 <meta name="keywords" content="amazon ppc management, amazon advertising agency, sponsored products management, amazon ppc agency, lower acos amazon, amazon ads management, amazon dsp, amazon sponsored brands">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @push('schema')

@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon SEO & Keyword Research Services | Rank Higher in Amazon Search | XpertVA')
-@section('meta_description', 'Amazon SEO and keyword research services using Helium 10, Brand Analytics, and Cerebro. Rank for high-intent buyer keywords on Amazon US, UK, EU, and CA marketplaces.')
+@section('title', 'Amazon SEO & Keyword Research Services | XpertVA')
+@section('meta_description', 'Amazon SEO and keyword research using Helium 10, Brand Analytics and Cerebro. Rank for high-intent buyer keywords across US, UK, EU and CA marketplaces.')
 @section('head_tone', 'site-head--on-dark')
 
 @push('head')
@@ -9,6 +9,9 @@
 <meta property="og:title" content="Amazon SEO & Keyword Research Services | XpertVA">
 <meta property="og:description" content="Rank for high-intent buyer keywords on Amazon with research-backed SEO from certified Seller Central experts.">
 <meta name="keywords" content="amazon keyword research, amazon seo, amazon a10 algorithm, helium 10 keyword research, amazon search ranking, amazon keyword tool, brand analytics keywords, amazon seo agency">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta property="og:url" content="{{ url('/services/amazon/seo-keyword-research') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @push('schema')

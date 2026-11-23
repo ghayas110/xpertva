@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon A+ Content & Storefront Design Services | Brand Story EBC | XpertVA')
-@section('meta_description', 'Amazon A+ Content (EBC), Premium A+, and Brand Storefront design services. Lift conversion 5-10% with comparison charts, brand story modules, and shoppable storefront pages.')
+@section('title', 'Amazon A+ Content & Storefront Design | XpertVA')
+@section('meta_description', 'Amazon A+ Content, Premium A+ and Brand Storefront design. Comparison charts, brand story modules and shoppable pages that lift conversion.')
 @section('head_tone', 'site-head--on-dark')
 
 @push('head')
@@ -9,6 +9,9 @@
 <meta property="og:title" content="Amazon A+ Content & Storefront Design | XpertVA">
 <meta property="og:description" content="Convert more shoppers with Amazon A+ Content, Premium A+, and Brand Storefront design built for Brand Registered sellers.">
 <meta name="keywords" content="amazon a+ content, amazon ebc, premium a+ content, amazon storefront design, brand store amazon, amazon brand registry, a+ content design, amazon brand story">
+<meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
+<meta property="og:url" content="{{ url('/services/amazon/a-plus-storefront') }}">
+<meta name="twitter:card" content="summary_large_image">
 @endpush
 
 @push('schema')

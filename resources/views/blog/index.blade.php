@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Blog & Insights | Amazon, eBay, Shopify & Walmart Growth | XpertVA')
-@section('meta_description', 'Editorial insights, playbooks, and case studies on Amazon listing optimization, PPC strategy, Shopify growth, and virtual assistant best practices from the XpertVA team.')
+@section('title', 'Blog: Amazon & eCommerce Growth Insights | XpertVA')
+@section('meta_description', 'Playbooks and case studies on Amazon listing optimization, PPC strategy, Shopify growth and virtual assistant best practice, from the XpertVA team.')
 
 @push('head')
 <link rel="canonical" href="{{ url('/blog') }}">
@@ -10,6 +10,7 @@
 <meta property="og:description" content="Playbooks, case studies, and expert insights for Amazon, eBay, Shopify, and Walmart sellers.">
 <meta property="og:url" content="{{ url('/blog') }}">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="{{ asset('assets/images/blog/seo-strategies.png') }}">
 @endpush
 
 @section('content')

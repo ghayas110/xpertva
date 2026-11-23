@@ -14,4 +14,9 @@ Disallow: /leaves
 Disallow: /email
 Disallow: /activities
 
+# Cloudflare rewrites mailto: links to /cdn-cgi/l/email-protection, which
+# returns 404 to any crawler that does not run JavaScript. Every page carries
+# one, so without this line a site audit reports 60+ "links to broken page".
+Disallow: /cdn-cgi/
+
 Sitemap: https://xpertva.com/sitemap.xml

@@ -110,77 +110,77 @@
         ['title' => 'Chandelier Lift System', 'cat' => 'Infographics', 'img' => 'images/chandelier-lift-system.jpg', 'desc' => 'Infographics integration.', 'ar' => 1.0],
 
         // A TO Z CLAIM
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/1.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.256],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/2.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.26],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/3.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.16],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/4.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.35],
-        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'A-to-z Guarantee Claims/5.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.175],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'a-to-z-claims/a-to-z-claim-granted-odr-reversed-1.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.256],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'a-to-z-claims/a-to-z-claim-granted-odr-reversed-2.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.26],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'a-to-z-claims/a-to-z-claim-granted-odr-reversed-3.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.16],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'a-to-z-claims/a-to-z-claim-granted-odr-reversed-4.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.35],
+        ['title' => 'A to Z Claim Success', 'cat' => 'A to Z Claim', 'img' => 'a-to-z-claims/a-to-z-claim-granted-odr-reversed-5.jpg', 'desc' => 'Claim dispute resolution', 'ar' => 0.175],
 
         // ACCOUNT HEALTH
-        ['title' => 'Account Health Safety', 'cat' => 'Account Health', 'img' => 'Account Health/c3hrneItb1.jpg', 'desc' => 'Account reinstatement & health', 'ar' => 0.497],
+        ['title' => 'Account Health Safety', 'cat' => 'Account Health', 'img' => 'account-health/amazon-account-health-dashboard.jpg', 'desc' => 'Seller Central dashboard with every policy healthy', 'ar' => 0.497],
 
         // AMAZON CASES
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/1.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.266],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/2.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.376],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/3.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.281],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/4.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.256],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/5.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.235],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/6.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.309],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/8.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.527],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/9.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.344],
-        ['title' => 'Amazon Case Resolve', 'cat' => 'Amazon Cases', 'img' => 'Amazon Cases/10.jpg', 'desc' => 'Seller support resolution', 'ar' => 0.284],
+        ['title' => 'Buy Box Recovered', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/featured-offer-buy-box-won.jpg', 'desc' => 'Featured Offer won after case escalation', 'ar' => 0.266],
+        ['title' => 'Feedback Removed', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/negative-feedback-removal-approved.jpg', 'desc' => 'Policy-violating seller feedback struck', 'ar' => 0.376],
+        ['title' => 'ASINs Reinstated', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/asin-reinstatement-approved.jpg', 'desc' => 'Suppressed ASINs returned to active', 'ar' => 0.281],
+        ['title' => 'List Price Corrected', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/list-price-update-approved.jpg', 'desc' => 'Price fixed with manufacturer documentation', 'ar' => 0.256],
+        ['title' => 'DG Capacity Raised', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/dangerous-goods-capacity-increase.jpg', 'desc' => 'Dangerous goods storage limit increased', 'ar' => 0.235],
+        ['title' => 'Title Updated', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/product-title-change-approved.jpg', 'desc' => 'Product title changed via Brand Registry', 'ar' => 0.309],
+        ['title' => 'Lost Units Recovered', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/fba-lost-inventory-reimbursed.jpg', 'desc' => 'Warehouse investigation found and reimbursed stock', 'ar' => 0.527],
+        ['title' => 'Detail Page Fixed', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/product-page-image-fix.jpg', 'desc' => 'Incorrect product images corrected', 'ar' => 0.344],
+        ['title' => 'Byline Link Restored', 'cat' => 'Amazon Cases', 'img' => 'amazon-cases/brand-byline-link-fix.jpg', 'desc' => 'Brand byline reconnected to the Store', 'ar' => 0.284],
 
         // KEYWORD RESEARCH
-        ['title' => 'Keyword Optimization', 'cat' => 'Keyword Research', 'img' => 'Keyword Research/final.jpg', 'desc' => 'Search volume & rank tracking', 'ar' => 0.412],
+        ['title' => 'Keyword Optimization', 'cat' => 'Keyword Research', 'img' => 'keyword-research/amazon-keyword-research-competitor-matrix.jpg', 'desc' => 'Competitor keyword matrix with search volumes', 'ar' => 0.412],
 
         // LISTING ISSUES
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/74qzypE9bI.jpg', 'desc' => 'Stranded inventory fixed', 'ar' => 0.387],
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/867qLvJCNQ.jpg', 'desc' => 'Category approvals', 'ar' => 0.52],
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/VbUbvEIDmB.jpg', 'desc' => 'Suppressed listing active', 'ar' => 0.554],
-        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'Listing Issues/fAYJdtfv2V.jpg', 'desc' => 'Error 5665 / 8541 resolution', 'ar' => 0.628],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'listing-issues/amazon-listing-issue-resolved-1.jpg', 'desc' => 'Stranded inventory fixed', 'ar' => 0.387],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'listing-issues/amazon-listing-issue-resolved-2.jpg', 'desc' => 'Category approvals', 'ar' => 0.52],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'listing-issues/amazon-listing-issue-resolved-3.jpg', 'desc' => 'Suppressed listing active', 'ar' => 0.554],
+        ['title' => 'Listing Fix', 'cat' => 'Listing Issues', 'img' => 'listing-issues/amazon-listing-issue-resolved-4.jpg', 'desc' => 'Error 5665 / 8541 resolution', 'ar' => 0.628],
 
         // LISTING OPTIMIZATION
-        ['title' => 'Listing Rank Boost', 'cat' => 'Listing Optimization', 'img' => 'Listing Optimization/final-1.jpg', 'desc' => 'SEO optimized copy', 'ar' => 0.355],
+        ['title' => 'Listing Rank Boost', 'cat' => 'Listing Optimization', 'img' => 'listing-optimization/amazon-listing-quality-score-analysis.jpg', 'desc' => 'Listing Quality Score analysis scoring 10 of 10', 'ar' => 0.355],
 
         // MAP ENFORCEMENT
-        ['title' => 'Pricing Control', 'cat' => 'MAP Enforcement', 'img' => 'MAP Enforcement/All Blur 2.png', 'desc' => 'Unauthorized seller removal', 'ar' => 0.573],
+        ['title' => 'Pricing Control', 'cat' => 'MAP Enforcement', 'img' => 'map-enforcement/map-enforcement-violation-tracker.png', 'desc' => 'MAP violation tracker across monitored resellers', 'ar' => 0.573],
 
         // PPC OPTIMIZATION
-        ['title' => 'PPC ACOS Drop', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/TCWQ4nKt8K.jpg', 'desc' => 'Ad spend efficiency', 'ar' => 0.492],
-        ['title' => 'PPC Sales Boost', 'cat' => 'Amazon PPC Optimization', 'img' => 'PPC Campaign Management & Optimization/gA69WkFEUI.jpg', 'desc' => 'Campaign structure overview', 'ar' => 0.492],
+        ['title' => 'PPC ACOS Drop', 'cat' => 'Amazon PPC Optimization', 'img' => 'ppc-management/amazon-ppc-campaign-performance.jpg', 'desc' => 'Sponsored Products spend and sales trend', 'ar' => 0.492],
+        ['title' => 'PPC Sales Boost', 'cat' => 'Amazon PPC Optimization', 'img' => 'ppc-management/amazon-ppc-campaign-manager-dashboard.jpg', 'desc' => 'Amazon Ads campaign manager performance dashboard', 'ar' => 0.492],
 
         // A+ PREMIUM
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/54kbqy3MU4.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/DO4pwaZzIp.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/QlRcqWsLX5.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/SIc4i0qSam.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/UzpT4epgtC.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/uRaNcIWJHx.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/xuJ2Pv0W3g.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
-        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'Premium-Basic A%2B Content/yzDXOce00J.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-2.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-3.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Content Build', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-ceiling-fan.jpg', 'desc' => 'A+ modules for a smart ceiling fan listing', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-4.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-5.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-6.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-7.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
+        ['title' => 'A+ Module Design', 'cat' => 'A+ Premium', 'img' => 'a-plus-content/amazon-a-plus-content-module-8.jpg', 'desc' => 'Brand registry EBC', 'ar' => 1.8],
 
         // STOREFRONT
-        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/b1lyQ4S1zi.jpg', 'desc' => 'Custom branded pages', 'ar' => 1.8],
-        ['title' => 'Brand Storefront', 'cat' => 'Storefront Creation', 'img' => 'Storefront/yOhjU6le9N.jpg', 'desc' => 'Custom branded pages', 'ar' => 1.8],
+        ['title' => 'Storefront Build', 'cat' => 'Storefront Creation', 'img' => 'storefront/amazon-brand-storefront-nitrile-gloves.jpg', 'desc' => 'Amazon Brand Store built for a nitrile glove range', 'ar' => 1.8],
+        ['title' => 'Storefront Design', 'cat' => 'Storefront Creation', 'img' => 'storefront/amazon-brand-storefront-design.jpg', 'desc' => 'Multi-page Amazon Brand Store layout', 'ar' => 1.8],
 
         // COUPON & PROMO
-        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Coupon.png', 'desc' => 'Sales velocity increment', 'ar' => 0.437],
-        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'Coupon & Promotion Management/Running Coupon.png', 'desc' => 'Velocity campaign', 'ar' => 0.461],
+        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'coupon-promotions/amazon-coupon-setup.png', 'desc' => 'Sales velocity increment', 'ar' => 0.437],
+        ['title' => 'Promo Success', 'cat' => 'Coupon & Promotion', 'img' => 'coupon-promotions/amazon-running-coupon.png', 'desc' => 'Velocity campaign', 'ar' => 0.461],
 
         // REIMBURSEMENT
-        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/1.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.34],
-        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/2.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.348],
-        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'Reimbursement/3.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.228],
+        ['title' => 'Label Refunds', 'cat' => 'Reimbursement', 'img' => 'reimbursement/fba-shipping-label-reimbursement.jpg', 'desc' => 'Unused FBA shipping labels reimbursed', 'ar' => 0.34],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'reimbursement/fba-reimbursement-approved-2.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.348],
+        ['title' => 'FBA Reimbursement', 'cat' => 'Reimbursement', 'img' => 'reimbursement/fba-reimbursement-approved-3.jpg', 'desc' => 'Lost inventory recovered', 'ar' => 0.228],
 
         // SUCCESS STORIES
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/March 2024.jpg', 'desc' => 'Yearly growth metrics', 'ar' => 0.506],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Last 3 month 2025.jpg', 'desc' => 'Quarterly progress', 'ar' => 0.5],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 1st quater.jpg', 'desc' => 'Sales explosion', 'ar' => 0.506],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/2024 Last Quater.jpg', 'desc' => 'Peak season review', 'ar' => 0.509],
-        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'SDS Account - success story/Sep 2024.jpg', 'desc' => 'Constant momentum', 'ar' => 0.505],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'case-study-sds/sales-march-2024.jpg', 'desc' => 'Yearly growth metrics', 'ar' => 0.506],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'case-study-sds/sales-last-quarter-2025.jpg', 'desc' => 'Quarterly progress', 'ar' => 0.5],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'case-study-sds/sales-q1-2024.jpg', 'desc' => 'Sales explosion', 'ar' => 0.506],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'case-study-sds/sales-q4-2024.jpg', 'desc' => 'Peak season review', 'ar' => 0.509],
+        ['title' => 'SDS Account Growth', 'cat' => 'Success Stories', 'img' => 'case-study-sds/sales-september-2024.jpg', 'desc' => 'Constant momentum', 'ar' => 0.505],
 
-        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/1st Qtr 2024.png', 'desc' => 'Bestseller rankings', 'ar' => 0.556],
-        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'Tubelox Toyz Sales/4th Qtr 2024.png', 'desc' => 'Holiday rush sales', 'ar' => 0.555],
+        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'case-study-tubelox/sales-q1-2024.png', 'desc' => 'Bestseller rankings', 'ar' => 0.556],
+        ['title' => 'Tubelox Toyz Growth', 'cat' => 'Success Stories', 'img' => 'case-study-tubelox/sales-q4-2024.png', 'desc' => 'Holiday rush sales', 'ar' => 0.555],
         ];
         @endphp
 

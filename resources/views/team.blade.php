@@ -76,7 +76,7 @@
                 </p>
             </div>
             <div class="photo photo--wide reveal-media duo__media">
-                <img src="{{ asset('assets/photos/team-laptops.jpg') }}" loading="lazy" decoding="async"
+                <img src="{{ asset('assets/photos/team-laptops.jpg') }}" width="1600" height="1066" loading="lazy" decoding="async"
                      alt="Account managers working through marketplace reports together at a shared desk.">
             </div>
         </div>

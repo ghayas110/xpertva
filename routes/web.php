@@ -272,12 +272,6 @@ Route::get('/sitemap.xml', function () {
         ['loc' => url('/services/amazon/a-plus-storefront'), 'changefreq' => 'monthly', 'priority' => '0.85'],
         ['loc' => url('/services/amazon/account-management'), 'changefreq' => 'monthly', 'priority' => '0.85'],
         ['loc' => url('/services/amazon/brand-protection'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/amazon/listing-optimization'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/amazon/ppc-management'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/amazon/seo-keyword-research'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/amazon/a-plus-storefront'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/amazon/account-management'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/amazon/brand-protection'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/services/shopify'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/services/walmart'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/services/ebay'), 'changefreq' => 'monthly', 'priority' => '0.8'],
@@ -291,6 +285,10 @@ Route::get('/sitemap.xml', function () {
         ['loc' => url('/blog'), 'changefreq' => 'weekly', 'priority' => '0.8'],
         ['loc' => url('/privacy-policy'), 'changefreq' => 'yearly', 'priority' => '0.3'],
     ];
+
+    // Listing a URL twice is a quality signal against the sitemap, and the
+    // Amazon block had been pasted in twice at conflicting priorities.
+    $urls = array_reverse(array_values(array_column(array_reverse($urls), null, 'loc')));
 
     $blogs = \App\Models\Blog::select('slug', 'updated_at')->orderBy('created_at', 'desc')->get();
     foreach ($blogs as $blog) {

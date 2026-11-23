@@ -25,7 +25,10 @@ class BlogController extends Controller
             });
         }
 
-        $blogs = $query->paginate(9)->withQueryString();
+        // 9 per page left 6 posts with zero internal links pointing at them —
+        // reachable only via the sitemap. A larger page keeps the whole
+        // archive one click from the index.
+        $blogs = $query->paginate(24)->withQueryString();
         $categories = Blog::select('category')
             ->distinct()
             ->orderBy('category')
