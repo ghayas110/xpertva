@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Shopify Services - XpertVA')
+@section('title', 'Shopify Store Management Services | XpertVA')
 @section('meta_description', 'XpertVA Shopify services: store setup, theme customization, product management, app integrations, and conversion rate optimization.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Shopify services',
+    'title' => 'Shopify Store Management Services',
+    'kicker' => 'Shopify services',
     'lede'     => 'Your own store is the one channel nobody can suspend. We build it, stock it, and keep the checkout converting.',
     'photo'    => 'assets/photos/retail-store.jpg',
     'photoAlt' => 'A merchandised retail interior with considered product display.',

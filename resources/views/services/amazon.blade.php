@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon Services - XpertVA')
+@section('title', 'Amazon Seller Account Management | XpertVA')
 @section('meta_description', 'XpertVA Amazon Seller Central management, listing optimization, PPC advertising, inventory management, BSR improvement, and full account management.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -43,7 +43,7 @@
 @section('content')
 
 <section class="phead phead--photo">
-    <img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async">
+    <x-img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async" />
     <div class="wrap">
         <a class="crumb" href="{{ route('services.index') }}">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
@@ -127,12 +127,12 @@
                 </ul>
             </div>
             <div class="cindex__preview" aria-hidden="true">
-                <img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="">
-                <img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="">
-                <img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="">
-                <img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="">
-                <img data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="">
-                <img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="">
+                <x-img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="" />
+                <x-img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="" />
+                <x-img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="" />
+                <x-img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="" />
+                <x-img data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="" />
+                <x-img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="" />
             </div>
         </div>
     </div>

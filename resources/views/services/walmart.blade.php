@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Walmart Services - XpertVA')
+@section('title', 'Walmart Marketplace Management Services | XpertVA')
 @section('meta_description', 'XpertVA Walmart Marketplace: account setup, listing optimization, inventory management, and advertising to grow your Walmart seller account.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Walmart Marketplace',
+    'title' => 'Walmart Marketplace Management Services',
+    'kicker' => 'Walmart Marketplace',
     'lede'     => 'Less crowded than Amazon and still growing. The sellers who set it up properly early are the ones taking the Buy Box now.',
     'photo'    => 'assets/photos/pos-counter.jpg',
     'photoAlt' => 'A shop counter with a tablet point of sale system in use.',

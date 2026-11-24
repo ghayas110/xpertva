@@ -18,7 +18,8 @@
 <section class="phead">
     <div class="wrap">
         <div class="phead__grid">
-            <h1 class="display">Writing</h1>
+            <p class="eyebrow">Writing</p>
+            <h1 class="display">Amazon and eCommerce Growth Insights</h1>
             <div>
                 <p class="lede">
                     What we learn running marketplace accounts, written up so you can use it

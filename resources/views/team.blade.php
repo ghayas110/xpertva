@@ -17,7 +17,7 @@
 @section('content')
 
 <section class="phead phead--photo">
-    <img class="phead__bg" src="{{ asset('assets/photos/team-workshop.jpg') }}" alt="A working session mapping account priorities across a wall of notes." fetchpriority="high" decoding="async">
+    <x-img class="phead__bg" src="{{ asset('assets/photos/team-workshop.jpg') }}" alt="A working session mapping account priorities across a wall of notes." fetchpriority="high" decoding="async" />
     <div class="wrap">
         <div class="phead__grid">
             <h1 class="display">Nine years of<br>other people's<br>catalogues.</h1>
@@ -76,8 +76,8 @@
                 </p>
             </div>
             <div class="photo photo--wide reveal-media duo__media">
-                <img src="{{ asset('assets/photos/team-laptops.jpg') }}" width="1600" height="1066" loading="lazy" decoding="async"
-                     alt="Account managers working through marketplace reports together at a shared desk.">
+                <x-img src="{{ asset('assets/photos/team-laptops.jpg') }}" width="1600" height="1066" loading="lazy" decoding="async"
+                     alt="Account managers working through marketplace reports together at a shared desk." />
             </div>
         </div>
     </div>

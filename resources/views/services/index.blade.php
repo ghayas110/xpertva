@@ -17,7 +17,7 @@
 @section('content')
 
 <section class="phead phead--photo">
-    <img class="phead__bg" src="{{ asset('assets/photos/open-office.jpg') }}" alt="An open plan studio floor with account teams at work." fetchpriority="high" decoding="async">
+    <x-img class="phead__bg" src="{{ asset('assets/photos/open-office.jpg') }}" alt="An open plan studio floor with account teams at work." fetchpriority="high" decoding="async" />
     <div class="wrap">
         <div class="phead__grid">
             <h1 class="display">Everything a<br>catalogue needs.</h1>
@@ -99,8 +99,8 @@
     <div class="wrap">
         <div class="duo">
             <div class="photo photo--wide reveal-media duo__media">
-                <img src="{{ asset('assets/photos/team-workshop.jpg') }}" loading="lazy" decoding="async"
-                     alt="A working session mapping account priorities across a wall of notes.">
+                <x-img src="{{ asset('assets/photos/team-workshop.jpg') }}" loading="lazy" decoding="async"
+                     alt="A working session mapping account priorities across a wall of notes." />
             </div>
             <div>
                 <h2 class="h2 mb-3" data-split-heading>One team, or none of it works</h2>

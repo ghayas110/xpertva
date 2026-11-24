@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Design & Development - XpertVA')
+@section('title', 'UI, UX and Front-End Design Services | XpertVA')
 @section('meta_description', 'XpertVA design and development: UI/UX design, graphic design, and front-end development for modern eCommerce brands.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Design and development',
+    'title' => 'UI, UX and Front-End Design Services',
+    'kicker' => 'Design and development',
     'lede'     => 'Design that stops at a Figma file is a cost. We hand over the built thing.',
     'photo'    => 'assets/photos/ux-wireframes.jpg',
     'photoAlt' => 'A team sketching interface wireframes across a large sheet of paper.',

@@ -800,3 +800,8 @@ html.lenis,html.lenis body{height:auto}
   .chat__panel{width:calc(100vw - 1.8rem);max-height:72vh}
   .chat__row{grid-template-columns:1fr}
 }
+
+/* <picture> wraps images that have a WebP twin. display:contents makes the
+   wrapper generate no box, so the <img> lays out exactly as it did when it
+   was a direct child — flex, grid and absolute positioning all unchanged. */
+picture{display:contents}

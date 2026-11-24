@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Content & Branding - XpertVA')
+@section('title', 'eCommerce Content and Branding | XpertVA')
 @section('meta_description', 'XpertVA content and branding services: product copywriting, brand identity, graphic design, and content strategy for eCommerce businesses.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Content and branding',
+    'title' => 'eCommerce Content and Branding Services',
+    'kicker' => 'Content and branding',
     'lede'     => 'On a marketplace, your images are the shop, the salesperson and the packaging. They are worth doing properly.',
     'photo'    => 'assets/photos/packaging-kraft.jpg',
     'photoAlt' => 'Kraft product packaging laid out ready for catalogue photography.',

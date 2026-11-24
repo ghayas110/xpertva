@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Website & eCommerce Development - XpertVA')
+@section('title', 'eCommerce Web Development Services | XpertVA')
 @section('meta_description', 'XpertVA web development services: custom eCommerce websites, Shopify, WooCommerce, WordPress, and PWA builds optimized for conversion and performance.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Web development',
+    'title' => 'eCommerce Web Development Services',
+    'kicker' => 'Web development',
     'lede'     => 'A store that loads in one second and works on a five year old phone will out earn a prettier one every time.',
     'photo'    => 'assets/photos/dev-screen.jpg',
     'photoAlt' => 'A developer working on a web interface at a large monitor.',

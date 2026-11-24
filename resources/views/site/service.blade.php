@@ -18,6 +18,12 @@
             {{ $parent['label'] }}
         </a>
         <div class="phead__grid">
+            @isset($kicker)
+                {{-- The editorial line keeps its place; the H1 below now names
+                     the service, because an H1 reading "Shopify services" told
+                     a searcher less than the page deserved. --}}
+                <p class="eyebrow">{{ $kicker }}</p>
+            @endisset
             <h1 class="display display--sm">{{ $title }}</h1>
             <div>
                 <p class="lede">{{ $lede }}</p>

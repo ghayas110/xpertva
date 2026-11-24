@@ -41,14 +41,14 @@
             {{-- The people, and the report they produced. Both above the fold. --}}
             <figure class="hero__stage" style="margin:0" data-hero-in>
                 <div class="photo">
-                    <img src="{{ asset('assets/photos/team-laptops.jpg') }}"
+                    <x-img src="{{ asset('assets/photos/team-laptops.jpg') }}"
                          width="1600" height="1066" fetchpriority="high" decoding="async"
-                         alt="Account managers working through marketplace reports together at a shared desk.">
+                         alt="Account managers working through marketplace reports together at a shared desk." />
                 </div>
                 <div class="hero__proof">
-                    <img src="{{ asset('assets/proof/hero-dashboard.jpg') }}"
+                    <x-img src="{{ asset('assets/proof/hero-dashboard.jpg') }}"
                          width="1600" height="1000" fetchpriority="high" decoding="async"
-                         alt="Amazon Seller Central sales dashboard for a managed XpertVA client account showing 9,226,488 dollars in ordered product sales and a rising units-ordered trend line from September 2024 to November 2025.">
+                         alt="Amazon Seller Central sales dashboard for a managed XpertVA client account showing 9,226,488 dollars in ordered product sales and a rising units-ordered trend line from September 2024 to November 2025." />
                 </div>
                 <figcaption class="hero__caption">
                     One managed account, 14 months. Brand name removed at the client's request.
@@ -83,7 +83,7 @@
                 'diamond-excellency' => 'Diamond Excellency',
                 'holiday-apartment'  => 'Holiday Apartment',
             ] as $slug => $brand)
-                <img src="{{ asset('assets/logos/' . $slug . '.png') }}" alt="{{ $brand }}, an XpertVA eCommerce client" loading="lazy" decoding="async" height="40">
+                <x-img src="{{ asset('assets/logos/' . $slug . '.png') }}" alt="{{ $brand }}, an XpertVA eCommerce client" loading="lazy" decoding="async" height="40" />
             @endforeach
         </div>
     </div>
@@ -150,12 +150,12 @@
             </div>
 
             <div class="cindex__preview" aria-hidden="true">
-                <img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="Amazon brand storefront layout built by XpertVA">
-                <img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="Amazon Sponsored Products campaign structure in Seller Central">
-                <img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="Amazon keyword research showing search volume and rank tracking">
-                <img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="Amazon A+ Content module comparing product variants">
-                <img data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="Amazon Seller Central account health dashboard">
-                <img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="MAP enforcement report listing unauthorised sellers">
+                <x-img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="Amazon brand storefront layout built by XpertVA" />
+                <x-img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="Amazon Sponsored Products campaign structure in Seller Central" />
+                <x-img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="Amazon keyword research showing search volume and rank tracking" />
+                <x-img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="Amazon A+ Content module comparing product variants" />
+                <x-img data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="Amazon Seller Central account health dashboard" />
+                <x-img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="MAP enforcement report listing unauthorised sellers" />
             </div>
         </div>
     </div>
@@ -239,8 +239,8 @@
 
 {{-- 7. Photographic band. The parallax drift gives the scroll a beat between two dense sections. --}}
 <section class="imgband" data-parallax>
-    <img class="imgband__img" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}"
-         alt="Long aisles of racked inventory inside a fulfilment warehouse." loading="lazy" decoding="async">
+    <x-img class="imgband__img" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}"
+         alt="Long aisles of racked inventory inside a fulfilment warehouse." loading="lazy" decoding="async" />
     <div class="imgband__inner">
         <h2 data-split-heading>Your catalogue is an operation,<br>not a side task.</h2>
         <p data-anim data-anim-delay="0.1">
@@ -258,8 +258,8 @@
                 <p class="eyebrow mb-3">How it runs</p>
                 <h2 class="h2 mb-3" data-split-heading>Four weeks in,<br>you stop guessing.</h2>
                 <div class="photo photo--wide reveal-media mt-2">
-                    <img src="{{ asset('assets/photos/studio-meeting.jpg') }}" loading="lazy" decoding="async"
-                         alt="An XpertVA account team reviewing marketplace performance together in the studio.">
+                    <x-img src="{{ asset('assets/photos/studio-meeting.jpg') }}" loading="lazy" decoding="async"
+                         alt="An XpertVA account team reviewing marketplace performance together in the studio." />
                 </div>
             </div>
             <div>

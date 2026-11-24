@@ -43,7 +43,7 @@
 
 @section('content')
 <section class="phead phead--photo">
-    <img class="phead__bg" src="{{ asset('assets/photos/strategy-desk.jpg') }}" alt="Two people reviewing keyword research notes beside a laptop." fetchpriority="high" decoding="async">
+    <x-img class="phead__bg" src="{{ asset('assets/photos/strategy-desk.jpg') }}" alt="Two people reviewing keyword research notes beside a laptop." fetchpriority="high" decoding="async" />
     <div class="wrap">
             <a class="crumb" href="{{ route('services.amazon') }}">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>

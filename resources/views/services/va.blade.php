@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Professional Virtual Assistance - XpertVA')
+@section('title', 'eCommerce Virtual Assistant Services | XpertVA')
 @section('meta_description', 'Hire a professional virtual assistant from XpertVA for eCommerce operations, customer support, data entry, order management, and more.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Virtual assistants',
+    'title' => 'eCommerce Virtual Assistant Services',
+    'kicker' => 'Virtual assistants',
     'lede'     => 'A trained operator inside your account every working day, for a fraction of a local hire.',
     'photo'    => 'assets/photos/team-table.jpg',
     'photoAlt' => 'Three colleagues working through account tasks at a shared table.',

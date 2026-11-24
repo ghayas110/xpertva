@@ -98,8 +98,8 @@
 
             <div>
                 <div class="photo photo--wide reveal-media mb-3">
-                    <img src="{{ asset('assets/photos/strategy-desk.jpg') }}" loading="lazy" decoding="async"
-                         alt="Two people reviewing account notes and a laptop across a desk.">
+                    <x-img src="{{ asset('assets/photos/strategy-desk.jpg') }}" loading="lazy" decoding="async"
+                         alt="Two people reviewing account notes and a laptop across a desk." />
                 </div>
 
                 <div class="crail">

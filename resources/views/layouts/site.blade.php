@@ -41,7 +41,10 @@
           "description": "Professional virtual assistant services for eCommerce sellers on Amazon, eBay, Shopify, and Walmart. Founded 2017.",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "EnglishTown",
+            {{-- streetAddress removed: it held "EnglishTown", which is the
+                 city, not a street. A wrong street address is worse than
+                 none — Google cross-checks it against the Business Profile.
+                 Put the real one back here once it matches GBP exactly. --}}
             "addressLocality": "Englishtown",
             "addressRegion": "NJ",
             "postalCode": "07726",

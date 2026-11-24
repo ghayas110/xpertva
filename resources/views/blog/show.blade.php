@@ -5,13 +5,28 @@
 @section('title', ($blog->title ?? 'Article') . ' | XpertVA')
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags($blog->description ?? $blog->content), 155))
 
+@php
+    /*
+     | One cover URL for the whole page.
+     |
+     | The old inline expression was asset('assets/images/' . $blog->image),
+     | which for a post with no image produced ".../assets/images" — a folder.
+     | Google cannot read that as an article image, so 8 of 17 posts were
+     | ineligible for Article rich results. Fall back to a real file that is
+     | wide enough (1600px) to qualify.
+    */
+    $cover = filled($blog->image)
+        ? (filter_var($blog->image, FILTER_VALIDATE_URL) ? $blog->image : asset('assets/images/' . $blog->image))
+        : asset('assets/proof/hero-dashboard.jpg');
+@endphp
+
 @push('head')
 <link rel="canonical" href="{{ url()->current() }}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{{ $blog->title }}">
 <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->description ?? $blog->content), 155) }}">
 <meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:image" content="{{ filter_var($blog->image, FILTER_VALIDATE_URL) ? $blog->image : asset('assets/images/' . $blog->image) }}">
+<meta property="og:image" content="{{ $cover }}">
 <meta property="article:published_time" content="{{ $blog->created_at->toIso8601String() }}">
 <meta property="article:modified_time" content="{{ $blog->updated_at->toIso8601String() }}">
 <meta property="article:section" content="{{ $blog->category }}">
@@ -25,7 +40,7 @@
   "@@type": "BlogPosting",
   "headline": {!! json_encode($blog->title) !!},
   "description": {!! json_encode(\Illuminate\Support\Str::limit(strip_tags($blog->description ?? $blog->content), 155)) !!},
-  "image": "{{ filter_var($blog->image, FILTER_VALIDATE_URL) ? $blog->image : asset('assets/images/' . $blog->image) }}",
+  "image": "{{ $cover }}",
   "wordCount": {{ $wordCount }},
   "articleSection": {!! json_encode($blog->category) !!},
   "datePublished": "{{ $blog->created_at->toIso8601String() }}",
@@ -55,7 +70,6 @@
 @section('content')
 
 @php
-    $cover = filter_var($blog->image, FILTER_VALIDATE_URL) ? $blog->image : asset('assets/images/' . $blog->image);
     $shareUrl = urlencode(url()->current());
     $shareTitle = urlencode($blog->title);
 @endphp
@@ -91,7 +105,7 @@
     @if ($blog->image)
         <div class="wrap" style="max-width:68rem">
             <div class="photo photo--wide reveal-media">
-                <img src="{{ $cover }}" alt="{{ $blog->title }}" fetchpriority="high" decoding="async">
+                <x-img src="{{ $cover }}" alt="{{ $blog->title }}" fetchpriority="high" decoding="async" />
             </div>
         </div>
     @endif

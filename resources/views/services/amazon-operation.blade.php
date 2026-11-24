@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Amazon E-Commerce Operations - XpertVA')
+@section('title', 'Amazon Operations Management | XpertVA')
 @section('meta_description', 'XpertVA Amazon operations management: full-service Amazon account management, case management, brand registry, and marketplace optimization.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Amazon operations',
+    'title' => 'Amazon Operations Management',
+    'kicker' => 'Amazon operations',
     'lede'     => 'The unglamorous daily work that decides whether a good catalogue actually earns.',
     'photo'    => 'assets/photos/fulfilment-floor.jpg',
     'photoAlt' => 'A fulfilment warehouse floor stacked with outbound cartons.',

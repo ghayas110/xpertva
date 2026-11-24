@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Ebay Services - XpertVA')
+@section('title', 'eBay Store Management Services | XpertVA')
 @section('meta_description', 'XpertVA eBay services: professional listing creation, store management, feedback management, order processing, and growth strategies.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'eBay services',
+    'title' => 'eBay Store Management Services',
+    'kicker' => 'eBay services',
     'lede'     => 'An eBay store still moves serious volume in the right categories. It just needs someone working it daily.',
     'photo'    => 'assets/photos/fulfilment-floor.jpg',
     'photoAlt' => 'A fulfilment warehouse floor stacked with outbound cartons.',

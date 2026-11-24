@@ -2,7 +2,7 @@
 <div class="overlay overlay--form" data-panel="consult" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="consult-title">
     <div class="overlay__bar">
         <span class="brand">
-            <img src="{{ asset('assets/images/logo-xpertva.png') }}" alt="" width="34" height="34">
+            <x-img src="{{ asset('assets/images/logo-xpertva.png') }}" alt="" width="34" height="34" />
             <span>XpertVA</span>
         </span>
         <button type="button" class="close-btn" data-close>
@@ -59,7 +59,7 @@
 <div class="overlay overlay--form" data-panel="audit" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="audit-title">
     <div class="overlay__bar">
         <span class="brand">
-            <img src="{{ asset('assets/images/logo-xpertva.png') }}" alt="" width="34" height="34">
+            <x-img src="{{ asset('assets/images/logo-xpertva.png') }}" alt="" width="34" height="34" />
             <span>XpertVA</span>
         </span>
         <button type="button" class="close-btn" data-close>

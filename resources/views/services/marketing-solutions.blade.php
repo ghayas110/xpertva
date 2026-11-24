@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Marketing Solutions & SEO - XpertVA')
+@section('title', 'eCommerce Marketing and SEO Services | XpertVA')
 @section('meta_description', 'XpertVA digital marketing: data-driven campaigns, SEO, PPC, social media, and Amazon advertising strategies to grow your eCommerce brand.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Marketing solutions',
+    'title' => 'eCommerce Marketing and SEO Services',
+    'kicker' => 'Marketing solutions',
     'lede'     => 'Traffic is easy to buy and hard to make pay. We plan every channel against one number: what a customer is worth to you.',
     'photo'    => 'assets/photos/retail-bags.jpg',
     'photoAlt' => 'Retail shopping bags arranged on a dark surface.',

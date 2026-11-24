@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Mobile App Development - XpertVA')
+@section('title', 'Mobile App Development Services | XpertVA')
 @section('meta_description', 'XpertVA mobile app development: iOS and Android apps, PWAs, and cross-platform mobile solutions designed for eCommerce and business growth.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -32,7 +32,8 @@
 
 @section('content')
 @include('site.service', [
-    'title'    => 'Mobile app development',
+    'title' => 'Mobile App Development Services',
+    'kicker' => 'Mobile app development',
     'lede'     => 'Worth building when repeat purchase is your business. Not worth building because a competitor has one.',
     'photo'    => 'assets/photos/desk-devices.jpg',
     'photoAlt' => 'Laptops, tablets and phones laid out across a shared work surface.',

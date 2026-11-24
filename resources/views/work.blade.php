@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Work - XpertVA')
+@section('title', 'eCommerce Case Studies and Results | XpertVA')
 @section('meta_description', 'XpertVA case studies: $9.2M in Amazon sales, 6x revenue growth, and proven eCommerce success stories across Amazon, Shopify, and Walmart.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -17,10 +17,11 @@
 @section('content')
 
 <section class="phead phead--photo">
-    <img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async">
+    <x-img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async" />
     <div class="wrap">
         <div class="phead__grid">
-            <h1 class="display">Work</h1>
+            <p class="eyebrow">Work</p>
+            <h1 class="display">eCommerce Case Studies and Results</h1>
             <div>
                 <p class="lede">
                     Screenshots from live client accounts, not mockups. Brand names are removed

@@ -41,25 +41,13 @@
     RewriteCond %{THE_REQUEST} \s/+index\.php[\s?]
     RewriteRule ^ / [L,R=301]
 
-    # ======================================================================
-    # Serve WebP where the browser accepts it
-    #
-    # Each optimised image ships as a twin next to the original —
-    # photo.jpg and photo.webp. A browser that sends "image/webp" in its
-    # Accept header gets the smaller file; anything else gets the original
-    # byte for byte. No template, CSS or database reference changes, which
-    # matters because blog cover images are stored in the database.
-    #
-    # The rule matches the per-directory relative path rather than
-    # %{REQUEST_URI}: by this point the request has already been rewritten to
-    # /public/..., and using REQUEST_URI would bake that prefix into the
-    # target. Delete the .webp files to roll the whole thing back.
-    # ======================================================================
-    RewriteCond %{HTTP_ACCEPT} image/webp
-    RewriteCond %{REQUEST_FILENAME} -f
-    RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpe?g|png)$ [NC]
-    RewriteCond %1.webp -f
-    RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=WEBPSWAP:1,L,NC]
+    # NOTE: Accept-header WebP negotiation was removed from here.
+    # Cloudflare ignores "Vary: Accept" (it honours only Accept-Encoding), so
+    # whichever variant reached the edge cache first was served to everyone —
+    # including WebP to browsers that cannot display it. WebP is now selected
+    # by the browser through <picture>, where the two formats have different
+    # URLs and the cache key separates them correctly.
+
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -83,12 +71,6 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-</IfModule>
-
-<IfModule mod_headers.c>
-    # Tell caches the response depends on the Accept header, so a WebP reply
-    # is never handed to a client that cannot read it.
-    Header append Vary Accept env=WEBPSWAP
 </IfModule>
 
 <IfModule mod_mime.c>

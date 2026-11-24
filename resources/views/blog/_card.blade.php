@@ -5,7 +5,7 @@
 <article class="post {{ ($lead ?? false) ? 'post--lead' : '' }}" data-anim>
     @if ($post->image)
         <div class="post__media">
-            <img src="{{ $cover }}" alt="{{ $post->title }}" loading="lazy" decoding="async">
+            <x-img src="{{ $cover }}" alt="{{ $post->title }}" loading="lazy" decoding="async" />
         </div>
     @endif
     <div>
