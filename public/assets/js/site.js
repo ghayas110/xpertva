@@ -448,14 +448,70 @@
   })();
 
   /* -------------------------------------------------- form submit feedback */
+  /* Lead forms.
+     These pages are served from the CDN cache, so the form carries no CSRF
+     token and the old flash-message-on-redirect pattern is gone. Submitting
+     through fetch keeps the person on the page and shows the result inline.
+     If fetch is unavailable or the request fails outright we let the browser
+     post the form normally, which lands on /thank-you. */
   all('form[data-async-feedback]').forEach(function (form) {
-    on(form, 'submit', function () {
+    on(form, 'submit', function (e) {
       var btn = form.querySelector('[type="submit"]');
-      if (!btn || btn.dataset.busy) return;
-      btn.dataset.busy = '1';
-      btn.dataset.label = btn.textContent;
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
+      if (btn && btn.dataset.busy) { e.preventDefault(); return; }
+
+      if (!window.fetch || !window.FormData) return;   // let the browser do it
+      e.preventDefault();
+
+      if (btn) {
+        btn.dataset.busy = '1';
+        btn.dataset.label = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+      }
+
+      function release() {
+        if (!btn) return;
+        delete btn.dataset.busy;
+        btn.textContent = btn.dataset.label || 'Send';
+        btn.disabled = false;
+      }
+
+      function note(msg, bad) {
+        var box = form.querySelector('[data-form-note]');
+        if (!box) {
+          box = document.createElement('p');
+          box.setAttribute('data-form-note', '');
+          form.insertBefore(box, form.firstChild);
+        }
+        box.className = bad ? 'form-note form-note--bad' : 'form-note form-note--ok';
+        box.setAttribute('role', 'status');
+        box.textContent = msg;
+      }
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        credentials: 'same-origin'
+      })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok && res.d && res.d.ok) {
+            form.reset();
+            note(res.d.message || 'Thank you. We will be in touch shortly.', false);
+          } else {
+            var errs = (res.d && res.d.errors) || {};
+            var first = Object.keys(errs).map(function (k) { return errs[k][0]; });
+            note(first.length ? first.join(' ') : 'Something went wrong. Please try again.', true);
+          }
+          release();
+        })
+        .catch(function () {
+          // Network or parsing failure: hand it back to the browser so the
+          // person is not left with a dead button.
+          release();
+          form.submit();
+        });
     });
   });
 })();

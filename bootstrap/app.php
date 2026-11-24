@@ -13,8 +13,25 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'role'        => \App\Http\Middleware\CheckRole::class,
-            'agent.token' => \App\Http\Middleware\AgentToken::class,
+            'role'         => \App\Http\Middleware\CheckRole::class,
+            'agent.token'  => \App\Http\Middleware\AgentToken::class,
+            'cache.public' => \App\Http\Middleware\CachePublicPage::class,
+        ]);
+
+        /*
+         | The two public lead forms post from pages that are cached by the
+         | CDN, so their HTML cannot carry a per-visitor CSRF token — a cached
+         | token would be shared between visitors and reject almost everyone.
+         |
+         | Dropping CSRF here is safe in a way it would not be on an
+         | authenticated route: there is no signed-in action to forge. The
+         | worst a forged request achieves is creating a lead. Spam is handled
+         | instead by the rate limit on the route, a honeypot field, and a
+         | same-origin check in PublicLeadController.
+        */
+        $middleware->validateCsrfTokens(except: [
+            'contact/submit',
+            'audit/submit',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

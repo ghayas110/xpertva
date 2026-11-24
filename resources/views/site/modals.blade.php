@@ -18,7 +18,14 @@
                 <p class="panel-note">Replies within one business day.</p>
             </div>
             <form action="{{ route('contact.submit') }}" method="POST" data-async-feedback>
-                @csrf
+                {{-- Honeypot. Hidden from people, irresistible to bots. These
+                     pages are CDN-cached so they cannot carry a CSRF token;
+                     this plus the same-origin check and the route's rate
+                     limit does that job instead. --}}
+                <div class="sr-only" aria-hidden="true">
+                    <label for="hp-consult">Company website</label>
+                    <input id="hp-consult" name="company_website" type="text" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="form-2col">
                     <div class="field">
                         <label for="c-name">Full name</label>
@@ -68,7 +75,14 @@
                 <p class="panel-note">No charge, no obligation.</p>
             </div>
             <form action="{{ route('audit.submit') }}" method="POST" data-async-feedback>
-                @csrf
+                {{-- Honeypot. Hidden from people, irresistible to bots. These
+                     pages are CDN-cached so they cannot carry a CSRF token;
+                     this plus the same-origin check and the route's rate
+                     limit does that job instead. --}}
+                <div class="sr-only" aria-hidden="true">
+                    <label for="hp-audit">Company website</label>
+                    <input id="hp-audit" name="company_website" type="text" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="form-2col">
                     <div class="field">
                         <label for="a-name">Full name</label>

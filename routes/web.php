@@ -5,6 +5,28 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicLeadController;
 
+
+/*
+ | Public marketing and blog pages.
+ |
+ | These run WITHOUT the session middleware. With SESSION_DRIVER=database the
+ | web group was doing a database read and a write on every anonymous page
+ | view to build a session no marketing page reads, and the resulting
+ | laravel-session cookie made the response uncacheable by any CDN.
+ |
+ | Dropping it removes that round trip and lets Cloudflare hold the HTML.
+ | Anything that genuinely needs a session — the portal, login, the chat
+ | endpoints, the lead POSTs — keeps the full web group.
+*/
+$publicPage = ['cache.public'];
+$noSession  = [
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+];
+
+Route::middleware($publicPage)->withoutMiddleware($noSession)->group(function () {
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -75,6 +97,8 @@ Route::get('/work', function () {
 Route::get('/team', function () {
     return view('team');
 })->name('team');
+
+});
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -250,6 +274,8 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+Route::middleware($publicPage)->withoutMiddleware($noSession)->group(function () {
+
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
@@ -317,6 +343,10 @@ Route::get('/sitemap.xml', function () {
     return response($xml, 200)->header('Content-Type', 'application/xml');
 })->name('sitemap');
 
+Route::get('/thank-you', function () {
+    return view('thank-you');
+})->name('thank-you');
+
 Route::get('/privacy-policy', function () {
     return view('privacy-policy');
 })->name('privacy-policy');
@@ -325,6 +355,8 @@ Route::get('/privacy-policy', function () {
 Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/', [\App\Http\Controllers\BlogController::class, 'index'])->name('index');
     Route::get('/{slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('show');
+});
+
 });
 
 // Public Website Chat (anonymous visitors, throttled)

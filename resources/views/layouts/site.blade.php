@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- No CSRF meta here on purpose: these pages are CDN-cached, so a
+         token baked into the HTML would be shared between visitors and
+         rejected for almost all of them. chat.js fetches a live token
+         from /chat/token, which is never cached. --}}
     <title>@yield('title', 'XpertVA - eCommerce operations for Amazon, Shopify, Walmart and eBay brands')</title>
     <meta name="description" content="@yield('meta_description', 'XpertVA runs marketplace operations for eCommerce brands. Listings, advertising, account health and creative on Amazon, Shopify, Walmart and eBay. Founded 2017.')">
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
