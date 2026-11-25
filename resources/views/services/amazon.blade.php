@@ -50,7 +50,10 @@
             All services
         </a>
         <div class="phead__grid">
-            <h1 class="display">Amazon,<br>run properly.</h1>
+            {{-- The brand line stays as the eyebrow; the H1 names the service so
+                 a searcher can tell what the page is about. --}}
+            <p class="eyebrow">Amazon, run properly.</p>
+            <h1 class="display display--sm">Amazon Seller Account Management Services</h1>
             <div>
                 <p class="lede">
                     Six disciplines inside one Seller Central account, worked by operators who have run
@@ -95,6 +98,16 @@
 {{-- Disciplines with real work behind each one --}}
 <section class="section" data-cindex>
     <div class="wrap">
+        <div class="callout mb-4">
+            <p class="callout__label">In short</p>
+            <p>
+                Amazon seller account management is the day to day running of a Seller Central account:
+                listings, advertising, keyword research, A+ content, account health, inventory and brand
+                protection. XpertVA puts one named operator on your account to do that work, with a backup
+                who knows it, and reports to you in writing every week.
+            </p>
+        </div>
+
         <div class="cindex">
             <div>
                 <h2 class="h2 mb-3" data-split-heading>Six disciplines</h2>
@@ -164,6 +177,51 @@
         </div>
     </div>
 </section>
+
+{{-- Order of work --}}
+<section class="section">
+    <div class="wrap">
+        <h2 class="h2 mb-4" data-split-heading>How the work runs</h2>
+        <div class="seq">
+            @foreach ([
+                ['Account audit', 'Listings, campaigns, account health, inventory and brand issues reviewed and written up, with the fixes ranked by what they are costing you.'],
+                ['Fix what is leaking', 'Suppressed listings, wasted ad spend, open cases and unclaimed reimbursements are dealt with first, because they pay for everything after.'],
+                ['Run it every day', 'Your operator works the account daily across the six disciplines, with a backup who knows it well enough to cover.'],
+                ['Report in writing', 'A weekly note on what changed, what it cost and what happens next, plus a monthly profit view after fees, ads, returns and storage.'],
+            ] as [$step, $desc])
+                <div class="seq__item" data-anim data-anim-delay="{{ min($loop->index * 0.04, 0.2) }}">
+                    <h3><span class="num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $step }}</h3>
+                    <p>{{ $desc }}</p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- Plain content only: Google retired FAQ rich results in May 2026, so no FAQPage schema. --}}
+<section class="section" style="background:var(--paper-2)">
+    <div class="wrap" style="max-width:60rem">
+        <h2 class="h2 mb-4" data-split-heading>Questions we get asked</h2>
+        <div class="faq">
+            @foreach ([
+                ['What does an Amazon account manager do?', 'They run the account day to day: optimising listings, managing advertising, watching account health, handling Seller Support cases, planning inventory and protecting the brand from hijackers. The goal is a catalogue that ranks, converts and stays healthy.'],
+                ['Is it safe to give you access to Seller Central?', 'Yes. We are added as a secondary user with only the permissions the work needs. You never share your primary login and can remove our access at any time from User Permissions.'],
+                ['Do you work with both FBA and FBM sellers?', 'Yes. We manage FBA shipments, inventory and reimbursements, and merchant fulfilled order handling and shipping settings.'],
+                ['Which marketplaces do you cover?', 'We work across Amazon marketplaces including the US, UK, EU and Canada, and can run the same catalogue in several of them.'],
+                ['Can we hire you for one discipline only?', 'Yes. Each discipline, such as PPC or listing optimisation, is available on its own. Most accounts end up needing several, which is why they sit under one team.'],
+                ['How much does Amazon account management cost?', 'We quote after a free consultation, in writing, based on catalogue size, marketplaces and which disciplines the account needs. You see the scope and the monthly figure before you commit to anything.'],
+            ] as [$q, $a])
+                <details>
+                    <summary>{{ $q }}</summary>
+                    <p>{{ $a }}</p>
+                </details>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+@include('site.reading')
+
 
 @include('site.cta', [
     'heading' => 'Send us one ASIN.',

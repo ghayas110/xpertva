@@ -9,7 +9,7 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Blog::query()->latest();
+        $query = Blog::query()->listed()->latest();
 
         if ($request->filled('category')) {
             $query->where('category', $request->category);
@@ -41,9 +41,15 @@ class BlogController extends Controller
 
     public function show($slug)
     {
+        // Posts merged into another one answer with a permanent redirect so
+        // their links and any ranking pass to the surviving post.
+        if ($target = config('content.blog_redirects', [])[$slug] ?? null) {
+            return redirect()->route('blog.show', $target, 301);
+        }
+
         $blog = Blog::where('slug', $slug)->firstOrFail();
 
-        $related = Blog::where('id', '!=', $blog->id)
+        $related = Blog::listed()->where('id', '!=', $blog->id)
             ->where(function ($q) use ($blog) {
                 $q->where('category', $blog->category);
                 if ($blog->tags) {

@@ -19,7 +19,7 @@
 
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/bricolage.woff2') }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/geist.woff2') }}" crossorigin>
-    <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=9">
+    <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=10">
 
     @if ($gaId = config('services.google_analytics.id'))
         {{-- Google tag, exactly as Google issued it for this property.
@@ -44,6 +44,14 @@
 
     @stack('head')
 
+    {{-- streetAddress is deliberately absent from the address below: it held
+         "EnglishTown", which is the city, not a street. A wrong street address
+         is worse than none, because Google cross-checks it against the Business
+         Profile. Put the real one back once it matches GBP exactly.
+
+         This note has to live out here. Inside the verbatim block Blade does not strip
+         comments, so it was printed into the JSON-LD and made the whole
+         Organization block invalid JSON on every page. --}}
     @verbatim
     <script type="application/ld+json">
     {
@@ -62,10 +70,6 @@
           "description": "Professional virtual assistant services for eCommerce sellers on Amazon, eBay, Shopify, and Walmart. Founded 2017.",
           "address": {
             "@type": "PostalAddress",
-            {{-- streetAddress removed: it held "EnglishTown", which is the
-                 city, not a street. A wrong street address is worse than
-                 none — Google cross-checks it against the Business Profile.
-                 Put the real one back here once it matches GBP exactly. --}}
             "addressLocality": "Englishtown",
             "addressRegion": "NJ",
             "postalCode": "07726",

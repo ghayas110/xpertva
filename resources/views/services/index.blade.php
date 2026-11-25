@@ -74,6 +74,7 @@
         <h2 class="h2 mb-4" data-split-heading>What we do on top</h2>
         <ul class="channels" data-anim>
             @foreach ([
+                ['Amazon virtual assistants', 'A dedicated Amazon VA who already knows Seller Central. Listings, buyer messages, FBA shipments and cases.', 'services.amazon-va'],
                 ['Virtual assistants', 'A trained operator inside your account daily. Catalogue work, buyer messages, orders and reporting.', 'services.va'],
                 ['Amazon operations', 'Inventory, FBA shipments, cases, pricing and reimbursement recovery. The work that protects margin.', 'services.amazon-ops'],
                 ['Marketing solutions', 'Search, paid social, email and marketplace ads planned against blended acquisition cost.', 'services.marketing'],

@@ -131,6 +131,9 @@
         </div>
     </section>
 
+    @include('site.reading')
+
+
     @include('site.cta', [
     'heading' => 'Lower Your Amazon ACoS This Quarter',
     'body'    => 'Free PPC audit with a 90-day scaling plan from a certified Amazon Ads specialist.',

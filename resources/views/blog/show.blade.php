@@ -126,6 +126,17 @@
                 {!! $hasMarkup ? $blog->content : nl2br(e($blog->content)) !!}
             </div>
 
+            {{-- Hand the reader on to the service this post supports. The post
+                 answers the how-to; the service page is the one meant to rank
+                 for the commercial query. The service page links back. --}}
+            @if ($service = $blog->supportedService())
+                <aside class="callout mt-4" aria-label="Related service">
+                    <p class="callout__label">{{ $service['label'] }}</p>
+                    <p class="mb-2">{{ $service['pitch'] }}</p>
+                    <a class="tlink" href="{{ $service['url'] }}">Explore {{ $service['label'] }}</a>
+                </aside>
+            @endif
+
             @if ($blog->tags)
                 <ul class="chips mt-4" style="flex-wrap:wrap">
                     @foreach (array_filter(array_map('trim', explode(',', $blog->tags))) as $tag)

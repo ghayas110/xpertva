@@ -128,6 +128,9 @@
         </div>
     </section>
 
+    @include('site.reading')
+
+
     @include('site.cta', [
     'heading' => 'Protect Your Amazon Account',
     'body'    => 'Free Account Health audit and reimbursement scan from a Seller Central specialist.',

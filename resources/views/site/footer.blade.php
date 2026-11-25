@@ -25,6 +25,7 @@
                 <p class="foot__h">Platforms</p>
                 <ul class="foot__list">
                     <li><a href="{{ route('services.amazon') }}">Amazon</a></li>
+                    <li><a href="{{ route('services.amazon-va') }}">Amazon virtual assistant</a></li>
                     <li><a href="{{ route('services.shopify') }}">Shopify</a></li>
                     <li><a href="{{ route('services.walmart') }}">Walmart</a></li>
                     <li><a href="{{ route('services.ebay') }}">eBay</a></li>

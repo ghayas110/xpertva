@@ -59,7 +59,9 @@ class ImportBlogs extends Command
             $title = $blogData['title'] ?? 'Untitled Blog';
             $this->line("Importing: <info>{$title}</info>");
 
-            $slug = Str::slug($title);
+            // An explicit slug lets an import rewrite an existing post (new
+            // title, same URL) instead of creating a duplicate under a new one.
+            $slug = $blogData['slug'] ?? Str::slug($title);
             
             // Handle image
             $finalImagePath = null;
@@ -75,17 +77,22 @@ class ImportBlogs extends Command
                 }
             }
 
-            Blog::updateOrCreate(
-                ['slug' => $slug],
-                [
-                    'title' => $title,
-                    'category' => $blogData['category'] ?? 'General',
-                    'description' => $blogData['description'] ?? '',
-                    'content' => $blogData['content'] ?? '',
-                    'tags' => $blogData['tags'] ?? '',
-                    'image' => $finalImagePath ?? ($blogData['image_path'] ?? null),
-                ]
-            );
+            $fields = [
+                'title' => $title,
+                'category' => $blogData['category'] ?? 'General',
+                'description' => $blogData['description'] ?? '',
+                'content' => $blogData['content'] ?? '',
+                'tags' => $blogData['tags'] ?? '',
+            ];
+
+            // Only touch the image when the import supplies one. Writing null
+            // here used to wipe the cover of any existing post being updated.
+            $image = $finalImagePath ?? ($blogData['image_path'] ?? null);
+            if ($image) {
+                $fields['image'] = $image;
+            }
+
+            Blog::updateOrCreate(['slug' => $slug], $fields);
         }
 
         $this->info("Import completed successfully!");

@@ -165,6 +165,9 @@
         </div>
     </section>
 
+    @include('site.reading')
+
+
     @include('site.cta', [
     'heading' => 'Ready to Rank Higher on Amazon?',
     'body'    => 'Get a free Amazon listing audit from a certified Seller Central specialist.',

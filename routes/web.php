@@ -65,6 +65,8 @@ Route::prefix('services')->name('services.')->group(function () {
         return view('services.design-development');
     })->name('design');
 
+    Route::get('/amazon-virtual-assistant', fn () => view('services.amazon-virtual-assistant'))->name('amazon-va');
+
     Route::get('/virtual-assistant', function () {
         return view('services.va');
     })->name('va');
@@ -301,6 +303,7 @@ Route::get('/sitemap.xml', function () {
         ['loc' => url('/services/shopify'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/services/walmart'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/services/ebay'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services/amazon-virtual-assistant'), 'changefreq' => 'monthly', 'priority' => '0.9'],
         ['loc' => url('/services/virtual-assistant'), 'changefreq' => 'monthly', 'priority' => '0.9'],
         ['loc' => url('/services/amazon-operations'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/services/marketing-solutions'), 'changefreq' => 'monthly', 'priority' => '0.8'],
@@ -316,7 +319,7 @@ Route::get('/sitemap.xml', function () {
     // Amazon block had been pasted in twice at conflicting priorities.
     $urls = array_reverse(array_values(array_column(array_reverse($urls), null, 'loc')));
 
-    $blogs = \App\Models\Blog::select('slug', 'updated_at')->orderBy('created_at', 'desc')->get();
+    $blogs = \App\Models\Blog::listed()->select('slug', 'updated_at')->orderBy('created_at', 'desc')->get();
     foreach ($blogs as $blog) {
         $urls[] = [
             'loc' => url('/blog/' . $blog->slug),
