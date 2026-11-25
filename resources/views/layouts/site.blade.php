@@ -21,6 +21,27 @@
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/geist.woff2') }}" crossorigin>
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=9">
 
+    @if ($gaId = config('services.google_analytics.id'))
+        {{-- Google tag, exactly as Google issued it for this property.
+             Loading gtm.js with a G- measurement ID serves a container that
+             already carries the GA4 config, so it fires page_view on its own
+             and also brings enhanced measurement (scroll, outbound clicks)
+             with it. Adding gtag('config', ...) here as well would register
+             the ID a second time and risk a duplicate page_view, so it is
+             deliberately absent.
+
+             Placed after the font and CSS preloads so it never competes with
+             them for the first connections; async means it does not block
+             rendering either way. --}}
+        <link rel="preconnect" href="https://www.googletagmanager.com">
+        <script async src="https://www.googletagmanager.com/gtm.js?id={{ $gaId }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+        </script>
+    @endif
+
     @stack('head')
 
     @verbatim

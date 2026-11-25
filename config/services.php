@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Google Analytics 4
+    |--------------------------------------------------------------------------
+    |
+    | Set GA_MEASUREMENT_ID in .env on the live server only. Leaving it unset
+    | locally keeps development traffic out of the property, which otherwise
+    | quietly corrupts every report you build on it.
+    |
+    */
+
+    'google_analytics' => [
+        'id' => env('GA_MEASUREMENT_ID'),
+    ],
+
 ];
