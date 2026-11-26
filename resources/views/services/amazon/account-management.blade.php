@@ -42,6 +42,11 @@
 @endpush
 
 @section('content')
+@include('site.breadcrumbs', [
+    'trail'   => [['Services', route('services.index')], ['Amazon', route('services.amazon')]],
+    'current' => 'Amazon Account Management Services',
+])
+
 <section class="phead phead--photo">
     <x-img class="phead__bg" src="{{ asset('assets/photos/fulfilment-floor.jpg') }}" alt="A fulfilment warehouse floor stacked with outbound cartons." fetchpriority="high" decoding="async" />
     <div class="wrap">
@@ -108,6 +113,35 @@
         </div>
     </section>
 
+    @include('site.service-detail', [
+    'process' => [
+        ['name' => 'Account audit', 'desc' => 'We review Account Health, open cases, suppressed and stranded listings, inventory and reimbursement gaps, and give you the findings in writing.'],
+        ['name' => 'Clear the backlog', 'desc' => 'Urgent items go first: anything that threatens the account, then listings that cannot sell, then money Amazon owes you.'],
+        ['name' => 'Daily checks', 'desc' => 'Your account manager checks Account Health, buyer messages, performance notifications and inventory every working day.'],
+        ['name' => 'Cases and appeals', 'desc' => 'Cases are opened, chased and escalated until they close. Appeals get a written Plan of Action that you approve before it is sent.'],
+        ['name' => 'Weekly report', 'desc' => 'A short written summary of what changed, what was recovered and what needs your decision.'],
+    ],
+    'deliverables' => [
+        'A written account audit with a priority list',
+        'Daily Account Health and notification checks',
+        'A case log showing every open case and its status',
+        'Plans of Action drafted for your approval',
+        'FBA reimbursement claims filed and tracked',
+        'A weekly written report',
+    ],
+    'fitFor' => [
+        'Sellers spending hours each week on cases, notifications and listing errors',
+        'Accounts with an Account Health warning or a recent suspension',
+        'Brands with stranded or suppressed inventory that never seems to clear',
+        'Owners who want one named person accountable for the account',
+    ],
+    'notFitFor' => [
+        'You only need a single suspension appeal and no ongoing help',
+        'You cannot give us user access with the permissions the work needs',
+        'You want someone to work around Amazon\'s rules rather than within them',
+    ],
+])
+
     <section class="section">
         <div class="wrap" style="max-width:60rem">
         <h2 class="h2 mb-4" data-split-heading>Frequently Asked Questions</h2>
@@ -118,6 +152,9 @@
                 ['How do you appeal an Amazon suspension?', 'A Plan of Action (POA) that identifies root cause, immediate corrective actions, and long-term preventive measures. We draft, submit, and escalate it through Seller Performance.'],
                 ['Can you recover lost FBA reimbursements?', 'Yes. We audit FBA inventory and file claims for lost, damaged, mis-weighed inventory, customer return discrepancies, and fee overcharges, typically recovering 1-3% of FBA revenue.'],
                 ['What is an A-to-Z Guarantee Claim?', 'A buyer-initiated dispute when the customer believes they did not receive the item or it differs from the listing. Unresolved claims hurt ODR and need a fact-based appeal within 30 days.'],
+                ['Do you need my Seller Central password?', 'No. You add us as a secondary user under User Permissions, with access only to the areas the work needs. You never share your primary login and can remove our access at any time.'],
+                ['What happens if my account is suspended?', 'We read the notification, find the root cause from your account data, and write a Plan of Action that explains the cause, what has been fixed and what stops it happening again. You approve it before we submit, and we follow up until Amazon responds.'],
+                ['How quickly do you respond to a problem?', 'Your account manager checks the account every working day, so most issues are picked up the day they appear. Anything that threatens the account is raised with you straight away, not saved for the weekly report.'],
             ] as [$q, $a])
             <details>
                 <summary>{{ $q }}</summary>

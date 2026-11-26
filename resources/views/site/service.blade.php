@@ -22,8 +22,15 @@
     $parent = $parent ?? ['label' => 'All services', 'route' => 'services.index'];
 @endphp
 
+@include('site.breadcrumbs', [
+    'trail'   => $parent['route'] === 'services.index'
+        ? [['Services', route('services.index')]]
+        : [['Services', route('services.index')], [$parent['label'], route($parent['route'])]],
+    'current' => $title,
+])
+
 <section class="phead phead--photo">
-    <img class="phead__bg" src="{{ asset($photo) }}" alt="{{ $photoAlt }}" fetchpriority="high" decoding="async">
+    <x-img class="phead__bg" src="{{ asset($photo) }}" alt="{{ $photoAlt }}" fetchpriority="high" decoding="async" sizes="100vw" />
     <div class="wrap">
         <a class="crumb" href="{{ route($parent['route']) }}">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
@@ -88,82 +95,7 @@
     </div>
 </section>
 
-@isset($process)
-<section class="section" style="background:var(--paper-2)">
-    <div class="wrap">
-        <h2 class="h2 mb-4" data-split-heading>How the work runs</h2>
-        <div class="seq">
-            @foreach ($process as $step)
-                <div class="seq__item" data-anim data-anim-delay="{{ min($loop->index * 0.04, 0.2) }}">
-                    <h3><span class="num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $step['name'] }}</h3>
-                    <p>{{ $step['desc'] }}</p>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endisset
-
-@isset($deliverables)
-<section class="section">
-    <div class="wrap">
-        <div class="duo">
-            <div>
-                <h2 class="h2 mb-3" data-split-heading>What you get</h2>
-                <p class="body">Written down before the work starts, so you can check it was done.</p>
-            </div>
-            <ul class="ticks">
-                @foreach ($deliverables as $item)
-                    <li>{{ $item }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-</section>
-@endisset
-
-@isset($fitFor)
-<section class="section" style="background:var(--paper-2)">
-    <div class="wrap">
-        <div class="duo">
-            <div>
-                <h2 class="h3 mb-3">A good fit if</h2>
-                <ul class="ticks">
-                    @foreach ($fitFor as $item)
-                        <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @isset($notFitFor)
-                <div>
-                    <h2 class="h3 mb-3">Probably not the right fit if</h2>
-                    <ul class="ticks">
-                        @foreach ($notFitFor as $item)
-                            <li>{{ $item }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endisset
-        </div>
-    </div>
-</section>
-@endisset
-
-@isset($faqs)
-<section class="section">
-    <div class="wrap" style="max-width:60rem">
-        <h2 class="h2 mb-4" data-split-heading>Questions we get asked</h2>
-        <div class="faq">
-            @foreach ($faqs as [$q, $a])
-                <details>
-                    <summary>{{ $q }}</summary>
-                    <p>{{ $a }}</p>
-                </details>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endisset
+@include('site.service-detail')
 
 @isset($related)
 <section class="section--tight" style="background:var(--paper-2);padding-block:clamp(3rem,6vw,5rem)">

@@ -96,9 +96,40 @@ Route::get('/work', function () {
     return view('work');
 })->name('work');
 
+// Amazon case files: one page per Seller Central case we resolved, from
+// resources/data/amazon-cases.json. Registered before /work/{case} so
+// "amazon-cases" is never read as a case-study slug.
+Route::get('/work/amazon-cases', function () {
+    return view('work-amazon-cases', ['cases' => \App\Support\AmazonCases::all()]);
+})->name('work.amazon-cases');
+
+Route::get('/work/amazon-cases/{slug}', function (string $slug) {
+    $case = \App\Support\AmazonCases::find($slug) ?? abort(404);
+
+    return view('work-amazon-case', compact('slug', 'case'));
+})->where('slug', '[a-z0-9-]+')->name('work.amazon-case');
+
+// Case studies and author bio pages are both driven by config/content.php,
+// so an unknown slug is a plain 404 rather than a database miss.
+Route::get('/work/{case}', function (string $case) {
+    $study = config('content.case_studies', [])[$case] ?? abort(404);
+
+    return view('work-case', ['slug' => $case, 'study' => $study]);
+})->where('case', '[a-z0-9-]+')->name('work.case');
+
 Route::get('/team', function () {
     return view('team');
 })->name('team');
+
+Route::get('/team/{member}', function (string $member) {
+    $author = \App\Support\Authors::find($member) ?? abort(404);
+    $posts = \App\Models\Blog::listed()
+        ->whereIn('slug', \App\Support\Authors::slugsFor($member))
+        ->latest()
+        ->get();
+
+    return view('team-member', compact('author', 'posts'));
+})->where('member', '[a-z0-9-]+')->name('team.member');
 
 });
 
@@ -287,46 +318,72 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/sitemap.xml', function () {
-    $urls = [
-        ['loc' => url('/'), 'changefreq' => 'weekly', 'priority' => '1.0'],
-        ['loc' => url('/team'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/work'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/contact'), 'changefreq' => 'yearly', 'priority' => '0.7'],
-        ['loc' => url('/services'), 'changefreq' => 'monthly', 'priority' => '0.9'],
-        ['loc' => url('/services/amazon'), 'changefreq' => 'monthly', 'priority' => '0.9'],
-        ['loc' => url('/services/amazon/listing-optimization'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/amazon/ppc-management'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/amazon/seo-keyword-research'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/amazon/a-plus-storefront'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/amazon/account-management'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/amazon/brand-protection'), 'changefreq' => 'monthly', 'priority' => '0.85'],
-        ['loc' => url('/services/shopify'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/walmart'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/ebay'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/amazon-virtual-assistant'), 'changefreq' => 'monthly', 'priority' => '0.9'],
-        ['loc' => url('/services/virtual-assistant'), 'changefreq' => 'monthly', 'priority' => '0.9'],
-        ['loc' => url('/services/amazon-operations'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/marketing-solutions'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/web-development'), 'changefreq' => 'monthly', 'priority' => '0.8'],
-        ['loc' => url('/services/content-branding'), 'changefreq' => 'monthly', 'priority' => '0.7'],
-        ['loc' => url('/services/mobile-app-development'), 'changefreq' => 'monthly', 'priority' => '0.7'],
-        ['loc' => url('/services/design-development'), 'changefreq' => 'monthly', 'priority' => '0.7'],
-        ['loc' => url('/blog'), 'changefreq' => 'weekly', 'priority' => '0.8'],
-        ['loc' => url('/privacy-policy'), 'changefreq' => 'yearly', 'priority' => '0.3'],
+    /*
+     | lastmod for a page is the modified time of the view that renders it,
+     | so it moves when the page's content actually changes and not on every
+     | deploy. changefreq and priority are gone: Google ignores both.
+     |
+     | Deploys must preserve file mtimes for this to mean anything. A plain
+     | git pull does (it only touches changed files); an upload tool that
+     | resets every timestamp would make every page look freshly edited.
+    */
+    $viewTime = function (string $view): ?string {
+        $file = resource_path('views/' . str_replace('.', '/', $view) . '.blade.php');
+
+        return is_file($file) ? date(DATE_ATOM, filemtime($file)) : null;
+    };
+
+    $pages = [
+        '/'                                      => 'home',
+        '/team'                                  => 'team',
+        '/work'                                  => 'work',
+        '/contact'                               => 'contact',
+        '/services'                              => 'services.index',
+        '/services/amazon'                       => 'services.amazon',
+        '/services/amazon/listing-optimization'  => 'services.amazon.listing-optimization',
+        '/services/amazon/ppc-management'        => 'services.amazon.ppc-management',
+        '/services/amazon/seo-keyword-research'  => 'services.amazon.seo-keyword-research',
+        '/services/amazon/a-plus-storefront'     => 'services.amazon.a-plus-storefront',
+        '/services/amazon/account-management'    => 'services.amazon.account-management',
+        '/services/amazon/brand-protection'      => 'services.amazon.brand-protection',
+        '/services/shopify'                      => 'services.shopify',
+        '/services/walmart'                      => 'services.walmart',
+        '/services/ebay'                         => 'services.ebay',
+        '/services/amazon-virtual-assistant'     => 'services.amazon-virtual-assistant',
+        '/services/virtual-assistant'            => 'services.va',
+        '/services/amazon-operations'            => 'services.amazon-operation',
+        '/services/marketing-solutions'          => 'services.marketing-solutions',
+        '/services/web-development'              => 'services.web-development',
+        '/services/content-branding'             => 'services.content-branding',
+        '/services/mobile-app-development'       => 'services.mobile-app-development',
+        '/services/design-development'           => 'services.design-development',
+        '/privacy-policy'                        => 'privacy-policy',
     ];
 
-    // Listing a URL twice is a quality signal against the sitemap, and the
-    // Amazon block had been pasted in twice at conflicting priorities.
-    $urls = array_reverse(array_values(array_column(array_reverse($urls), null, 'loc')));
+    $urls = [];
+    foreach ($pages as $path => $view) {
+        $urls[] = ['loc' => url($path), 'lastmod' => $viewTime($view)];
+    }
+
+    // Config-driven pages: the later of the view and config/content.php.
+    $contentTime = filemtime(config_path('content.php'));
+    $later = fn (?string $a) => date(DATE_ATOM, max($a ? strtotime($a) : 0, $contentTime));
+    foreach (array_keys(config('content.case_studies', [])) as $slug) {
+        $urls[] = ['loc' => route('work.case', $slug), 'lastmod' => $later($viewTime('work-case'))];
+    }
+    $casesTime = fn (string $view) => date(DATE_ATOM, max(strtotime($viewTime($view) ?? '@0'), \App\Support\AmazonCases::lastModified()));
+    $urls[] = ['loc' => route('work.amazon-cases'), 'lastmod' => $casesTime('work-amazon-cases')];
+    foreach (array_keys(\App\Support\AmazonCases::all()) as $slug) {
+        $urls[] = ['loc' => route('work.amazon-case', $slug), 'lastmod' => $casesTime('work-amazon-case')];
+    }
+    foreach (array_keys(config('content.authors', [])) as $key) {
+        $urls[] = ['loc' => route('team.member', $key), 'lastmod' => $later($viewTime('team-member'))];
+    }
 
     $blogs = \App\Models\Blog::listed()->select('slug', 'updated_at')->orderBy('created_at', 'desc')->get();
+    $urls[] = ['loc' => url('/blog'), 'lastmod' => optional($blogs->max('updated_at'))->toAtomString()];
     foreach ($blogs as $blog) {
-        $urls[] = [
-            'loc' => url('/blog/' . $blog->slug),
-            'lastmod' => $blog->updated_at->toAtomString(),
-            'changefreq' => 'monthly',
-            'priority' => '0.7',
-        ];
+        $urls[] = ['loc' => url('/blog/' . $blog->slug), 'lastmod' => $blog->updated_at->toAtomString()];
     }
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
@@ -334,11 +391,9 @@ Route::get('/sitemap.xml', function () {
     foreach ($urls as $url) {
         $xml .= "  <url>\n";
         $xml .= "    <loc>" . e($url['loc']) . "</loc>\n";
-        if (isset($url['lastmod'])) {
+        if (!empty($url['lastmod'])) {
             $xml .= "    <lastmod>" . $url['lastmod'] . "</lastmod>\n";
         }
-        $xml .= "    <changefreq>" . $url['changefreq'] . "</changefreq>\n";
-        $xml .= "    <priority>" . $url['priority'] . "</priority>\n";
         $xml .= "  </url>\n";
     }
     $xml .= '</urlset>';

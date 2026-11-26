@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Contact Us - XpertVA')
+@section('title', 'Contact XpertVA: Book an eCommerce Consultation')
 @section('meta_description', 'Get in touch with XpertVA. Call +1 (732) 490-6272 or email hello@xpertva.com. Located in Englishtown, NJ. We respond within 24 hours.')
 
 @push('head')

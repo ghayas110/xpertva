@@ -8,7 +8,7 @@
 <link rel="canonical" href="{{ url('/services/amazon/listing-optimization') }}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Amazon Listing Optimization Services | XpertVA">
-<meta property="og:description" content="Rank higher and convert more on Amazon with SEO-optimized titles, bullets, descriptions, and A+ content built by certified Amazon specialists.">
+<meta property="og:description" content="Rank higher and convert more on Amazon with SEO-optimized titles, bullets, descriptions, and A+ content built by experienced Amazon specialists.">
 <meta property="og:url" content="{{ url('/services/amazon/listing-optimization') }}">
 <meta name="keywords" content="amazon listing optimization, amazon seo services, amazon product listing, optimize amazon listing, amazon listing optimization service, seller central listing optimization, amazon a+ content, amazon backend keywords">
 <meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
@@ -85,7 +85,7 @@
         </a>
             <h1 class="display display--sm mb-3">Amazon Listing Optimization Services</h1>
             <p class="lede mb-3">
-                Rank higher in Amazon search and convert more shoppers with SEO-optimized titles, bullet points, A+ content, images and backend keywords, all built by certified Amazon Seller Central specialists.
+                Rank higher in Amazon search and convert more shoppers with SEO-optimized titles, bullet points, A+ content, images and backend keywords, all built by experienced Amazon Seller Central specialists.
             </p>
             <div class="callout">
                 <p class="callout__label">Quick answer</p>
@@ -145,6 +145,28 @@
         </div>
     </section>
 
+    @include('site.service-detail', [
+    'deliverables' => [
+        'A competitor benchmark for each ASIN',
+        'A keyword map for the title, bullets and backend terms',
+        'A rewritten title, five bullets and description',
+        'Image and infographic briefs, or finished designs',
+        'A+ Content where the brand is registered',
+        'A 30-day rank and conversion report after publishing',
+    ],
+    'fitFor' => [
+        'Listings with traffic but a low unit session percentage',
+        'Products launched with supplier-written copy',
+        'Catalogues where variations, titles and images are inconsistent',
+        'Sellers about to increase PPC spend who want the listing ready first',
+    ],
+    'notFitFor' => [
+        'The listing is suppressed or blocked, which is an account management fix first',
+        'You need hundreds of low-value SKUs uploaded rather than optimized',
+        'You cannot review changes within a week, which stalls the work',
+    ],
+])
+
     <section class="section">
         <div class="wrap" style="max-width:60rem">
         <h2 class="h2 mb-4" data-split-heading>Frequently Asked Questions</h2>
@@ -155,6 +177,9 @@
                 ['How much does Amazon listing optimization cost?', 'Professional Amazon listing optimization typically ranges from $150 to $600 per listing depending on whether A+ content, lifestyle images, and brand storefront work are included.'],
                 ['What is the difference between Amazon SEO and Amazon PPC?', 'Amazon SEO improves organic ranking through optimized listing copy, keywords, images, and reviews. Amazon PPC is paid advertising. The two work together, better listings convert PPC clicks more cheaply, lowering ACoS.'],
                 ['Do you optimize for Amazon US, UK, and EU marketplaces?', 'Yes. XpertVA optimizes listings across Amazon US, UK, Canada, Mexico, Germany, France, Italy, Spain, and the UAE marketplaces with localized keywords for each region.'],
+                ['Will changing my listing hurt my current rank?', 'It can for a short time. That is why we keep the terms you already rank for, change one top seller at a time, and track rank daily for the first two weeks so anything that slips can be put back.'],
+                ['Do you write the images as well as the copy?', 'Yes. We write image briefs for the main image, infographics and lifestyle shots, and our designers can produce the finished files. If you have your own photographer, we hand them the briefs instead.'],
+                ['Can you optimize listings I do not own the brand for?', 'We can improve the parts a reseller is allowed to edit, but Amazon gives control of the detail page to the brand owner. For brands you do not own, we focus on pricing, offer quality and PPC instead.'],
             ] as [$q, $a])
             <details>
                 <summary>{{ $q }}</summary>
@@ -170,7 +195,7 @@
 
     @include('site.cta', [
     'heading' => 'Ready to Rank Higher on Amazon?',
-    'body'    => 'Get a free Amazon listing audit from a certified Seller Central specialist.',
+    'body'    => 'Get a free Amazon listing audit from an experienced Seller Central specialist.',
 ])
 
 @endsection

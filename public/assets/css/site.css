@@ -213,6 +213,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hero__title{margin-bottom:1.5rem}
 .hero__title em{font-style:normal;color:var(--accent)}
 .hero__ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.hero__aside{margin-top:1.25rem;font-size:.95rem;color:var(--muted);max-width:34rem}
 .hero__media{position:relative;border-radius:var(--r);overflow:hidden;background:var(--paper-2);aspect-ratio:16/10}
 .hero__media video,.hero__media img{width:100%;height:100%;object-fit:cover}
 .hero__media::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px var(--line);pointer-events:none}
@@ -614,6 +615,10 @@ html.lenis,html.lenis body{height:auto}
 .post:focus-within{padding-left:.5rem}
 .post h3{font-family:var(--ff-display);font-weight:600;font-size:1.14rem;line-height:1.25;letter-spacing:-.02em;transition:color .3s var(--ease)}
 .post__meta{font-family:var(--ff-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.byline{display:inline-flex;align-items:center;gap:.75rem;font-size:.92rem;color:var(--muted)}
+.byline img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none}
+.byline strong{color:var(--ink);font-weight:600}
+.byline:hover strong{color:var(--accent)}
 .post--lead{grid-column:1/-1}
 @media (min-width:700px){
   .post--lead{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.5rem,3vw,2.5rem);align-items:center}
@@ -811,3 +816,20 @@ html.lenis,html.lenis body{height:auto}
    wrapper generate no box, so the <img> lays out exactly as it did when it
    was a direct child — flex, grid and absolute positioning all unchanged. */
 picture{display:contents}
+
+/* Case studies (/work/{slug}) */
+.casefacts{display:flex;flex-wrap:wrap;gap:1rem 2.5rem;margin:1.75rem 0 0}
+.casefacts div{display:grid;gap:.2rem}
+.casefacts dt{font-family:var(--ff-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.casefacts dd{margin:0;color:var(--ink);font-weight:500}
+.beforeafter{display:grid;gap:1.25rem}
+@media (min-width:760px){.beforeafter{grid-template-columns:1fr 1fr}}
+.beforeafter__side{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.25rem,3vw,2rem);min-width:0}
+.beforeafter__side--after{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+.kv{display:grid;margin:0}
+.kv div{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;color:var(--ink);font-weight:600;text-align:right}
+.phead--photo .casefacts dt{color:var(--on-dark-dim)}
+.phead--photo .casefacts dd{color:var(--on-dark)}
+.phead--photo .casefacts .tlink{color:var(--on-dark)}

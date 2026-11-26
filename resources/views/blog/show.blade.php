@@ -2,7 +2,9 @@
 
 {{-- Suffix kept short: titles were running to 113 characters and Google cuts
      at about 60, so every post was being truncated mid-sentence in results. --}}
-@section('title', ($blog->title ?? 'Article') . ' | XpertVA')
+{{-- The <title> uses the short keyword-first version from config/content.php
+     (seo_titles); the H1 below keeps the full title from the admin. --}}
+@section('title', $blog->seoTitle() . ' | XpertVA')
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags($blog->description ?? $blog->content), 155))
 
 @php
@@ -15,6 +17,8 @@
      | ineligible for Article rich results. Fall back to a real file that is
      | wide enough (1600px) to qualify.
     */
+    $author = $blog->author();
+
     $cover = filled($blog->image)
         ? (filter_var($blog->image, FILTER_VALIDATE_URL) ? $blog->image : asset('assets/images/' . $blog->image))
         : asset('assets/proof/hero-dashboard.jpg');
@@ -23,7 +27,7 @@
 @push('head')
 <link rel="canonical" href="{{ url()->current() }}">
 <meta property="og:type" content="article">
-<meta property="og:title" content="{{ $blog->title }}">
+<meta property="og:title" content="{{ $blog->seoTitle() }}">
 <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($blog->description ?? $blog->content), 155) }}">
 <meta property="og:url" content="{{ url()->current() }}">
 <meta property="og:image" content="{{ $cover }}">
@@ -45,7 +49,7 @@
   "articleSection": {!! json_encode($blog->category) !!},
   "datePublished": "{{ $blog->created_at->toIso8601String() }}",
   "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
-  "author": { "@@type": "Organization", "name": "XpertVA Editorial Team", "url": "https://xpertva.com" },
+  "author": {!! json_encode($author ? \App\Support\Authors::schema($author) : ['@type' => 'Organization', 'name' => 'XpertVA', 'url' => 'https://xpertva.com'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!},
   "publisher": {
     "@@type": "Organization",
     "name": "XpertVA",
@@ -88,6 +92,13 @@
 
             @if ($blog->description)
                 <p class="lede mb-3">{{ $blog->description }}</p>
+            @endif
+
+            @if ($author)
+                <a class="byline mb-2" href="{{ $author['url'] }}" rel="author">
+                    <x-img src="{{ asset($author['photo']) }}" alt="" width="40" height="40" sizes="40px" loading="lazy" decoding="async" />
+                    <span>By <strong>{{ $author['name'] }}</strong>, {{ $author['role'] }}</span>
+                </a>
             @endif
 
             <p class="post__meta">

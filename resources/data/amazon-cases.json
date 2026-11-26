@@ -1,0 +1,605 @@
+{
+  "_comment": "Amazon case files shown at /work/amazon-cases/{slug}. Facts come only from the Seller Central case replies in public/assets/amazon-cases. Brand names, ASINs, FNSKUs and support-agent names are deliberately left out of the text. 'steps' and 'faqs' are general guidance on the case type, not claims about this account.",
+  "product-title-change-brand-registry": {
+    "title": "Amazon Product Title Change via Brand Registry",
+    "h1": "Changing an Amazon product title through Brand Registry Support",
+    "category": "Listing",
+    "summary": "A brand needed the title on one of its ASINs changed. We took it to Brand Registry Support, and Amazon confirmed the new title would show within 48 hours.",
+    "team": "Amazon Brand Registry Support",
+    "resolution": "New title live within 48 hours of Amazon's reply",
+    "image": "assets/amazon-cases/product-title-change-approved.jpg",
+    "alt": "Seller Central case titled Request to change item name, answered by Amazon Brand Registry Support confirming the product title update.",
+    "stats": [
+      [
+        "48 hrs",
+        "Time Amazon gave for the new title to appear"
+      ],
+      [
+        "1 case",
+        "Opened with Brand Registry Support"
+      ]
+    ],
+    "problem": [
+      "The brand needed the item name on one of its ASINs changed to a clearer title that listed the pack contents, the flavours and what the product is for.",
+      "Title edits made in Seller Central do not always reach the detail page. When more than one seller contributes data to an ASIN, or Amazon's catalogue holds its own value, the brand owner's edit can be accepted and still not show. A Brand Registry Support case is the direct route."
+    ],
+    "filed": [
+      "A request to Brand Registry Support to update the item name on the ASIN",
+      "The exact new title, written to Amazon's title rules"
+    ],
+    "reply": "Amazon processed the request, confirmed the new title word for word, and said it would appear on the detail page within the next 48 hours. It also pointed to Edit Product and inventory files for future changes.",
+    "quote": "We have processed your request to update the product title.",
+    "steps": [
+      [
+        "Try the normal route first",
+        "Edit the title in Manage Inventory, or upload it in an inventory file. Wait a day and check the live page, not just Seller Central."
+      ],
+      [
+        "Check Amazon's title rules",
+        "Keep the title within Amazon's length limit, drop promotional words such as best seller or free shipping, and avoid the special characters Amazon blocks. A title that breaks the rules can be rejected without a clear error."
+      ],
+      [
+        "Open a Brand Registry case",
+        "If the change does not stick, open a case with Brand Registry Support from the brand owner's account and ask for the item name to be updated. Paste the full new title and the ASIN."
+      ],
+      [
+        "Check the live page",
+        "Amazon usually gives a time frame in its reply. Check the detail page after it passes, on desktop and mobile, and reply on the same case if the old title is still showing."
+      ]
+    ],
+    "faqs": [
+      [
+        "Why will my Amazon title not update?",
+        "Usually because another contributor's data or Amazon's own catalogue data is taking priority over yours, or because the new title breaks a style rule. A brand owner in Brand Registry can ask Brand Registry Support to apply the change directly."
+      ],
+      [
+        "How long does an Amazon title change take?",
+        "In this case Amazon said 48 hours from its reply. Simple edits made in Seller Central can show sooner, but a change processed through a support case often takes a day or two."
+      ],
+      [
+        "Can a reseller change the title of a branded product?",
+        "A reseller can suggest changes, but the brand owner's data takes priority once the brand is in Brand Registry. That is why the case was raised from the brand's own account."
+      ]
+    ],
+    "services": [
+      "services.amazon.listing-optimization",
+      "services.amazon.account-management"
+    ]
+  },
+  "fba-lost-inventory-reimbursement": {
+    "title": "FBA Lost Inventory Reimbursement Case Study",
+    "h1": "FBA lost inventory: 169 units reimbursed and 27 units found",
+    "category": "FBA reimbursement",
+    "summary": "A warehouse lost investigation on one FNSKU ended with 169 units reimbursed, 27 missing units found and returned to stock, and 7 damaged units paid for.",
+    "team": "Amazon Selling Partner Support",
+    "resolution": "Investigation completed and closed on the same case",
+    "image": "assets/amazon-cases/fba-lost-inventory-reimbursed.jpg",
+    "alt": "Seller Central case titled Warehouse Lost Investigation, showing 27 units found, 169 units reimbursed and 7 units identified as damaged.",
+    "stats": [
+      [
+        "169",
+        "Units reimbursed"
+      ],
+      [
+        "27",
+        "Missing units found and returned to the account"
+      ],
+      [
+        "7",
+        "Units reimbursed as damaged"
+      ]
+    ],
+    "problem": [
+      "Units of one FNSKU had gone missing inside Amazon's fulfilment network. They were neither sellable nor reimbursed.",
+      "Amazon reimburses many lost units automatically, but not all of them, and the automatic process can lag well behind the loss. Units that slip through are money the seller never sees unless someone checks the ledger and asks."
+    ],
+    "filed": [
+      "A reimbursement request for the lost units of the FNSKU, which Amazon handled as a warehouse lost investigation"
+    ],
+    "reply": "Amazon completed the investigation in three parts. 27 units were traced and returned to the account. 169 units were reimbursed, each with its own reimbursement transaction ID. 7 units first logged as damaged were also paid for. Amazon added that the FNSKU had been flagged for proactive reimbursement review.",
+    "quote": "We have completed our investigation of your lost inventory.",
+    "steps": [
+      [
+        "Run the Inventory Ledger report",
+        "Compare units received, shipped, returned, removed and adjusted for each FNSKU. Lost and damaged adjustments with no matching reimbursement are the ones to chase."
+      ],
+      [
+        "Check the Reimbursements report",
+        "Make sure the units are not already paid for. Amazon often reimburses automatically, and a duplicate claim wastes time."
+      ],
+      [
+        "Allow time for automatic reimbursement",
+        "Amazon says proactive reimbursements can take up to three weeks after a unit is identified as lost. Claim what is still outstanding after that."
+      ],
+      [
+        "Open the claim with the numbers",
+        "Give the FNSKU, the date range and the unit gap from the ledger. Clear numbers get a clear answer, as this case shows."
+      ],
+      [
+        "Check the result in both reports",
+        "Found units appear back in the ledger, and reimbursed units appear in the Reimbursements report with a transaction ID."
+      ]
+    ],
+    "faqs": [
+      [
+        "Does Amazon reimburse lost FBA inventory automatically?",
+        "Often, yes. Amazon's reply in this case says it reimburses inventory lost in its fulfilment centres without a request. Automatic reimbursement does not catch everything, which is why the ledger is worth checking."
+      ],
+      [
+        "How do I check whether Amazon has reimbursed me?",
+        "Use the Reimbursements report in Seller Central for payments, and the Inventory Ledger report for units that were found and returned to stock."
+      ],
+      [
+        "Is there a deadline for FBA reimbursement claims?",
+        "Yes. Amazon sets time limits for each type of claim and has changed them over the years, so check the current FBA inventory reimbursement policy in Seller Central before you file."
+      ]
+    ],
+    "services": [
+      "services.amazon.account-management",
+      "services.amazon-ops"
+    ]
+  },
+  "fix-amazon-product-page-images": {
+    "title": "Fixing Wrong Images on an Amazon Product Page",
+    "h1": "Fixing the wrong images on an Amazon product detail page",
+    "category": "Listing",
+    "summary": "An ASIN had a problem with its images. We raised a Fix a product page case, and a Selling Partner Support specialist confirmed the detail page had been corrected.",
+    "team": "Amazon Selling Partner Support",
+    "resolution": "Detail page updated and confirmed by a Live Channel Specialist",
+    "image": "assets/amazon-cases/product-page-image-fix.jpg",
+    "alt": "Seller Central case titled Fix a product page, where Amazon confirms the image issue on an ASIN was fixed and the detail page updated.",
+    "stats": [
+      [
+        "1 ASIN",
+        "Detail page images corrected"
+      ],
+      [
+        "Specialist",
+        "Handled by Amazon's Live Channel team"
+      ]
+    ],
+    "problem": [
+      "The detail page for one ASIN had an image problem that needed Amazon to step in and fix it.",
+      "Image problems cost sales twice: shoppers who notice leave, and shoppers who do not notice may return the product. On a listing several sellers contribute to, the wrong images can also come from someone else's upload."
+    ],
+    "filed": [
+      "A Fix a product page case with Selling Partner Support describing the image issue on the ASIN"
+    ],
+    "reply": "A Live Channel Specialist followed up on the case to confirm the required updates had been made, with a link to the corrected detail page.",
+    "quote": "The required updates have been made.",
+    "steps": [
+      [
+        "Upload the correct images first",
+        "Replace the images in Manage Inventory and check that each one meets Amazon's image rules. The main image needs a pure white background and the product filling most of the frame."
+      ],
+      [
+        "Give it a day",
+        "Image changes can take time to show. Check the live page from a private browser window, because Seller Central previews are not always what shoppers see."
+      ],
+      [
+        "Open a Fix a product page case",
+        "If the old images stay, open the case in Seller Central's help hub, name the ASIN and say which images are wrong and which should replace them."
+      ],
+      [
+        "Ask for a specialist if it stalls",
+        "If the first reply does not fix it, reply on the case or contact a specialist. In this case a Live Channel Specialist confirmed the fix."
+      ]
+    ],
+    "faqs": [
+      [
+        "Why are the wrong images showing on my Amazon listing?",
+        "Another seller may have contributed images to the same ASIN, Amazon's catalogue may be holding older images, or the new upload failed a quality check. Brand owners in Brand Registry have the strongest claim to control the images."
+      ],
+      [
+        "What are Amazon's main image requirements?",
+        "A pure white background, the product filling most of the frame, no added text, logos or watermarks, and enough resolution for zoom. Amazon's style guide for your category may add more."
+      ],
+      [
+        "How long does an image fix take on Amazon?",
+        "A normal upload can show within a day. When a support case is needed, it depends on the queue. Check the page after each reply rather than assuming the change is live."
+      ]
+    ],
+    "services": [
+      "services.amazon.listing-optimization",
+      "services.amazon.account-management"
+    ]
+  },
+  "amazon-brand-byline-store-link-fix": {
+    "title": "Fixing the Amazon \"Visit the Store\" Byline Link",
+    "h1": "Fixing an Amazon byline that would not link to the brand Store",
+    "category": "Storefront",
+    "summary": "A brand's byline was not showing \"Visit the Store\" with a link to its Amazon Store. Amazon Advertiser Support made the change and said the link would connect within 72 hours.",
+    "team": "Amazon Advertiser Support",
+    "resolution": "Change made on 16 August 2025, link live within 72 hours",
+    "image": "assets/amazon-cases/brand-byline-link-fix.jpg",
+    "alt": "Seller Central case titled Other account issues, where Amazon Advertiser Support confirms it fixed the byline so it links to the brand's Store within 72 hours.",
+    "stats": [
+      [
+        "72 hrs",
+        "Time Amazon gave for the byline to link to the Store"
+      ],
+      [
+        "16 Aug 2025",
+        "Date Amazon made the change"
+      ]
+    ],
+    "problem": [
+      "The byline under the product title is supposed to read \"Visit the [Brand] Store\" and link to the brand's Amazon Store. On this brand's listings it was not showing that text, so shoppers had no link from the product to the rest of the range.",
+      "The byline link is free traffic to the Store, and the Store is where shoppers find the rest of the catalogue. Losing it hurts cross-selling and any Sponsored Brands campaigns that send traffic to the Store."
+    ],
+    "filed": [
+      "A case with Advertiser Support explaining that the byline text was not showing as \"Visit the [Brand] Store\"",
+      "The brand name and Store the byline should point to"
+    ],
+    "reply": "Advertiser Support confirmed it had made the necessary changes on Amazon's side on 16 August 2025, and that the byline link would take 72 hours to connect to the Store.",
+    "quote": "It will take 72 hours for the byline link to connect to your Store.",
+    "steps": [
+      [
+        "Check the brand name matches exactly",
+        "The brand field on each ASIN has to match the brand name registered in Brand Registry, including spelling, spacing and capitals. A small mismatch is the most common reason the link breaks."
+      ],
+      [
+        "Make sure the Store is published",
+        "The Store needs to be live in the Stores builder in the advertising console, not just saved as a draft."
+      ],
+      [
+        "Contact Advertiser Support",
+        "Stores sit in Amazon Ads, so Advertiser Support rather than Seller Support is usually the team that can relink the byline. Name the brand, the Store and a sample ASIN."
+      ],
+      [
+        "Wait, then check",
+        "Amazon gave 72 hours here. Check several ASINs once that has passed, and reply on the same case if any are still unlinked."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the byline on an Amazon listing?",
+        "It is the line just under the product title that names the brand. For brands with an Amazon Store, it reads \"Visit the [Brand] Store\" and links to the Store."
+      ],
+      [
+        "Why does my byline not link to my Amazon Store?",
+        "Usually because the brand name on the ASIN does not exactly match the registered brand, or because the Store is not published. Sometimes the connection breaks on Amazon's side and support has to relink it, as in this case."
+      ],
+      [
+        "Which Amazon team fixes the Store byline?",
+        "In this case it was Advertiser Support, because Stores are managed in Amazon Ads."
+      ]
+    ],
+    "services": [
+      "services.amazon.a-plus-storefront",
+      "services.amazon.brand-protection"
+    ]
+  },
+  "amazon-list-price-correction": {
+    "title": "Amazon List Price Correction With MSRP Proof",
+    "h1": "Correcting an Amazon list price with manufacturer documentation",
+    "category": "Pricing",
+    "summary": "An ASIN's list price was wrong. Using the manufacturer's published price as evidence, Amazon's specialist team updated the list price to $2,259.00.",
+    "team": "Amazon Connect with a Specialist",
+    "resolution": "List price updated and showing on the detail page",
+    "image": "assets/amazon-cases/list-price-update-approved.jpg",
+    "alt": "Seller Central case titled Price, where Amazon's specialist team confirms the list price was updated to 2,259 dollars based on manufacturer documentation.",
+    "stats": [
+      [
+        "$2,259.00",
+        "Corrected list price"
+      ],
+      [
+        "Specialist",
+        "Handled through Amazon Connect with a Specialist"
+      ]
+    ],
+    "problem": [
+      "The list price on one ASIN did not match the manufacturer's price. The list price is the reference figure Amazon can show next to the selling price, so a wrong one either hides a real saving or shows a misleading one.",
+      "Amazon validates list prices and will remove or reject one it cannot verify, so simply typing a new figure into Seller Central is often not enough."
+    ],
+    "filed": [
+      "A request to update the list price on the ASIN",
+      "Documentation of the manufacturer's price, taken from the manufacturer's own website"
+    ],
+    "reply": "The specialist confirmed the list price update was complete, set to $2,259.00 based on the manufacturer documentation provided, and already showing on the product detail page.",
+    "quote": "The list price update for ASIN has been successfully completed.",
+    "steps": [
+      [
+        "Find the manufacturer's published price",
+        "Use the price on the manufacturer's own website or official price list. Amazon gives more weight to the brand's own source than to a reseller's page."
+      ],
+      [
+        "Update the list price field",
+        "Enter the list price in Seller Central first. If Amazon removes or ignores it, that is the sign it needs a case."
+      ],
+      [
+        "Open a case with the evidence",
+        "Give the ASIN, the correct figure and a link or screenshot of the manufacturer's price. Ask for the list price to be updated, not the selling price."
+      ],
+      [
+        "Check how it displays",
+        "Once Amazon confirms, look at the detail page to see the list price and any saving shown against your selling price."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the list price on Amazon?",
+        "It is a reference price, usually the manufacturer's suggested retail price, that Amazon can show next to the selling price. Amazon only shows it when it can verify it."
+      ],
+      [
+        "Why did Amazon remove my list price?",
+        "Usually because Amazon could not verify it against recent prices or the manufacturer's price. Providing manufacturer documentation, as in this case, is the usual fix."
+      ],
+      [
+        "Is the list price the same as my selling price?",
+        "No. The selling price is what the shopper pays. The list price is the reference figure that a discount is measured against."
+      ]
+    ],
+    "services": [
+      "services.amazon.account-management",
+      "services.amazon.listing-optimization"
+    ]
+  },
+  "amazon-asin-reinstatement": {
+    "title": "Amazon ASIN Reinstatement Case Study",
+    "h1": "Getting several deactivated ASINs reinstated on Amazon",
+    "category": "Account health",
+    "summary": "Several ASINs had been taken down. After review, Amazon's specialist reinstated all of them, active within 24 hours, with a reminder to refresh price and quantity.",
+    "team": "Amazon Seller Support specialist",
+    "resolution": "ASINs reinstated, active within 24 hours",
+    "image": "assets/amazon-cases/asin-reinstatement-approved.jpg",
+    "alt": "Seller Central case where an Amazon specialist confirms several ASINs were reviewed and reinstated, active within 24 hours.",
+    "stats": [
+      [
+        "24 hrs",
+        "Time Amazon gave for the ASINs to go active"
+      ],
+      [
+        "Several",
+        "ASINs reinstated on one case"
+      ]
+    ],
+    "problem": [
+      "A group of ASINs on the account were no longer live, so they could not sell. Every day they stayed down was lost sales and lost ranking history.",
+      "Listings are taken down for many reasons, from a policy flag to missing compliance documents. The fix starts with finding the exact reason on each ASIN rather than resubmitting and hoping."
+    ],
+    "filed": [
+      "A reinstatement request covering all the affected ASINs on one case"
+    ],
+    "reply": "Amazon reviewed the request and reinstated the ASINs. It said reinstatement would be active within 24 hours, that price and quantity might need updating to bring the offers back, and to contact it again if the detail pages were not visible within two business days.",
+    "quote": "We have reviewed your request and these ASINS have been reinstated.",
+    "steps": [
+      [
+        "Find the reason on each ASIN",
+        "Check Account Health, the Listing policy violations section and any performance notification. The reason decides what evidence Amazon will want."
+      ],
+      [
+        "Fix the cause before appealing",
+        "Correct the listing, upload the missing document or remove the problem claim first. An appeal for a listing that still breaks the rule is usually refused."
+      ],
+      [
+        "Group related ASINs in one request",
+        "When several ASINs were taken down for the same reason, one well-documented case is easier to follow than many short ones."
+      ],
+      [
+        "Refresh the offers after reinstatement",
+        "Amazon's reply here says price and quantity may need updating. Check each offer is live and buyable, not just that the ASIN is back."
+      ],
+      [
+        "Follow up on stragglers",
+        "If any detail page is still missing after two business days, reply on the same case as Amazon asks."
+      ]
+    ],
+    "faqs": [
+      [
+        "How long does Amazon ASIN reinstatement take?",
+        "It depends on the reason and the queue. Once approved, Amazon said in this case the ASINs would be active within 24 hours."
+      ],
+      [
+        "Why is my ASIN still not live after reinstatement?",
+        "The offer may need its price or quantity updated, as Amazon notes here. If the page is still missing after two business days, contact Amazon on the same case."
+      ],
+      [
+        "Do I need a Plan of Action for ASIN reinstatement?",
+        "For some reasons, yes, particularly policy and safety complaints. For others, such as missing documents, the document itself is enough."
+      ]
+    ],
+    "services": [
+      "services.amazon.account-management",
+      "services.amazon.listing-optimization"
+    ]
+  },
+  "remove-negative-seller-feedback-amazon": {
+    "title": "Removing Negative Seller Feedback on Amazon",
+    "h1": "Getting negative seller feedback removed on Amazon",
+    "category": "Account health",
+    "summary": "A buyer left seller feedback that broke Amazon's rules. We requested removal, and on 17 November 2025 Amazon confirmed the feedback had been taken down.",
+    "team": "Amazon Selling Partner Support",
+    "resolution": "Feedback removed on 17 November 2025",
+    "image": "assets/amazon-cases/negative-feedback-removal-approved.jpg",
+    "alt": "Seller Central case titled Feedback Removal Request, where Amazon confirms the feedback violated its policy and was removed on 17 November 2025.",
+    "stats": [
+      [
+        "Removed",
+        "Feedback taken down by Amazon"
+      ],
+      [
+        "17 Nov 2025",
+        "Date of Amazon's decision"
+      ]
+    ],
+    "problem": [
+      "A buyer left negative seller feedback on an order. Negative feedback counts against the seller's feedback rating and can affect the Order Defect Rate, which Amazon uses to judge account health.",
+      "Not all negative feedback can be removed. Amazon only takes it down when it breaks a specific rule, so the request has to name the rule it breaks."
+    ],
+    "filed": [
+      "A feedback removal request for the order through Selling Partner Support",
+      "The reason the feedback broke Amazon's feedback policy"
+    ],
+    "reply": "Amazon reviewed the request, found the feedback violated its policy, and removed it.",
+    "quote": "Accordingly, we have removed this feedback.",
+    "steps": [
+      [
+        "Check it against Amazon's rules",
+        "Amazon removes feedback that contains obscene language, personal information, or a product review rather than seller feedback. Feedback about a fulfilment problem on an order Amazon fulfilled is struck through instead."
+      ],
+      [
+        "Request removal from Feedback Manager",
+        "Find the order in Feedback Manager and request removal. If that is refused, open a case and quote the rule the feedback breaks."
+      ],
+      [
+        "Contact the buyer only within the rules",
+        "You may ask a buyer to reconsider through Amazon's messaging, but never offer anything in return for changing or removing feedback."
+      ],
+      [
+        "Fix what caused it",
+        "If the complaint was real, fix the cause. Removed feedback does not stop the next buyer having the same problem."
+      ]
+    ],
+    "faqs": [
+      [
+        "Can Amazon remove negative seller feedback?",
+        "Yes, when it breaks Amazon's feedback policy, as this case shows. Feedback that is simply negative but within the rules stays."
+      ],
+      [
+        "What is the difference between seller feedback and a product review?",
+        "Seller feedback rates the seller's service: shipping, packaging, communication. A product review rates the product itself. Feedback that is really a product review is one of the reasons Amazon removes it."
+      ],
+      [
+        "Does negative feedback affect my Amazon account health?",
+        "It can. Negative feedback counts towards the Order Defect Rate, which Amazon expects to stay under 1%."
+      ]
+    ],
+    "services": [
+      "services.amazon.account-management",
+      "services.amazon-va"
+    ]
+  },
+  "amazon-featured-offer-buy-box-restored": {
+    "title": "Amazon Featured Offer (Buy Box) Restored",
+    "h1": "Winning back the Featured Offer (Buy Box) on an Amazon ASIN",
+    "category": "Buy Box",
+    "summary": "A seller was not getting the Featured Offer on its own ASIN. After a specialist case, Amazon made system changes and confirmed the seller was the featured offer winner.",
+    "team": "Amazon Seller Support specialist",
+    "resolution": "Seller confirmed as the Featured Offer winner",
+    "image": "assets/amazon-cases/featured-offer-buy-box-won.jpg",
+    "alt": "Seller Central case titled Featured Offer, where Amazon confirms system changes were made and the seller is now the featured offer winner on the ASIN.",
+    "stats": [
+      [
+        "Won",
+        "Featured Offer restored on the ASIN"
+      ],
+      [
+        "Specialist",
+        "Handled by Amazon's specialist support"
+      ]
+    ],
+    "problem": [
+      "The seller's offer was not winning the Featured Offer, the Buy Box, on one ASIN. Most Amazon sales go through the Featured Offer, so an offer that does not win it sells very little even when it is the best one.",
+      "Sometimes the cause is price, stock or performance. Sometimes it is a fault on Amazon's side that only a case can fix, which is what this one turned out to be."
+    ],
+    "filed": [
+      "A specialist case about the Featured Offer on the ASIN"
+    ],
+    "reply": "Amazon said the necessary system changes had been made for the ASIN and that the seller was now the featured offer winner on its detail page.",
+    "quote": "You are now the featured offer winner on its detail page.",
+    "steps": [
+      [
+        "Rule out the usual causes",
+        "Check your price against other offers and recent prices, your stock level, your shipping speed and your account health. These decide most Featured Offer outcomes."
+      ],
+      [
+        "Look for a suppressed Featured Offer",
+        "If no seller is winning, Amazon may have suppressed the Featured Offer, often because the price looks high compared with recent prices elsewhere."
+      ],
+      [
+        "Open a case when the numbers say you should win",
+        "If your offer is competitive and your metrics are healthy but you still do not win, ask Amazon to investigate the ASIN. Give the ASIN and what you have already checked."
+      ],
+      [
+        "Monitor after the fix",
+        "Watch Featured Offer percentage in the Business Reports for that ASIN for the next few weeks to make sure it holds."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the Featured Offer on Amazon?",
+        "It is the offer Amazon shows in the Buy Box, the Add to Cart and Buy Now buttons on the detail page. Amazon picks it from eligible offers based on price, delivery, availability and seller performance."
+      ],
+      [
+        "Why am I not winning the Buy Box on my own product?",
+        "Common reasons are a higher price than another offer or than recent prices, low stock, slower shipping or weak account metrics. Occasionally it is an Amazon system issue, as in this case."
+      ],
+      [
+        "How do I see my Featured Offer percentage?",
+        "In Seller Central's Business Reports, the Detail Page Sales and Traffic reports show Featured Offer (Buy Box) percentage by ASIN."
+      ]
+    ],
+    "services": [
+      "services.amazon.account-management",
+      "services.amazon.brand-protection"
+    ]
+  },
+  "amazon-dangerous-goods-capacity-increase": {
+    "title": "Amazon Dangerous Goods Capacity Increase Approved",
+    "h1": "Raising an Amazon dangerous goods storage limit for aerosols",
+    "category": "FBA capacity",
+    "summary": "A seller could not send more stock of an aerosol ASIN because of its dangerous goods storage limit. Amazon approved the increase on 24 September 2025.",
+    "team": "Amazon Selling Partner Support",
+    "resolution": "US dangerous goods capacity increase approved on 24 September 2025",
+    "image": "assets/amazon-cases/dangerous-goods-capacity-increase.jpg",
+    "alt": "Seller Central case where Amazon approves a US dangerous goods aerosol storage capacity increase on 24 September 2025.",
+    "stats": [
+      [
+        "Approved",
+        "US dangerous goods capacity increase for aerosol"
+      ],
+      [
+        "24 Sep 2025",
+        "Date of Amazon's reply"
+      ]
+    ],
+    "problem": [
+      "The seller had reached its FBA storage limit for aerosol products, which Amazon handles as dangerous goods. With the limit full, no more inventory of the aerosol ASIN could be sent in, so the product risked running out of stock.",
+      "Dangerous goods have their own capacity limits, separate from standard storage, and they are usually much tighter."
+    ],
+    "filed": [
+      "A request through Selling Partner Support to increase the US dangerous goods storage capacity for aerosols",
+      "The ASIN that could not be replenished because of the limit"
+    ],
+    "reply": "Amazon's internal team reviewed the request and approved the increase to the US dangerous goods capacity limit for aerosol. It reminded the seller to keep a balanced level between dangerous goods sold and on hand.",
+    "quote": "Your request for US Dangerous Goods capacity limit increase is approved.",
+    "steps": [
+      [
+        "Check which limit you have hit",
+        "Dangerous goods limits are set per storage type, such as aerosol or flammable, and measured in cubic feet. Check the capacity figures in Seller Central for the right type."
+      ],
+      [
+        "Clear slow stock first",
+        "Removing or selling through slow dangerous goods inventory frees capacity and makes an increase easier to justify."
+      ],
+      [
+        "Request the increase with numbers",
+        "Give the ASIN, the storage type, your current limit, the capacity you need and your sales rate. Amazon wants to see that the extra space will sell through."
+      ],
+      [
+        "Keep sold and on-hand in balance",
+        "Amazon's reply asks for exactly that. Sending in far more than sells can lead to the limit being cut again."
+      ]
+    ],
+    "faqs": [
+      [
+        "Why does Amazon limit dangerous goods storage?",
+        "Aerosols, flammables and other hazmat products need special storage in Amazon's fulfilment centres, and that space is limited. Amazon caps how much each seller can store."
+      ],
+      [
+        "Can I ask Amazon to raise my hazmat storage limit?",
+        "Yes. This case was approved through Selling Partner Support after the seller explained it could not replenish an ASIN."
+      ],
+      [
+        "How is dangerous goods capacity measured?",
+        "In cubic feet, set separately for each storage type such as aerosol and flammable."
+      ]
+    ],
+    "services": [
+      "services.amazon-ops",
+      "services.amazon.account-management"
+    ]
+  }
+}

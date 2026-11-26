@@ -19,7 +19,7 @@
 
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/bricolage.woff2') }}" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="{{ asset('assets/fonts/geist.woff2') }}" crossorigin>
-    <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=10">
+    <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}?v=12">
 
     @if ($gaId = config('services.google_analytics.id'))
         {{-- Google tag, exactly as Google issued it for this property.
@@ -85,6 +85,14 @@
           "areaServed": "Worldwide",
           "priceRange": "$$",
           "openingHours": "Mo-Fr 09:00-18:00"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://xpertva.com/#website",
+          "url": "https://xpertva.com",
+          "name": "XpertVA",
+          "inLanguage": "en-US",
+          "publisher": { "@id": "https://xpertva.com/#organization" }
         }
       ]
     }

@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'About XpertVA - Professional Virtual Assistant Services')
+@section('title', 'About XpertVA: The Team Behind Your Marketplace')
 @section('meta_description', 'Learn about XpertVA, founded in 2017, 9+ years helping eCommerce sellers on Amazon, Shopify, eBay, and Walmart. Meet our leadership team in Englishtown, NJ.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -88,17 +88,16 @@
     <div class="wrap">
         <h2 class="h2 mb-4" data-split-heading>Leadership</h2>
         <div class="grid grid--2" style="max-width:52rem">
-            @foreach ([
-                ['Ali Zaidi', 'Chief Executive Officer and founder', 'assets/images/alizaidi.jpeg'],
-                ['Ebraheem Azhar', 'Chief Operating Officer', 'assets/images/Ebraheem.jpeg'],
-            ] as [$name, $role, $img])
+            {{-- Each name links to a bio page (/team/{key}) that also lists the
+                 articles credited to that person. Data: config/content.php. --}}
+            @foreach (config('content.authors', []) as $key => $person)
                 <figure style="margin:0" data-anim data-anim-delay="{{ $loop->index * 0.08 }}">
                     <div class="photo photo--square reveal-media">
-                        <img src="{{ asset($img) }}" alt="Portrait of {{ $name }}, {{ $role }} at XpertVA." loading="lazy" decoding="async">
+                        <x-img src="{{ asset($person['photo']) }}" alt="Portrait of {{ $person['name'] }}, {{ $person['role'] }} at XpertVA." loading="lazy" decoding="async" sizes="(min-width: 900px) 26rem, 100vw" />
                     </div>
                     <figcaption class="mt-2">
-                        <p class="h3">{{ $name }}</p>
-                        <p class="small">{{ $role }}</p>
+                        <p class="h3">@if (Route::has('team.member'))<a href="{{ route('team.member', $key) }}">{{ $person['name'] }}</a>@else{{ $person['name'] }}@endif</p>
+                        <p class="small">{{ $person['role'] }}</p>
                     </figcaption>
                 </figure>
             @endforeach

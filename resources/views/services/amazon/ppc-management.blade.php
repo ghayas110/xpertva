@@ -44,6 +44,11 @@
 @endpush
 
 @section('content')
+@include('site.breadcrumbs', [
+    'trail'   => [['Services', route('services.index')], ['Amazon', route('services.amazon')]],
+    'current' => 'Amazon PPC Management Services',
+])
+
 <section class="phead phead--photo">
     <x-img class="phead__bg" src="{{ asset('assets/photos/analytics-screen.jpg') }}" alt="A laptop showing advertising performance charts." fetchpriority="high" decoding="async" />
     <div class="wrap">
@@ -66,7 +71,7 @@
                 Book a consultation
                 @include('site.arrow')
             </button>
-            <button type="button" class="btn btn--ghost" data-open="audit">Free listing audit</button>
+            <button type="button" class="btn btn--ghost" data-open="audit">Free PPC audit</button>
         </div>
     </div>
 </section>
@@ -111,6 +116,35 @@
         </div>
     </section>
 
+    @include('site.service-detail', [
+    'process' => [
+        ['name' => 'Account audit', 'desc' => 'We review 60 to 90 days of search term, placement and campaign data to find wasted spend and missed terms before changing any bids.'],
+        ['name' => 'Set the target', 'desc' => 'We work out the break-even ACoS for each product from your margins and agree a target ACoS or TACoS with you.'],
+        ['name' => 'Restructure', 'desc' => 'Campaigns are split by match type and goal, with negative keywords so each search term is bid on in one place only.'],
+        ['name' => 'Weekly optimisation', 'desc' => 'Bids, budgets, placements and negatives are adjusted every week from the search term report.'],
+        ['name' => 'Report', 'desc' => 'A weekly written note covering spend, sales, ACoS, TACoS and what we changed.'],
+    ],
+    'deliverables' => [
+        'A written PPC audit showing wasted spend',
+        'A break-even ACoS for each product',
+        'A restructured campaign map',
+        'Weekly bid, budget and negative keyword changes',
+        'Search term harvesting into exact-match campaigns',
+        'A weekly report with ACoS and TACoS',
+    ],
+    'fitFor' => [
+        'Accounts spending on ads without knowing their break-even ACoS',
+        'Sellers whose ACoS climbed as they increased spend',
+        'Brands running only automatic campaigns',
+        'Owners who want ad results judged against total sales, not just ad sales',
+    ],
+    'notFitFor' => [
+        'Your ad spend is too small to produce usable search term data',
+        'Your listing converts poorly and needs fixing before more traffic',
+        'You want to rank at the top for every keyword regardless of profit',
+    ],
+])
+
     <section class="section">
         <div class="wrap" style="max-width:60rem">
         <h2 class="h2 mb-4" data-split-heading>Frequently Asked Questions</h2>
@@ -121,6 +155,9 @@
                 ['What is the difference between ACoS and TACoS?', 'ACoS measures ad spend against ad-attributed revenue only. TACoS measures ad spend against total revenue including organic. Falling TACoS while sales grow signals a healthy account.'],
                 ['How much does Amazon PPC management cost?', 'Most agencies charge a flat $500-$2,500/month or 10%-20% of monthly ad spend, depending on account size, marketplaces, and whether DSP is included.'],
                 ['How long does it take to lower ACoS?', 'Most accounts see ACoS drop within 30-60 days. Significant structural changes, match-type splits, negative harvesting, can show measurable lift within 14 days.'],
+                ['Do you need access to my Amazon Ads account?', 'Yes. You add us as a user in the Amazon Ads console with the access level the work needs. You keep ownership of the account and can remove our access at any time.'],
+                ['How is PPC management different from running ads myself?', 'The work is the same; the difference is time and consistency. Search term reports need reading every week, negatives need adding before waste builds up, and bids need moving as competition changes. Most sellers do this in bursts. We do it on a schedule and write down every change.'],
+                ['What reports will I see?', 'A weekly note with spend, ad sales, ACoS, TACoS and total sales, plus the changes we made and why. Once a month we add a short review of which campaigns earned their budget and which did not.'],
             ] as [$q, $a])
             <details>
                 <summary>{{ $q }}</summary>

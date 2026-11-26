@@ -32,6 +32,34 @@
     </div>
 </section>
 
+{{-- Case studies: one page per account, figures read off its own reports.
+     Driven by config/content.php (case_studies). --}}
+@if (Route::has('work.case') && Route::has('work.amazon-case') && class_exists(\App\Support\AmazonCases::class))
+<section class="section" style="padding-bottom:0">
+    <div class="wrap">
+        <h2 class="h2 mb-3" data-split-heading>Case studies</h2>
+        <div class="related">
+            @foreach (config('content.case_studies', []) as $caseSlug => $case)
+                <a href="{{ route('work.case', $caseSlug) }}">
+                    <span><strong>{{ $case['h1'] }}</strong><br><span class="small">{{ $case['timeframe'] }} &middot; {{ $case['account'] }}</span></span>
+                    @include('site.arrow')
+                </a>
+            @endforeach
+        </div>
+        <h2 class="h3 mt-4 mb-3">Amazon case files</h2>
+        <div class="related">
+            @foreach (\App\Support\AmazonCases::all() as $caseSlug => $amazonCase)
+                <a href="{{ route('work.amazon-case', $caseSlug) }}"><span>{{ $amazonCase['h1'] }}</span>@include('site.arrow')</a>
+            @endforeach
+        </div>
+        <p class="small mt-3"><a class="tlink" href="{{ route('work.amazon-cases') }}">All Amazon case results, grouped by type</a></p>
+        @if ($review = config('content.review_profile'))
+            <p class="small mt-3">Read what clients say about us on <a class="tlink" href="{{ $review['url'] }}" target="_blank" rel="noopener">{{ $review['name'] }}</a>.</p>
+        @endif
+    </div>
+</section>
+@endif
+
 {{-- The three headline reports, at full size --}}
 <section class="section">
     <div class="wrap">
@@ -65,7 +93,7 @@
             @foreach ($reports as $r)
                 <article class="duo {{ $loop->odd ? '' : 'duo--flip' }}" data-anim>
                     <div class="photo reveal-media duo__media" style="aspect-ratio:2/1">
-                        <img src="{{ asset($r['img']) }}" alt="{{ $r['alt'] }}" loading="lazy" decoding="async">
+                        <x-img src="{{ asset($r['img']) }}" alt="{{ $r['alt'] }}" loading="lazy" decoding="async" sizes="(min-width: 900px) 55vw, 100vw" />
                     </div>
                     <div>
                         <p class="case__figure num mb-2">{{ $r['figure'] }}</p>
@@ -185,13 +213,23 @@
         ];
         @endphp
 
+        @php
+            // Tiles whose screenshot has its own case page link to it.
+            $caseByImage = class_exists(\App\Support\AmazonCases::class) && Route::has('work.amazon-case')
+                ? collect(\App\Support\AmazonCases::all())->mapWithKeys(fn ($c, $k) => [$c['image'] => $k])->all()
+                : [];
+        @endphp
         <div class="masonry">
             @foreach ($portfolio as $item)
                 <figure class="tile" data-cat="{{ $item['cat'] }}" style="--ar:{{ $item['ar'] ?? 1 }}">
-                    <img src="{{ asset('assets/' . $item['img']) }}" alt="{{ $item['title'] }}: {{ $item['desc'] }}" loading="lazy" decoding="async">
+                    <x-img src="{{ asset('assets/' . $item['img']) }}" alt="{{ $item['title'] }}: {{ $item['desc'] }}" loading="lazy" decoding="async" sizes="(min-width: 1100px) 25vw, (min-width: 700px) 50vw, 100vw" />
                     <figcaption class="tile__cap">
                         <span class="eyebrow">{{ $item['cat'] }}</span>
-                        <h3>{{ $item['title'] }}</h3>
+                        @if ($tileCase = $caseByImage['assets/' . $item['img']] ?? null)
+                            <h3><a href="{{ route('work.amazon-case', $tileCase) }}">{{ $item['title'] }}</a></h3>
+                        @else
+                            <h3>{{ $item['title'] }}</h3>
+                        @endif
                     </figcaption>
                 </figure>
             @endforeach
