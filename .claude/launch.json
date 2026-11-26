@@ -4,8 +4,30 @@
     {
       "name": "xpertva",
       "runtimeExecutable": "/Applications/MAMP/bin/php/php8.4.17/bin/php",
-      "runtimeArgs": ["artisan", "serve", "--host=127.0.0.1", "--port=8123"],
+      "runtimeArgs": [
+        "artisan",
+        "serve",
+        "--host=127.0.0.1",
+        "--port=8123"
+      ],
       "port": 8123
+    },
+    {
+      "name": "xpertva-sqlite",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "DB_CONNECTION=sqlite",
+        "DB_DATABASE=/private/tmp/claude-501/-Users-ghayasall-Documents-GitHub-xpertva-copy/2191b192-807d-4a8e-b6c7-08af5c702066/scratchpad/test.sqlite",
+        "CACHE_STORE=array",
+        "SESSION_DRIVER=array",
+        "QUEUE_CONNECTION=sync",
+        "php",
+        "artisan",
+        "serve",
+        "--host=127.0.0.1",
+        "--port=8124"
+      ],
+      "port": 8124
     }
   ]
 }

@@ -41,6 +41,11 @@
 @endpush
 
 @section('content')
+@include('site.breadcrumbs', [
+    'trail'   => [['Services', route('services.index')], ['Amazon', route('services.amazon')]],
+    'current' => 'Amazon A+ Content & Storefront Design',
+])
+
 <section class="phead phead--photo">
     <x-img class="phead__bg" src="{{ asset('assets/photos/retail-store.jpg') }}" alt="A retail interior with merchandised shelving and considered product display." fetchpriority="high" decoding="async" />
     <div class="wrap">
@@ -89,6 +94,35 @@
         </div>
     </section>
 
+    @include('site.service-detail', [
+    'process' => [
+        ['name' => 'Brand and catalogue review', 'desc' => 'We read your listings, reviews and return reasons to find the questions shoppers ask before they buy, and confirm your Brand Registry status.'],
+        ['name' => 'Module plan', 'desc' => 'We decide which A+ modules each ASIN gets, what each image has to prove, and how the Brand Story and Storefront tie the range together.'],
+        ['name' => 'Copy and design', 'desc' => 'Copy is written for a phone screen first, then designed to Amazon\'s module sizes. You approve every module before anything is submitted.'],
+        ['name' => 'Submit and fix', 'desc' => 'We submit through A+ Content Manager, answer any rejection notes, and resubmit until each module is approved and live.'],
+        ['name' => 'Measure', 'desc' => 'Where your brand is eligible, we use Manage Your Experiments to test one change at a time and keep the version that converts better.'],
+    ],
+    'deliverables' => [
+        'A module plan for each ASIN',
+        'Mobile-first copy for every module',
+        'Designed images sized to Amazon\'s module specifications',
+        'A Brand Story carousel linking to your Storefront',
+        'Storefront pages with navigation and shoppable tiles',
+        'Approved, live modules in A+ Content Manager',
+    ],
+    'fitFor' => [
+        'Brand Registered sellers whose product description is still plain text',
+        'Ranges with several variants that shoppers struggle to compare',
+        'Brands sending Sponsored Brands traffic to a Storefront that is one page or out of date',
+        'Sellers who have A+ live but have never tested an alternative',
+    ],
+    'notFitFor' => [
+        'You are not enrolled in Brand Registry and have no trademark filed yet',
+        'You resell other brands\' products, so the A+ Content is not yours to edit',
+        'You need product photography shot from scratch and cannot send samples',
+    ],
+])
+
     <section class="section">
         <div class="wrap" style="max-width:60rem">
         <h2 class="h2 mb-4" data-split-heading>Frequently Asked Questions</h2>
@@ -98,6 +132,10 @@
                 ['What is the difference between A+ and Premium A+ Content?', 'A+ Content offers seven modules and is free. Premium A+ Content adds video, interactive comparison charts, hover hotspots, and a wider layout. It is invitation-based and reserved for top brands.'],
                 ['What is an Amazon Storefront?', 'An Amazon Storefront is a free multi-page brand site inside Amazon, exclusive to Brand Registered sellers, with custom URL, navigation, shoppable galleries, video tiles, and its own analytics.'],
                 ['Do I need Amazon Brand Registry?', 'Yes. Both A+ Content and Storefronts require Brand Registry, which requires a registered trademark in the country of sale. We assist with Brand Registry as part of onboarding.'],
+                ['How long does A+ Content approval take?', 'Amazon says reviews can take up to seven business days. Rejections usually cite a specific rule, such as a price claim or a comparison with another brand, and we fix the module and resubmit.'],
+                ['Can you A/B test A+ Content?', 'Yes, if your brand is eligible for Manage Your Experiments in Seller Central. We test one change at a time, such as a different first module, and keep the version with the higher conversion rate once the result is clear.'],
+                ['Who owns the designs?', 'You do. We hand over the source files for every module and Storefront page, so you can update them later with us or anyone else.'],
+                ['Do you need product samples?', 'Not always. We can design from your existing photography and renders. If the images you have cannot show what the module needs to prove, we tell you what to shoot before starting.'],
             ] as [$q, $a])
             <details>
                 <summary>{{ $q }}</summary>
@@ -107,6 +145,8 @@
         </div>
         </div>
     </section>
+
+    @include('site.reading')
 
     @include('site.cta', [
     'heading' => 'Build Your Amazon Brand Experience',

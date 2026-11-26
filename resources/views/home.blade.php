@@ -1,14 +1,17 @@
 @extends('layouts.site')
 
-@section('title', 'Virtual Assistant Services for Amazon Sellers | XpertVA')
-@section('meta_description', 'Virtual assistant services for Amazon, eBay, Shopify and Walmart sellers. Listings, PPC, account health and storefront design. 500+ brands scaled since 2017.')
+{{-- Agency-level title on purpose. "Amazon virtual assistant" belongs to
+     /services/amazon-virtual-assistant; with both pages chasing it, Google
+     would keep ranking the stronger homepage for a query it answers worse.
+     The hero links to that page with the phrase as its anchor instead. --}}
+@section('title', 'Amazon, Shopify & Walmart Marketplace Management | XpertVA')
+@section('meta_description', 'XpertVA runs Amazon, Shopify, Walmart and eBay accounts for eCommerce brands: listings, PPC, account health and creative, by in-house operators since 2017.')
 
 @push('head')
 <link rel="canonical" href="{{ url('/') }}">
-<link rel="preload" as="image" href="{{ asset('assets/proof/hero-dashboard.jpg') }}" fetchpriority="high">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Virtual Assistant Services for Amazon, eBay, Shopify & Walmart Sellers | XpertVA">
-<meta property="og:description" content="Expert virtual assistant services for eCommerce sellers. Listing optimization, PPC, A+ content, account health, and brand protection on Amazon, eBay, Shopify, and Walmart.">
+<meta property="og:title" content="Amazon, Shopify & Walmart Marketplace Management | XpertVA">
+<meta property="og:description" content="Marketplace management for eCommerce brands: listing optimization, PPC, A+ content, account health and brand protection on Amazon, Shopify, Walmart and eBay.">
 <meta property="og:url" content="{{ url('/') }}">
 <meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
 <meta name="twitter:card" content="summary_large_image">
@@ -36,18 +39,25 @@
                     </button>
                     <a class="btn btn--ghost btn--lg" href="{{ route('work') }}">See the work</a>
                 </div>
+                <p class="hero__aside" data-hero-in>
+                    Need one person inside Seller Central every day? Hire a dedicated
+                    <a class="tlink" href="{{ route('services.amazon-va') }}">Amazon virtual assistant</a>.
+                </p>
             </div>
 
             {{-- The people, and the report they produced. Both above the fold. --}}
             <figure class="hero__stage" style="margin:0" data-hero-in>
                 <div class="photo">
-                    <x-img src="{{ asset('assets/photos/team-laptops.jpg') }}"
+                    <x-img src="{{ asset('assets/photos/team-laptops.jpg') }}" sizes="(min-width: 900px) 45vw, 100vw"
                          width="1600" height="1066" fetchpriority="high" decoding="async"
                          alt="Account managers working through marketplace reports together at a shared desk." />
                 </div>
                 <div class="hero__proof">
-                    <x-img src="{{ asset('assets/proof/hero-dashboard.jpg') }}"
-                         width="1600" height="1000" fetchpriority="high" decoding="async"
+                    {{-- One fetchpriority=high image per page: the photo above is the
+                         LCP element. The old preload of this file fetched the JPEG
+                         while the <picture> fetched the WebP, so it loaded twice. --}}
+                    <x-img src="{{ asset('assets/proof/hero-dashboard.jpg') }}" sizes="(min-width: 900px) 30vw, 100vw"
+                         width="1600" height="1000" decoding="async"
                          alt="Amazon Seller Central sales dashboard for a managed XpertVA client account showing 9,226,488 dollars in ordered product sales and a rising units-ordered trend line from September 2024 to November 2025." />
                 </div>
                 <figcaption class="hero__caption">
@@ -150,12 +160,12 @@
             </div>
 
             <div class="cindex__preview" aria-hidden="true">
-                <x-img data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="Amazon brand storefront layout built by XpertVA" />
-                <x-img data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="Amazon Sponsored Products campaign structure in Seller Central" />
-                <x-img data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="Amazon keyword research showing search volume and rank tracking" />
-                <x-img data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="Amazon A+ Content module comparing product variants" />
-                <x-img data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="Amazon Seller Central account health dashboard" />
-                <x-img data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="MAP enforcement report listing unauthorised sellers" />
+                <x-img sizes="(min-width: 900px) 40vw, 100vw" data-cindex-img="listing" loading="lazy" src="{{ asset('assets/storefront/amazon-brand-storefront-nitrile-gloves.jpg') }}" alt="Amazon brand storefront layout built by XpertVA" />
+                <x-img sizes="(min-width: 900px) 40vw, 100vw" data-cindex-img="ppc" loading="lazy" src="{{ asset('assets/ppc-management/amazon-ppc-campaign-manager-dashboard.jpg') }}" alt="Amazon Sponsored Products campaign structure in Seller Central" />
+                <x-img sizes="(min-width: 900px) 40vw, 100vw" data-cindex-img="seo" loading="lazy" src="{{ asset('assets/keyword-research/amazon-keyword-research-competitor-matrix.jpg') }}" alt="Amazon keyword research showing search volume and rank tracking" />
+                <x-img sizes="(min-width: 900px) 40vw, 100vw" data-cindex-img="aplus" loading="lazy" src="{{ asset('assets/a-plus-content/amazon-a-plus-content-ceiling-fan.jpg') }}" alt="Amazon A+ Content module comparing product variants" />
+                <x-img sizes="(min-width: 900px) 40vw, 100vw" data-cindex-img="health" loading="lazy" src="{{ asset('assets/account-health/amazon-account-health-dashboard.jpg') }}" alt="Amazon Seller Central account health dashboard" />
+                <x-img sizes="(min-width: 900px) 40vw, 100vw" data-cindex-img="brand" loading="lazy" src="{{ asset('assets/map-enforcement/map-enforcement-violation-tracker.png') }}" alt="MAP enforcement report listing unauthorised sellers" />
             </div>
         </div>
     </div>
@@ -202,7 +212,7 @@
         @foreach ($cases as $c)
             <article class="case">
                 <div class="case__media reveal-media">
-                    <img src="{{ asset($c['img']) }}" alt="{{ $c['alt'] }}" loading="lazy" decoding="async" width="1800" height="900">
+                    <x-img src="{{ asset($c['img']) }}" alt="{{ $c['alt'] }}" loading="lazy" decoding="async" sizes="(min-width: 900px) 60vw, 100vw" />
                 </div>
                 <div class="case__body">
                     <p class="case__figure num">{{ $c['figure'] }}</p>

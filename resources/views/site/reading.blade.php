@@ -5,6 +5,8 @@
 
   Optional: $route (defaults to the current route name).
 --}}
+@include('site.case-files', ['route' => $route ?? request()->route()?->getName()])
+
 @php
     $route = $route ?? request()->route()?->getName();
     $slugs = array_keys(array_filter(

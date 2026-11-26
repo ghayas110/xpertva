@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', 'Services - XpertVA')
+@section('title', 'eCommerce Marketplace Services: Amazon, Shopify, Walmart')
 @section('meta_description', 'Explore XpertVA\'s full range of eCommerce services: Amazon, eBay, Shopify, Walmart management, virtual assistants, web development, and digital marketing.')
 @section('head_tone', 'site-head--on-dark')
 
@@ -53,7 +53,7 @@
             @foreach ($channels as [$name, $desc, $r, $img, $alt])
                 <a class="card card--media" href="{{ route($r) }}" data-anim data-anim-delay="{{ $loop->index * 0.06 }}">
                     <div class="reveal-media" style="overflow:hidden">
-                        <img src="{{ asset($img) }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+                        <x-img src="{{ asset($img) }}" alt="{{ $alt }}" loading="lazy" decoding="async" sizes="(min-width: 900px) 50vw, 100vw" />
                     </div>
                     <div class="card__text">
                         <div class="card__top">

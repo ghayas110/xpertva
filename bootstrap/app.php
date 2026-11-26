@@ -18,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'cache.public' => \App\Http\Middleware\CachePublicPage::class,
         ]);
 
+        // Global, so the portal, the API and error pages get them too.
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         /*
          | The two public lead forms post from pages that are cached by the
          | CDN, so their HTML cannot carry a per-visitor CSRF token — a cached

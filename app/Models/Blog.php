@@ -46,4 +46,24 @@ class Blog extends Model
 
         return ['url' => route($route)] + $service;
     }
+
+    /**
+     * Text for the <title> tag: the short, keyword-first title from
+     * config/content.php when there is one, otherwise the post's own title.
+     */
+    public function seoTitle(): string
+    {
+        return config('content.seo_titles', [])[$this->slug] ?? (string) $this->title;
+    }
+
+    /**
+     * The person credited with this post, as the config/content.php author
+     * entry plus 'key' and 'url'. Falls back to the default author.
+     */
+    public function author(): ?array
+    {
+        return \App\Support\Authors::find(
+            config('content.post_author', [])[$this->slug] ?? config('content.default_author')
+        );
+    }
 }

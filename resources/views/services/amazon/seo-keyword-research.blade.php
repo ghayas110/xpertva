@@ -7,7 +7,7 @@
 @push('head')
 <link rel="canonical" href="{{ url('/services/amazon/seo-keyword-research') }}">
 <meta property="og:title" content="Amazon SEO & Keyword Research Services | XpertVA">
-<meta property="og:description" content="Rank for high-intent buyer keywords on Amazon with research-backed SEO from certified Seller Central experts.">
+<meta property="og:description" content="Rank for high-intent buyer keywords on Amazon with research-backed SEO from experienced Seller Central operators.">
 <meta name="keywords" content="amazon keyword research, amazon seo, amazon a10 algorithm, helium 10 keyword research, amazon search ranking, amazon keyword tool, brand analytics keywords, amazon seo agency">
 <meta property="og:image" content="{{ asset('assets/proof/hero-dashboard.jpg') }}">
 <meta property="og:url" content="{{ url('/services/amazon/seo-keyword-research') }}">
@@ -42,6 +42,11 @@
 @endpush
 
 @section('content')
+@include('site.breadcrumbs', [
+    'trail'   => [['Services', route('services.index')], ['Amazon', route('services.amazon')]],
+    'current' => 'Amazon SEO & Keyword Research Services',
+])
+
 <section class="phead phead--photo">
     <x-img class="phead__bg" src="{{ asset('assets/photos/strategy-desk.jpg') }}" alt="Two people reviewing keyword research notes beside a laptop." fetchpriority="high" decoding="async" />
     <div class="wrap">
@@ -94,14 +99,43 @@
         <div class="wrap">
         <h2 class="h2 mb-3" data-split-heading>Tools We Use for Amazon Keyword Research</h2>
         <ul class="ticks mt-3">
-            <li>• <strong>Helium 10 Cerebro & Magnet</strong>, reverse ASIN keyword discovery and search-volume sizing.</li>
-            <li>• <strong>Amazon Brand Analytics</strong>, Search Query Performance data direct from Amazon.</li>
-            <li>• <strong>Jungle Scout Keyword Scout</strong>, historical search trend and competitor exact-phrase analysis.</li>
-            <li>• <strong>DataDive & Smartscout</strong>, keyword gap and category-share insights.</li>
-            <li>• <strong>Amazon Search Suggestions</strong>, auto-complete mining for long-tail buyer-intent terms.</li>
+            <li><strong>Helium 10 Cerebro & Magnet</strong>, reverse ASIN keyword discovery and search-volume sizing.</li>
+            <li><strong>Amazon Brand Analytics</strong>, Search Query Performance data direct from Amazon.</li>
+            <li><strong>Jungle Scout Keyword Scout</strong>, historical search trend and competitor exact-phrase analysis.</li>
+            <li><strong>DataDive & Smartscout</strong>, keyword gap and category-share insights.</li>
+            <li><strong>Amazon Search Suggestions</strong>, auto-complete mining for long-tail buyer-intent terms.</li>
         </ul>
         </div>
     </section>
+
+    @include('site.service-detail', [
+    'process' => [
+        ['name' => 'Baseline', 'desc' => 'We record where your main ASINs rank today for their top search terms, so every later change is measured against a fixed starting point.'],
+        ['name' => 'Research', 'desc' => 'We pull terms from Brand Analytics, reverse-ASIN lookups on your closest competitors and Amazon\'s own search suggestions, then drop terms that are irrelevant or out of reach.'],
+        ['name' => 'Keyword map', 'desc' => 'Each term gets one home: title, bullets, description, A+ or the backend field, so nothing is repeated and nothing important is left out.'],
+        ['name' => 'Rewrite and publish', 'desc' => 'Listing copy is rewritten around the map, within Amazon\'s style guide. You approve it before it goes live.'],
+        ['name' => 'Track', 'desc' => 'We track rank and unit session percentage for 30 days and move terms that convert in PPC into the listing.'],
+    ],
+    'deliverables' => [
+        'A keyword list with search volume and relevance',
+        'A keyword map showing where each term goes',
+        'A rewritten title, bullets and backend search terms',
+        'A rank baseline and a 30-day rank report',
+        'Negative and harvest keyword lists for your PPC campaigns',
+        'A short written summary of what changed and why',
+    ],
+    'fitFor' => [
+        'Listings with strong reviews but low organic rank',
+        'New launches that need the right terms in place before PPC spend',
+        'Listings written from a supplier sheet without any research',
+        'Brands moving into a new marketplace and language',
+    ],
+    'notFitFor' => [
+        'Your listing is suppressed or has a policy issue, which needs fixing first',
+        'Price, images or reviews are the real problem and you cannot change them',
+        'You want keyword stuffing that breaks Amazon\'s style guide',
+    ],
+])
 
     <section class="section">
         <div class="wrap" style="max-width:60rem">
@@ -112,6 +146,9 @@
                 ['How does the Amazon A10 algorithm work?', 'A10 ranks products by relevance, conversion rate, sales velocity, organic sales weight, seller authority, CTR, and review quality. Internal traffic and shopper conversion are weighted more heavily than in the older A9 algorithm.'],
                 ['Which Amazon keyword research tools are best?', 'Helium 10 Cerebro/Magnet, Jungle Scout Keyword Scout, Amazon Brand Analytics Search Query Performance, and DataDive. Brand Analytics is the most authoritative since it comes directly from Amazon.'],
                 ['How many keywords should an Amazon listing target?', 'A well-optimized listing typically indexes for 200-500 keywords through the title, bullets, description, A+ content, and 250-byte backend field. Focus 5-10 primary buyer-intent keywords on the title and bullets.'],
+                ['How long does Amazon SEO take to work?', 'Indexing for new terms usually shows within days of publishing. Rank movement on competitive terms takes longer, often several weeks, because it depends on sales velocity and conversion as well as relevance.'],
+                ['Is Amazon SEO the same as Google SEO?', 'No. Amazon ranks products mainly on relevance and on how well they sell for a search term, so conversion and sales velocity matter far more than links. Google ranks pages on relevance, quality and links from other sites.'],
+                ['Do you use backend search terms?', 'Yes. The backend field holds terms that do not fit naturally in the copy, such as synonyms, common misspellings and Spanish terms on Amazon US, kept within Amazon\'s byte limit and with no repeats from the title.'],
             ] as [$q, $a])
             <details>
                 <summary>{{ $q }}</summary>
@@ -121,6 +158,8 @@
         </div>
         </div>
     </section>
+
+    @include('site.reading')
 
     @include('site.cta', [
     'heading' => 'Get Your Free Amazon SEO Audit',

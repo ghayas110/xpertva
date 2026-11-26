@@ -42,6 +42,11 @@
 @endpush
 
 @section('content')
+@include('site.breadcrumbs', [
+    'trail'   => [['Services', route('services.index')], ['Amazon', route('services.amazon')]],
+    'current' => 'Amazon Brand Protection Services',
+])
+
 <section class="phead phead--photo">
     <x-img class="phead__bg" src="{{ asset('assets/photos/warehouse-aisles.jpg') }}" alt="Long aisles of racked inventory inside a fulfilment warehouse." fetchpriority="high" decoding="async" />
     <div class="wrap">
@@ -109,6 +114,28 @@
         </div>
     </section>
 
+    @include('site.service-detail', [
+    'deliverables' => [
+        'A list of every seller on your branded ASINs, authorized or not',
+        'Test buy evidence with photos for each enforcement case',
+        'Infringement reports filed through Brand Registry',
+        'Cease-and-desist letters for persistent sellers',
+        'A MAP violation tracker updated as prices change',
+        'A monthly report of sellers removed and cases still open',
+    ],
+    'fitFor' => [
+        'Brands seeing unknown sellers on their own listings',
+        'Manufacturers with a MAP policy that resellers ignore',
+        'Brands with counterfeit complaints in reviews or returns',
+        'Trademarked brands not yet using Brand Registry tools',
+    ],
+    'notFitFor' => [
+        'You do not own or license the trademark for the brand',
+        'The other sellers are resellers you supply but have no written agreement with',
+        'You need litigation. We gather evidence and work with your lawyer, but we are not a law firm',
+    ],
+])
+
     <section class="section">
         <div class="wrap" style="max-width:60rem">
         <h2 class="h2 mb-4" data-split-heading>Frequently Asked Questions</h2>
@@ -119,6 +146,11 @@
                 ['What is MAP enforcement on Amazon?', 'Minimum Advertised Price enforcement: monitoring resellers, sending MAP warning letters, and removing repeat-offender resellers through unauthorized-seller policies.'],
                 ['What is Amazon Brand Registry?', 'A free Amazon program for trademarked brands that unlocks A+ Content, Storefronts, brand analytics, and the Report a Violation tool used to remove hijackers and counterfeits.'],
                 ['What are Project Zero and Transparency?', 'Project Zero gives qualified brands self-service counterfeit removal authority. Transparency is a unit-level serialized-code program where Amazon verifies authenticity in the FBA fulfillment center.'],
+                ['Can you remove a seller who is selling genuine products?', 'Not with a counterfeit complaint. Amazon only acts on a valid IP claim, so a reseller of genuine stock is usually handled through your distribution agreements and MAP policy instead. We tell you which route applies before anything is filed.'],
+                ['What do you need from us to start?', 'Brand Registry access, your trademark registration numbers, a list of authorized resellers and your MAP policy if you have one. With those we can separate unauthorized sellers from legitimate ones in the first week.'],
+                ['How long does it take to remove a hijacker?', 'It depends on the evidence. A clear trademark or counterfeit case with a test buy is often resolved within days of filing. Sellers who come back, or cases Amazon rejects the first time, take longer and may need escalation.'],
+                ['Do you monitor my listings after the sellers are removed?', 'Yes. We keep watching every branded ASIN for new sellers and price changes, because removed sellers often return under a new name. You get a monthly report of what we found and what we filed.'],
+                ['How do you find out who a hijacker is?', 'Amazon\'s seller profile page shows each seller\'s business name and address, which is usually enough to send a cease-and-desist letter. A test buy adds the packaging, labels and return address, which often links several seller accounts to the same operator.'],
             ] as [$q, $a])
             <details>
                 <summary>{{ $q }}</summary>
@@ -128,6 +160,8 @@
         </div>
         </div>
     </section>
+
+    @include('site.reading')
 
     @include('site.cta', [
     'heading' => 'Stop Hijackers and Counterfeiters Today',
